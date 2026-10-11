@@ -1,0 +1,38 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Audio Data & Large Benchmarks (Keeps repo light for multi-machine sync)
+data/raw/
+data/processed/
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+*.zip
+*.tar.gz
+!data/samples/*.wav
+
+# Checkpoints & Model weights
+checkpoints/
+models/
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,11 @@
+prompt_id,text,dominant_tone,vowels,note
+P001,Mặt trời mọc ở đằng đông mang theo ánh nắng mai,ngang_sac_nang,a_o_e_i,Cụm từ tự nhiên chứa đủ thanh trắc và thanh bằng
+P002,Tiếng hát ngân nga giữa chiều thu vàng lá rơi,ngang_huyen,a_e_u_i,Âm tiết mở dễ ngân vang nốt dài
+P003,Mẹ ngồi ru con ngủ giấc nồng say đắm,nang_hoi_sac,e_o_u_a,Chứa thanh Nặng (glottal stop) và thanh Hỏi
+P004,Nỗi nhớ mãi dâng trào trong những đêm dài,nga_sac_huyen,o_a_e_i,Chứa thanh Ngã (creaky voice / glottal constriction)
+P005,Gió thổi vi vu qua rặng tre xanh ngắt,hoi_sac_ngang,o_u_e_a,Âm vực biến thiên với phụ âm xát
+P006,Dòng sông quê hương chảy êm đềm theo năm tháng,huyen_hoi_sac,o_e_a_u,Từ ngữ giàu tính nhạc điệu ca khúc
+P007,Ánh mắt thân thương đượm buồn nhìn về chốn xa,sac_nang_huyen,a_u_o_e,Chứa thanh Nặng và thanh Sắc đối lập
+P008,Mỗi bước đi là một kỷ niệm khó phai mờ,nga_nang_hoi,o_u_i_e,Chứa thanh Ngã và thanh Nặng liên tiếp
+P009,Hạt mưa rơi nhẹ trên mái nhà lá đơn sơ,nang_sac_ngang,a_u_e_o,Cấu trúc âm tiết khép (p/t/c/ch)
+P010,Bài ca đất nước vang vọng khắp non sông ngút ngàn,huyen_nang_sac,a_o_u_e,Thích hợp để đo F0 range và formant tuning
