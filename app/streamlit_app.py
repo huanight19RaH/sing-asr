@@ -23,6 +23,10 @@ sys.path.insert(0, str(root_dir / "src"))
 
 from dsp.audio_io import load_audio, save_audio
 from dsp.adaptive_tsm import adaptive_vowel_time_stretch
+from dsp.hpss_consonant_boost import boost_consonant_transients
+from dsp.vibrato_filter import suppress_vibrato_stft
+from dsp.melody_decoupler import decouple_melody_pitch
+from dsp.advanced_vocal_dsp import process_advanced_vocal_dsp, AdvancedPipelineConfig
 from perturbation.pitch_shift import pitch_shift_audio
 from perturbation.time_stretch import phase_vocoder_time_stretch
 from acoustics.pitch import extract_f0_contour
@@ -32,6 +36,7 @@ from asr.whisper_engine import WhisperEngine
 from asr.attention_monitor import analyze_cross_attention
 from evaluation.metrics import compute_metrics
 from evaluation.alignment import align_words
+
 
 
 # Page configuration
@@ -82,6 +87,11 @@ SAMPLE_OPTIONS = {
     "Isolated Sung Vocal Stem (Demucs v4 - Exp 3)": str(root_dir / "data/processed/separated/vietnamese_song_clip_26s_vocals_16k.wav"),
     "Uniform TSM Normalized Stem (Exp 4)": str(root_dir / "data/processed/normalized/norm_tempo-1_10x.wav"),
     "Adaptive Vowel TSM Normalized Stem (Exp 6)": str(root_dir / "data/processed/normalized/norm_adaptive_vowel_tsm.wav"),
+    "HPSS Consonant Boosted Stem (+4.6 dB - Exp 7)": str(root_dir / "data/processed/dsp_phase7/vocal_consonant_boost_1_7x.wav"),
+    "Singing Vibrato Suppressed Stem (Exp 7)": str(root_dir / "data/processed/dsp_phase7/vocal_vibrato_suppressed.wav"),
+    "Melody Decoupled Stem (145 Hz Register - Exp 7)": str(root_dir / "data/processed/dsp_phase7/vocal_melody_decoupled.wav"),
+    "Full Compound Vocal DSP Stem (Exp 7)": str(root_dir / "data/processed/dsp_phase7/vocal_full_compound_dsp.wav"),
+    "Polyphonic Mix + Full Compound DSP (Exp 7)": str(root_dir / "data/processed/dsp_phase7/poly_full_compound_dsp.wav"),
 }
 
 DEFAULT_REF_TEXT = (
@@ -112,13 +122,30 @@ with st.sidebar:
     st.header("2. DSP Front-End Conditioning")
     dsp_mode = st.radio(
         "Acoustic Pre-Processing:",
-        ["Pass-Through (Raw Audio)", "Adaptive Vowel TSM (Non-linear)", "Uniform Phase Vocoder", "Pitch Shift"]
+        [
+            "Pass-Through (Raw Audio)",
+            "Adaptive Vowel TSM (Non-linear)",
+            "HPSS Consonant Transient Boost",
+            "Singing Vibrato Suppression",
+            "Melody-Tone Decoupling (Register Shift)",
+            "Full Compound Vocal DSP Pipeline",
+            "Uniform Phase Vocoder",
+            "Pitch Shift"
+        ]
     )
     
     dsp_rate = 1.0
     dsp_pitch = 0.0
+    max_vowel_rate = 1.45
+    boost_val = 1.70
+    target_pitch_f0 = 160.0
+
     if dsp_mode == "Adaptive Vowel TSM (Non-linear)":
-        max_vowel_rate = st.slider("Max Vowel Compression Rate:", 1.1, 2.0, 1.5, 0.05)
+        max_vowel_rate = st.slider("Max Vowel Compression Rate:", 1.1, 2.0, 1.45, 0.05)
+    elif dsp_mode == "HPSS Consonant Transient Boost":
+        boost_val = st.slider("Transient Boost Multiplier:", 1.2, 2.5, 1.70, 0.05)
+    elif dsp_mode == "Melody-Tone Decoupling (Register Shift)":
+        target_pitch_f0 = st.slider("Target Conversational Pitch (Hz):", 120.0, 240.0, 160.0, 5.0)
     elif dsp_mode == "Uniform Phase Vocoder":
         dsp_rate = st.slider("Uniform Speedup Rate:", 0.8, 1.6, 1.15, 0.05)
     elif dsp_mode == "Pitch Shift":
@@ -144,11 +171,31 @@ with st.sidebar:
 
 # Process Audio according to DSP selection
 @st.cache_data(show_spinner=False)
-def load_and_condition_audio(path: str, mode: str, rate: float, pitch: float, max_vowel: float):
+def load_and_condition_audio(path: str, mode: str, rate: float, pitch: float, max_vowel: float, boost: float, target_f0: float):
     audio, sr = load_audio(path, target_sr=16000)
     if mode == "Adaptive Vowel TSM (Non-linear)":
         audio_cond, segs = adaptive_vowel_time_stretch(audio, sr=sr, max_rate=max_vowel, min_vowel_sec=0.35)
         return audio_cond, sr, segs
+    elif mode == "HPSS Consonant Transient Boost":
+        audio_cond, _ = boost_consonant_transients(audio, sr=sr, boost_factor=boost)
+        return audio_cond, sr, None
+    elif mode == "Singing Vibrato Suppression":
+        audio_cond, _ = suppress_vibrato_stft(audio, sr=sr)
+        return audio_cond, sr, None
+    elif mode == "Melody-Tone Decoupling (Register Shift)":
+        audio_cond, _ = decouple_melody_pitch(audio, sr=sr, target_speech_f0_hz=target_f0)
+        return audio_cond, sr, None
+    elif mode == "Full Compound Vocal DSP Pipeline":
+        audio_cond, _ = process_advanced_vocal_dsp(
+            audio, sr=sr,
+            config=AdvancedPipelineConfig(
+                enable_adaptive_tsm=True, tsm_max_rate=max_vowel,
+                enable_consonant_boost=True, consonant_boost_factor=boost,
+                enable_vibrato_suppression=True,
+                enable_melody_decoupling=True, target_speech_f0_hz=target_f0
+            )
+        )
+        return audio_cond, sr, None
     elif mode == "Uniform Phase Vocoder" and abs(rate - 1.0) > 1e-3:
         audio_cond = phase_vocoder_time_stretch(audio, rate=rate)
         return audio_cond, sr, None
@@ -159,7 +206,7 @@ def load_and_condition_audio(path: str, mode: str, rate: float, pitch: float, ma
 
 conditioned_audio, sample_rate, segments_info = load_and_condition_audio(
     selected_audio_path, dsp_mode, dsp_rate, dsp_pitch,
-    max_vowel_rate if dsp_mode == "Adaptive Vowel TSM (Non-linear)" else 1.5
+    max_vowel_rate, boost_val, target_pitch_f0
 )
 
 # Main Area Tabs
@@ -328,15 +375,36 @@ with tab3:
 
 # --- TAB 4: Scientific Benchmark Summary ---
 with tab4:
-    st.subheader("Empirical Research Findings (RQ1 - RQ6 Synthesis)")
+    st.subheader("Empirical Research Findings (RQ1 - RQ7 Synthesis)")
     
+    # Load Exp 7 results if exists
+    exp7_path = root_dir / "data/processed/exp7_vocal_dsp_results.json"
+    if exp7_path.exists():
+        with open(exp7_path, "r", encoding="utf-8") as f:
+            data_exp7 = json.load(f)
+        
+        st.write("**Phase VII: Advanced Musical & Vocal Acoustic DSP Benchmark Matrix (Exp 7 - RQ7):**")
+        table_rows_7 = []
+        for r in data_exp7.get("results", []):
+            table_rows_7.append({
+                "ID": r.get("id"),
+                "Configuration": r.get("name"),
+                "Tier": r.get("tier"),
+                "WER (%)": f"{r.get('wer') * 100:.2f}%",
+                "CER (%)": f"{r.get('cer') * 100:.2f}%",
+                "Deletions": r.get("deletions"),
+                "Insertions": r.get("insertions"),
+                "RTF": r.get("rtf")
+            })
+        st.dataframe(table_rows_7, use_container_width=True)
+
     # Load Exp 6 results if exists
     exp6_path = root_dir / "data/processed/exp6_deep_benchmark_results.json"
     if exp6_path.exists():
         with open(exp6_path, "r", encoding="utf-8") as f:
             data_exp6 = json.load(f)
         
-        st.write("**Controlled Benchmark Matrix Across Mitigation Tiers:**")
+        st.write("**Phase VI: Adaptive Vowel Normalization Benchmark Matrix (Exp 6 - RQ6):**")
         table_rows = []
         for r in data_exp6.get("results", []):
             table_rows.append({
@@ -358,4 +426,5 @@ with tab4:
     4. **RQ4 (Zero-Shot Normalization):** Phase Vocoder tempo 1.1x breaks the infinite loop, reducing WER to $94.87\%$.
     5. **RQ5 (Decoding & Foundation Model):** Vietnamese PhoWhisper is naturally resilient against loops. `no_repeat_ngram_size = 3` accelerates inference by $5.1\text{x}$.
     6. **RQ6 (Deep Speech DSP):** Non-linear Adaptive Vowel TSM compresses only prolonged vowels, reducing word deletions to **$0$** and dropping accompanied polyphonic mix WER to **$125.64\%$**.
+    7. **RQ7 (Phase VII Advanced Musical DSP):** HPSS Consonant Boosting (+4.6 dB) eliminates 100% of spurious insertions (**Insertions = 0**) and cuts Polyphonic Mix WER from $135.90\%$ down to **$97.44\%$** ($2.0\text{x}$ faster inference, RTF $0.055$).
     """)

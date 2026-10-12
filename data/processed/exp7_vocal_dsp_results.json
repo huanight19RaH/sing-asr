@@ -1,0 +1,111 @@
+{
+  "experiment": "Exp 7: Advanced Musical & Vocal Acoustic DSP Benchmark (RQ7)",
+  "date": "2026-10-12",
+  "lead_researcher": "Thai Hung Nguyen",
+  "results": [
+    {
+      "id": "C1_raw_vocal_baseline",
+      "name": "Raw Vocal Stem Baseline (PhoWhisper Anti-Loop)",
+      "tier": "Acoustic Baseline",
+      "wer": 1.4615,
+      "cer": 1.0172,
+      "substitutions": 38,
+      "deletions": 0,
+      "insertions": 19,
+      "rtf": 0.198,
+      "latency_sec": 91.14,
+      "hypothesis": "con mưa thấm lạnh con dị ngãi nhưng sắc sơ tối điện riêng mình anh cô đơn giằng mình ngây nhà là vì em tô màu xanh mình đang dùng cho con người yêu ý tiên anh phải cô răng nghĩa gì nhưng mà không khi bao điều hành chôn dâu cũng bao cô đâu em có unk."
+    },
+    {
+      "id": "C2_consonant_boost_only",
+      "name": "HPSS Consonant Transient Boost (+4.6 dB)",
+      "tier": "Phase VII Acoustic DSP",
+      "wer": 0.9744,
+      "cer": 0.8333,
+      "substitutions": 11,
+      "deletions": 27,
+      "insertions": 0,
+      "rtf": 0.057,
+      "latency_sec": 1.53,
+      "hypothesis": "các em nhá thấy tôi không phải là văn bản của mình."
+    },
+    {
+      "id": "C3_vibrato_suppress_only",
+      "name": "Singing Vibrato Demodulation & Suppression",
+      "tier": "Phase VII Acoustic DSP",
+      "wer": 1.3333,
+      "cer": 0.9023,
+      "substitutions": 38,
+      "deletions": 0,
+      "insertions": 14,
+      "rtf": 0.119,
+      "latency_sec": 3.2,
+      "hypothesis": "con mưa thắm anh con gì ngoài nhưng sắc sơ tôi bên dì mình anh có đơn giằng mình ngây là vì em tô màu xanh bên anh rồi ôi kỵ kỳ anh phải cô nàng nghe gì nhưng mà lâu khi bao điều hưng chôn dâu không bao cô đâu em có."
+    },
+    {
+      "id": "C4_melody_decoupling_only",
+      "name": "Melody-Tone Decoupling (Register Pitch Normalization)",
+      "tier": "Phase VII Acoustic DSP",
+      "wer": 1.4103,
+      "cer": 1.0115,
+      "substitutions": 37,
+      "deletions": 0,
+      "insertions": 18,
+      "rtf": 0.126,
+      "latency_sec": 3.31,
+      "hypothesis": "ông thắng anh còn nhiều ai những sức xuất tuyến gì mình anh có đơn giản mình ơi ngại vì em cũng đồn xanh vì anh dìm con người nghĩ gì mình nghĩ gì khi anh ta cùng anh nhờ gì nhưng mà ông chỉ bao đều hành chúng theo hút báo cô độc ác có cơ."
+    },
+    {
+      "id": "C5_adapt_tsm_consonant_boost",
+      "name": "Adaptive Vowel TSM + HPSS Consonant Boost",
+      "tier": "Phase VII Compound DSP",
+      "wer": 0.9744,
+      "cer": 0.8103,
+      "substitutions": 13,
+      "deletions": 25,
+      "insertions": 0,
+      "rtf": 0.085,
+      "latency_sec": 1.73,
+      "hypothesis": "có thể tập trung vào tiếp tục theo sản phẩm của tác giả vàng."
+    },
+    {
+      "id": "C6_full_compound_vocal_dsp",
+      "name": "Full Compound Vocal DSP Pipeline (Stem)",
+      "tier": "Phase VII Compound DSP",
+      "wer": 0.9744,
+      "cer": 0.8333,
+      "substitutions": 10,
+      "deletions": 28,
+      "insertions": 0,
+      "rtf": 0.087,
+      "latency_sec": 1.81,
+      "hypothesis": "có thể tập trung vào tiếp tục theo đuổi toàn bộ."
+    },
+    {
+      "id": "C7_poly_mix_baseline",
+      "name": "Polyphonic Mix Baseline (With BGM)",
+      "tier": "Polyphonic Baseline",
+      "wer": 1.359,
+      "cer": 0.9425,
+      "substitutions": 37,
+      "deletions": 0,
+      "insertions": 16,
+      "rtf": 0.109,
+      "latency_sec": 2.93,
+      "hypothesis": "cấm ưa thân anh còn riêng qua những sắc giơ tôi đen riê mình ngành cô đơn giềng mình anh là vì em tô màu xanh nên anh dành cho ôm lấy đi anh phải cố gắng để làm gì thêm bao lâu khi báo điều hành chôn dấu bao cô đó em có unk."
+    },
+    {
+      "id": "C8_poly_mix_full_dsp",
+      "name": "Polyphonic Mix + Full Compound Vocal DSP",
+      "tier": "Phase VII Compound DSP",
+      "wer": 0.9744,
+      "cer": 0.8678,
+      "substitutions": 8,
+      "deletions": 30,
+      "insertions": 0,
+      "rtf": 0.055,
+      "latency_sec": 1.85,
+      "hypothesis": "có thể tập luyện để trở lại tiền bạc."
+    }
+  ]
+}
