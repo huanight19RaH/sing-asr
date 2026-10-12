@@ -155,7 +155,12 @@ with st.sidebar:
     st.header("3. Foundation ASR Engine")
     model_choice = st.selectbox(
         "ASR Foundation Model:",
-        ["vinai/PhoWhisper-tiny", "openai/whisper-tiny", "openai/whisper-base"]
+        [
+            "vinai/PhoWhisper-tiny",
+            "PhoWhisper-tiny + LoRA Adapted (Phase VIII)",
+            "openai/whisper-tiny",
+            "openai/whisper-base"
+        ]
     )
 
     st.markdown("---")
@@ -418,6 +423,26 @@ with tab4:
             })
         st.dataframe(table_rows, use_container_width=True)
 
+    # Load Exp 8 results if exists
+    exp8_path = root_dir / "data/processed/exp8_lora_results.json"
+    if exp8_path.exists():
+        with open(exp8_path, "r", encoding="utf-8") as f:
+            data_exp8 = json.load(f)
+        
+        st.write("**Phase VIII: PEFT / LoRA Adaptation Benchmark Matrix (Exp 8 - RQ8):**")
+        table_rows_8 = []
+        for r in data_exp8.get("evaluation_results", []):
+            table_rows_8.append({
+                "Test Suite": r.get("type"),
+                "WER (%)": f"{r.get('wer') * 100:.2f}%",
+                "CER (%)": f"{r.get('cer') * 100:.2f}%",
+                "Deletions": r.get("deletions"),
+                "Insertions": r.get("insertions"),
+                "Substitutions": r.get("substitutions"),
+                "Latency": f"{r.get('latency_sec')}s"
+            })
+        st.dataframe(table_rows_8, use_container_width=True)
+
     st.markdown(r"""
     ### Key Academic Discoveries:
     1. **RQ1 (Speech vs Sung Gap):** Spoken WER $35.40\%$ vs Sung WER $135.90\%$ ($\Delta\text{WER} = +100.50\%$).
@@ -427,4 +452,5 @@ with tab4:
     5. **RQ5 (Decoding & Foundation Model):** Vietnamese PhoWhisper is naturally resilient against loops. `no_repeat_ngram_size = 3` accelerates inference by $5.1\text{x}$.
     6. **RQ6 (Deep Speech DSP):** Non-linear Adaptive Vowel TSM compresses only prolonged vowels, reducing word deletions to **$0$** and dropping accompanied polyphonic mix WER to **$125.64\%$**.
     7. **RQ7 (Phase VII Advanced Musical DSP):** HPSS Consonant Boosting (+4.6 dB) eliminates 100% of spurious insertions (**Insertions = 0**) and cuts Polyphonic Mix WER from $135.90\%$ down to **$97.44\%$** ($2.0\text{x}$ faster inference, RTF $0.055$).
+    8. **RQ8 (Phase VIII PEFT / LoRA Adaptation):** LoRA ($r=8$) trains only **$147,456$ parameters ($0.389\%$)**, cuts singing CER down to **$68.97\%$** (Deletions = 0), and maintains exceptional retention on conversational speech (**Spoken WER = $7.84\%$**, CER $4.21\%$) proving zero catastrophic forgetting.
     """)

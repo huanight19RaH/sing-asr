@@ -1,0 +1,78 @@
+{
+  "experiment": "Exp 8: PEFT / LoRA Adaptation on PhoWhisper-tiny (Phase VIII)",
+  "date": "2026-10-12",
+  "lead_researcher": "Thai Hung Nguyen",
+  "device": "cpu",
+  "parameter_statistics": {
+    "trainable_params": 147456,
+    "all_params": 37908096,
+    "trainable_pct": 0.389
+  },
+  "loss_trajectory": [
+    {
+      "epoch": 1,
+      "train_loss": 3.8871,
+      "val_loss": 5.1001,
+      "epoch_sec": 20.08
+    },
+    {
+      "epoch": 2,
+      "train_loss": 3.0357,
+      "val_loss": 3.979,
+      "epoch_sec": 13.67
+    },
+    {
+      "epoch": 3,
+      "train_loss": 2.3267,
+      "val_loss": 2.819,
+      "epoch_sec": 10.34
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.1843,
+      "val_loss": 2.1521,
+      "epoch_sec": 11.36
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.7853,
+      "val_loss": 1.6386,
+      "epoch_sec": 9.52
+    }
+  ],
+  "evaluation_results": [
+    {
+      "id": "test_vocal_stem",
+      "type": "Singing Vocal Stem",
+      "wer": 1.0256,
+      "cer": 0.6897,
+      "substitutions": 37,
+      "deletions": 0,
+      "insertions": 3,
+      "latency_sec": 2.7,
+      "hypothesis": "anh anh còn dây ngay sắt cho tôi điện thành cho người ta em trong lòng em trai anh nhớ thanh niên ưu ừn ươi lên lời ờn ơ ươn ừt ừon ừ ừi ừớt ướt ra ưư vơi vơ ơ xê."
+    },
+    {
+      "id": "test_poly_mix",
+      "type": "Polyphonic Mix with BGM",
+      "wer": 1.3333,
+      "cer": 0.9598,
+      "substitutions": 36,
+      "deletions": 0,
+      "insertions": 16,
+      "latency_sec": 2.64,
+      "hypothesis": "căn anh còn gì ngoài những giấc sơn tối đen riêng mình ngay cô đơn giềng mình anh đã biến tổ màu xanh nên anh dành chot ôm lấy đi ý y anh phải cố vang để làm gì thương bao lâu khi báo điều anh chôn dơ ơi ơiớớớ áo tớ uno thớt thơ."
+    },
+    {
+      "id": "test_spoken_anchor",
+      "type": "Conversational Speech Anchor",
+      "wer": 0.0784,
+      "cer": 0.0421,
+      "substitutions": 2,
+      "deletions": 0,
+      "insertions": 2,
+      "latency_sec": 3.12,
+      "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo nỗi bản ghi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm âm hân thanhe ổn định"
+    }
+  ]
+}

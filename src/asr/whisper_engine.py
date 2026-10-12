@@ -24,19 +24,37 @@ class ASRTranscriptionResult:
     real_time_factor: float  # RTF = inference_time / duration
 
 class WhisperEngine:
-    def __init__(self, model_id: str = "openai/whisper-tiny", device: str = "cpu"):
+    def __init__(self, model_id: str = "openai/whisper-tiny", device: str = "cpu", lora_dir: str | Path = None):
         """
-        Initialize Whisper inference wrapper.
+        Initialize Whisper or PhoWhisper inference wrapper with optional PEFT LoRA adapter.
         """
         self.model_id = model_id
         self.device = device
+        self.lora_dir = Path(lora_dir) if lora_dir else None
+        if "lora" in model_id.lower() and not self.lora_dir:
+            default_lora = Path(src_dir).parent / "models" / "lora_adapter_phowhisper"
+            if default_lora.exists():
+                self.lora_dir = default_lora
         self._pipe = None
+        self._lora_model = None
+        self._processor = None
 
     def _load_model(self):
-        if self._pipe is None:
+        if self.lora_dir and self.lora_dir.exists():
+            if self._lora_model is None:
+                from transformers import WhisperForConditionalGeneration, WhisperProcessor
+                from peft import PeftModel
+                print(f"[sing-asr ASR] Loading PhoWhisper with LoRA adapter from: {self.lora_dir} on {self.device}...")
+                base_id = "vinai/PhoWhisper-tiny"
+                self._processor = WhisperProcessor.from_pretrained(str(self.lora_dir))
+                base = WhisperForConditionalGeneration.from_pretrained(base_id)
+                self._lora_model = PeftModel.from_pretrained(base, str(self.lora_dir))
+                self._lora_model.to(self.device)
+                self._lora_model.eval()
+                print(f"[sing-asr ASR] LoRA adapter model loaded successfully.")
+        elif self._pipe is None:
             from transformers import pipeline
             print(f"[sing-asr ASR] Loading model: {self.model_id} on {self.device}...")
-            # Default pipeline creation
             self._pipe = pipeline(
                 "automatic-speech-recognition",
                 model=self.model_id,
@@ -81,11 +99,27 @@ class WhisperEngine:
                 print(f"[WhisperEngine] Prompt conversion warning: {e}")
 
         t0 = time.time()
-        # Feed dictionary and kwargs to pipeline
-        result = self._pipe({"raw": audio_data, "sampling_rate": sr}, generate_kwargs=gen_kwargs)
+        if self._lora_model is not None:
+            import torch
+            inputs = self._processor(audio_data, sampling_rate=sr, return_tensors="pt")
+            input_features = inputs.input_features.to(self.device)
+            gen_params = {
+                "max_new_tokens": 128,
+                "repetition_penalty": 1.2,
+                "no_repeat_ngram_size": 3,
+                "language": "vi",
+                "task": "transcribe"
+            }
+            if gen_kwargs:
+                gen_params.update(gen_kwargs)
+            with torch.no_grad():
+                pred_ids = self._lora_model.generate(input_features, **gen_params)
+            raw_text = self._processor.batch_decode(pred_ids, skip_special_tokens=True)[0].strip()
+        else:
+            # Feed dictionary and kwargs to pipeline
+            result = self._pipe({"raw": audio_data, "sampling_rate": sr}, generate_kwargs=gen_kwargs)
+            raw_text = result.get("text", "").strip()
         inf_time = time.time() - t0
-
-        raw_text = result.get("text", "").strip()
         rtf = inf_time / duration_sec if duration_sec > 0 else 0.0
 
         return ASRTranscriptionResult(

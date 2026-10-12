@@ -19,6 +19,7 @@ data/processed/segments/
 *.ogg
 *.zip
 *.tar.gz
+*.npz
 !data/samples/*.wav
 
 # Checkpoints & Model weights
