@@ -441,7 +441,35 @@ with tab4:
                 "Substitutions": r.get("substitutions"),
                 "Latency": f"{r.get('latency_sec')}s"
             })
-        st.dataframe(table_rows_8, use_container_width=True)
+    # Load Exp 8 Ablation Matrix results if exists
+    exp8_ablation_path = root_dir / "data/processed/exp8_lora_ablation_matrix.json"
+    if exp8_ablation_path.exists():
+        with open(exp8_ablation_path, "r", encoding="utf-8") as f:
+            data_abl = json.load(f)
+        st.write("**Phase VIII: LoRA Architectural Ablation Matrix (Rank & Target Modules):**")
+        abl_rows = []
+        base = data_abl.get("results", {}).get("baseline_zero_shot", {})
+        abl_rows.append({
+            "Architecture": "PhoWhisper-tiny (Zero-Shot Baseline)",
+            "Trainable Params": "0 (0.0%)",
+            "Vocal WER (%)": f"{base.get('vocal', {}).get('wer', 0) * 100:.2f}%",
+            "Vocal CER (%)": f"{base.get('vocal', {}).get('cer', 0) * 100:.2f}%",
+            "Poly WER (%)": f"{base.get('poly', {}).get('wer', 0) * 100:.2f}%",
+            "Speech WER (%)": f"{base.get('speech', {}).get('wer', 0) * 100:.2f}%",
+            "Speech CER (%)": f"{base.get('speech', {}).get('cer', 0) * 100:.2f}%",
+        })
+        for v_name, v_data in data_abl.get("results", {}).get("variants", {}).items():
+            meta = v_data.get("meta", {})
+            abl_rows.append({
+                "Architecture": v_name,
+                "Trainable Params": f"{meta.get('trainable_params', 0):,} ({meta.get('param_pct', 0)}%)",
+                "Vocal WER (%)": f"{v_data.get('vocal', {}).get('wer', 0) * 100:.2f}%",
+                "Vocal CER (%)": f"{v_data.get('vocal', {}).get('cer', 0) * 100:.2f}%",
+                "Poly WER (%)": f"{v_data.get('poly', {}).get('wer', 0) * 100:.2f}%",
+                "Speech WER (%)": f"{v_data.get('speech', {}).get('wer', 0) * 100:.2f}%",
+                "Speech CER (%)": f"{v_data.get('speech', {}).get('cer', 0) * 100:.2f}%",
+            })
+        st.dataframe(abl_rows, use_container_width=True)
 
     st.markdown(r"""
     ### Key Academic Discoveries:

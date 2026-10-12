@@ -1,5 +1,5 @@
 {
-  "id": "thung192/sing-asr-phowhisper-lora-adaptation",
+  "id": "thung192/sing-asr-phowhisper-lora-adaptation-benchmark",
   "title": "SING-ASR PhoWhisper LoRA Adaptation Benchmark",
   "code_file": "sing_asr_lora_kaggle.py",
   "language": "python",
@@ -8,7 +8,9 @@
   "enable_gpu": "true",
   "enable_tpu": "false",
   "enable_internet": "true",
-  "dataset_sources": [],
+  "dataset_sources": [
+    "thung192/sing-asr-benchmark-data"
+  ],
   "competition_sources": [],
   "kernel_sources": [],
   "model_sources": []

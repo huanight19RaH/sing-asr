@@ -139,10 +139,10 @@ def monitor_and_download(kernel_slug: str, env: dict, poll_interval_sec: int = 2
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="SING-ASR Kaggle LoRA Dispatcher")
-    parser.add_argument("--push", action="store_true", default=True, help="Push kernel to Kaggle")
-    parser.add_argument("--monitor", action="store_true", default=False, help="Monitor kernel until complete")
-    parser.add_argument("--status", action="store_true", default=False, help="Check current status")
-    parser.add_argument("--download", action="store_true", default=False, help="Download output artifacts")
+    parser.add_argument("--push", action="store_true", help="Push kernel to Kaggle")
+    parser.add_argument("--monitor", action="store_true", help="Monitor kernel until complete")
+    parser.add_argument("--status", action="store_true", help="Check current status")
+    parser.add_argument("--download", action="store_true", help="Download output artifacts")
     args = parser.parse_args()
 
     meta_file = KERNEL_DIR / "kernel-metadata.json"
@@ -156,7 +156,10 @@ if __name__ == "__main__":
         print(f"Trạng thái: {st}")
     elif args.download:
         pull_outputs(slug, env)
-    elif args.push:
-        ok, kslug, kenv = push_kernel()
+    elif args.monitor and not args.push:
+        monitor_and_download(slug, env)
+    else:
+        ok, kslug, kenv = push_kernel(ACCOUNT1_TOKEN)
         if ok and args.monitor:
             monitor_and_download(kslug, kenv)
+

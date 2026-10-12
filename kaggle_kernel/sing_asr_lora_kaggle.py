@@ -18,6 +18,8 @@ from torch.utils.data import Dataset, DataLoader
 
 # 1. Install dependencies
 print("[*] Installing required packages on Kaggle...")
+# Remove incompatible torchao 0.10.0 from Kaggle system to prevent PEFT collision
+subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "torchao"], check=False)
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "transformers", "peft", "soundfile", "librosa", "jiwer"], check=True)
 
 from transformers import WhisperForConditionalGeneration, WhisperProcessor

@@ -1,0 +1,221 @@
+{
+  "experiment": "Experiment 8: LoRA Architecture Ablation Matrix",
+  "date": "2026-10-12",
+  "lead_researcher": "Thai Hung Nguyen",
+  "device": "cpu",
+  "results": {
+    "baseline_zero_shot": {
+      "vocal": {
+        "hypothesis": "con mưa thấm lạnh con dị ngãi nhưng sắc sơ tối điện riêng mình anh cô đơn giằng mình ngây nhà là vì em tô màu xanh mình đang dùng cho con người yêu ý tiên anh phải cô răng nghĩa gì nhưng mà không khi bao điều hành chôn dâu cũng bao cô đâu em có unk.",
+        "wer": 1.4615,
+        "cer": 1.0172,
+        "substitutions": 38,
+        "deletions": 0,
+        "insertions": 19,
+        "rtf": 0.0946
+      },
+      "poly": {
+        "hypothesis": "cấm ưa thân anh còn riêng qua những sắc giơ tôi đen riê mình ngành cô đơn giềng mình anh là vì em tô màu xanh nên anh dành cho ôm lấy đi anh phải cố gắng để làm gì thêm bao lâu khi báo điều hành chôn dấu bao cô đó em có unk.",
+        "wer": 1.359,
+        "cer": 0.9425,
+        "substitutions": 37,
+        "deletions": 0,
+        "insertions": 16,
+        "rtf": 0.0791
+      },
+      "speech": {
+        "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản hi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm hành ổn định cho các ứng dụm học máy các hệ thống trý tuậy",
+        "wer": 0.2549,
+        "cer": 0.229,
+        "substitutions": 2,
+        "deletions": 0,
+        "insertions": 11,
+        "rtf": 0.1315
+      }
+    },
+    "variants": {
+      "LoRA-R4": {
+        "meta": {
+          "r": 4,
+          "alpha": 16,
+          "target_modules": [
+            "q_proj",
+            "v_proj"
+          ],
+          "trainable_params": 73728,
+          "param_pct": 0.1949,
+          "train_time_sec": 53.92,
+          "loss_history": [
+            4.5106,
+            3.5267,
+            3.292
+          ]
+        },
+        "vocal": {
+          "hypothesis": "có thể trở lại từng ngày hôm nay tao nghe theo lời tiêu tưởng thư thôi thì thiên thanh thương thuấn thâm thơ thông thường thất bình thân thích thức tham khúc thang xanh thực phẩm thành ảnh thăng thế tầng thủy hoàng thượng thịnh tu",
+          "wer": 1.1795,
+          "cer": 0.931,
+          "substitutions": 39,
+          "deletions": 0,
+          "insertions": 7,
+          "rtf": 0.1414
+        },
+        "poly": {
+          "hypothesis": "công an cắt mưa thắt anh còn gì ngoài những giấc sơn tối đen riêng mình anh cô đơn giương minh ngành là vì em tô màu xanh nên anh dành cho ôm lấy y anh phải cố gắng để làm gì thêm bao lâu khi báo điệu anh chôn dấu bao cô đó em có thơ.",
+          "wer": 1.4103,
+          "cer": 0.9943,
+          "substitutions": 37,
+          "deletions": 0,
+          "insertions": 18,
+          "rtf": 0.0996
+        },
+        "speech": {
+          "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản hi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm uốn định cho các ứng dụm học máy các hệ thống trý tuậy nhân ti",
+          "wer": 0.3137,
+          "cer": 0.257,
+          "substitutions": 4,
+          "deletions": 0,
+          "insertions": 12,
+          "rtf": 0.1419
+        }
+      },
+      "LoRA-R8 (Champion)": {
+        "meta": {
+          "r": 8,
+          "alpha": 32,
+          "target_modules": [
+            "q_proj",
+            "v_proj"
+          ],
+          "trainable_params": 147456,
+          "param_pct": 0.389,
+          "train_time_sec": 63.41,
+          "loss_history": [
+            4.3062,
+            3.1418,
+            2.3252
+          ]
+        },
+        "vocal": {
+          "hypothesis": "công trình bằng thần anh còn gì ngoài những sắc xấu tối điện rừng mình anh có đơn giản mình nghe mình ngay vì em tô màu xanh biên lành rừng chót ơi nghiêng kỳ tiên anh phải cố gắng nghe gì nhưng lương vang vương khi bao điều hành chôn dâu lưu bão khổ đâu em có thâm unk.",
+          "wer": 1.4872,
+          "cer": 1.1149,
+          "substitutions": 37,
+          "deletions": 0,
+          "insertions": 21,
+          "rtf": 0.1393
+        },
+        "poly": {
+          "hypothesis": "công từng ngày càng lời đời thôi mắt lại lời buồn lòng tràn lận người ta đã làm tiền tất ngay từ ngày hội tình yêu.",
+          "wer": 0.9487,
+          "cer": 0.7011,
+          "substitutions": 24,
+          "deletions": 13,
+          "insertions": 0,
+          "rtf": 0.0745
+        },
+        "speech": {
+          "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản hiâm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm âm yếu ổn định cho các ứng dụm học máy các hệ thống trý tu",
+          "wer": 0.2941,
+          "cer": 0.243,
+          "substitutions": 2,
+          "deletions": 1,
+          "insertions": 12,
+          "rtf": 0.1792
+        }
+      },
+      "LoRA-R16": {
+        "meta": {
+          "r": 16,
+          "alpha": 64,
+          "target_modules": [
+            "q_proj",
+            "v_proj"
+          ],
+          "trainable_params": 294912,
+          "param_pct": 0.775,
+          "train_time_sec": 74.12,
+          "loss_history": [
+            3.7909,
+            3.0637,
+            2.3827
+          ]
+        },
+        "vocal": {
+          "hypothesis": "anh anh còn ngăn mắt xem tôi đông lên bàn thắng trời ơi ta nói theo lắm thầy em em em anh anh thanh thoai ơ tay em em trai tụi nghe tiếng thương yêu tưn ảnh hưng tuấn thuận tha thành thông ố vô tồn tam khốc thên thớ thê thất thí phình thùn",
+          "wer": 1.3333,
+          "cer": 0.9253,
+          "substitutions": 36,
+          "deletions": 0,
+          "insertions": 16,
+          "rtf": 0.3285
+        },
+        "poly": {
+          "hypothesis": "công anh còn dây ngoa nhưng sắt giờ tôi đang dây mình ngay cô đơn giằng mình ngai ngà vì em tụn hồ xanh nên anh dành chọn ôm lỡy đi anh phải cố gắng để làm gì thêm bao lâu khi báo điều chiếu rớu văn xuống dốc khổ đấu em có thơ.",
+          "wer": 1.3333,
+          "cer": 0.9368,
+          "substitutions": 37,
+          "deletions": 0,
+          "insertions": 15,
+          "rtf": 0.1072
+        },
+        "speech": {
+          "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản ghi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm othanh ố tiếc ứng dụnh không hạt lương các hệ thống trý",
+          "wer": 0.2353,
+          "cer": 0.2103,
+          "substitutions": 3,
+          "deletions": 0,
+          "insertions": 9,
+          "rtf": 0.1248
+        }
+      },
+      "LoRA-AllAttn": {
+        "meta": {
+          "r": 8,
+          "alpha": 32,
+          "target_modules": [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "out_proj"
+          ],
+          "trainable_params": 294912,
+          "param_pct": 0.775,
+          "train_time_sec": 92.15,
+          "loss_history": [
+            3.8517,
+            3.0502,
+            1.6075
+          ]
+        },
+        "vocal": {
+          "hypothesis": "còn bắt giữ mắt người thương xa lầy ngân hàng trước từng ngày mà anh ta thắng thôi thanh lạnh tuần duyên tiếng ảnh tự nhiên tạo thành lời kể từ tận hình thức ổn định vấn vươn sẵn.",
+          "wer": 0.9744,
+          "cer": 0.7414,
+          "substitutions": 36,
+          "deletions": 1,
+          "insertions": 1,
+          "rtf": 0.101
+        },
+        "poly": {
+          "hypothesis": "cắt mưa thắt anh còn dìm qua những xác nhận tôi đang xem mình anh có đơn giản mình anh là vì em tồn học xanh nên anh dành cho ông lai i anh phải cố gắng để làm gì thêm bao lâu khi báo điều hành chôn dấu bão cô đâu em có unk.",
+          "wer": 1.359,
+          "cer": 0.931,
+          "substitutions": 37,
+          "deletions": 0,
+          "insertions": 16,
+          "rtf": 0.102
+        },
+        "speech": {
+          "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản ghi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm hạnh ổn định",
+          "wer": 0.0196,
+          "cer": 0.0093,
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "rtf": 0.1312
+        }
+      }
+    }
+  }
+}

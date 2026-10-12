@@ -338,6 +338,22 @@ sing-asr/data/
          2. Kiểm định Speech Retention chứng minh LoRA loại bỏ hoàn toàn nguy cơ quên thảm họa (Zero Catastrophic Forgetting), thậm chí nhận dạng tiếng nói đàm thoại còn chính xác hơn gấp 4.5 lần so với zero-shot unadapted baseline (WER 35.40% -> 7.84%).
        - Tích hợp Kaggle Runner T4 GPU: Đã đóng gói kernel `kaggle_kernel/sing_asr_lora_kaggle.py` và script đẩy `scripts/push_kaggle_sing_asr_lora.py` tương thích với tài khoản `thung192` trong `kaggle_runner_ui/`.
        - Toàn bộ kết quả lưu tại: `data/processed/exp8_lora_results.json`.
+    12. *Hoàn thành Toàn diện Phase VIII: Ma trận Khảo sát Kiến trúc LoRA (Ablation Matrix) & Tích hợp Kaggle Runner UI T4 GPU:*
+        - File thực thi: [`experiments/exp8_lora_ablation_matrix.py`](experiments/exp8_lora_ablation_matrix.py) & [`data/processed/exp8_lora_ablation_matrix.json`](data/processed/exp8_lora_ablation_matrix.json).
+        - Kết quả khảo sát 4 biến thể kiến trúc LoRA trên PhoWhisper-tiny:
+          * **Zero-Shot Baseline (0 tham số huấn luyện):** Vocal WER 146.15% (CER 101.72%), Poly WER 135.90% (CER 94.25%), Speech WER 25.49% (CER 22.90%).
+          * **LoRA-R4 ($r=4, \alpha=16$, 73.7K tham số = 0.195%):** Vocal WER giảm xuống **117.95%** (CER 93.10%), chứng minh rank cực nhỏ đã bắt đầu nén phân kỳ thanh nhạc.
+          * **LoRA-R8 ($r=8, \alpha=32$, 147.5K tham số = 0.389%):** Polyphonic Mix WER giảm xuống **94.87%** (CER 70.11%, **0 insertions**), giải quyết hiện tượng lặp từ khi có nhạc nền.
+          * **LoRA-R16 ($r=16, \alpha=64$, 294.9K tham số = 0.775%):** Speech WER cải thiện lên **23.53%** (CER 21.03%).
+          * **LoRA-AllAttn ($r=8, \alpha=32$, `q_proj, k_proj, v_proj, out_proj`, 294.9K tham số = 0.775% - Champion):**
+            - Vocal Stem WER: **97.44%** (CER 74.14%, Deletions: 1, Insertions: 1 vs baseline 20+ insertions).
+            - Spoken Vietnamese Anchor WER: **1.96%** (CER **0.93%**, **50/51 từ chính xác tuyệt đối**, 0 deletions, 0 insertions).
+        - Tích hợp Kaggle Runner UI & Tesla T4 GPU:
+          * Đã tạo thành công Kaggle Dataset `thung192/sing-asr-benchmark-data` (trạng thái: ready).
+          * Đã đăng ký project `sing_asr` vào hệ thống quản trị `kaggle_runner_ui/data/projects.yaml`.
+          * Đã khắc phục lỗi tương thích phiên bản `torchao 0.10.0` trên môi trường Kaggle container.
+          * Tự động hóa pipeline đẩy kernel, giám sát tiến trình và kéo artifact về máy.
+        - Streamlit Hub: Bổ sung bảng đối soát ma trận khảo sát kiến trúc LoRA vào Tab 4.
 * **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases IX - X):**
   1. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
      - Chưng cất tri thức từ Teacher (PhoWhisper-large hoặc Whisper-large-v3) sang Student (PhoWhisper-tiny).

@@ -33,7 +33,9 @@ models/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
-# IDE
+# IDE & Temp Logs
 .vscode/
 .idea/
 *.swp
+kaggle_debug_log/
+kaggle_dataset_upload/
