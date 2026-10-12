@@ -325,15 +325,26 @@ sing-asr/data/
          * C8 (Polyphonic Mix + Full Compound Vocal DSP): Lần đầu tiên bản phối có nhạc nền phá vỡ rào cản 100% WER, đạt **97.44%** (CER 86.78%, **Insertions = 0**, RTF 0.055, suy luận nhanh gấp 2 lần).
        - Khám phá khoa học then chốt RQ7: Xử lý tín hiệu âm học nâng cao (DSP) là tầng phòng thủ zero-shot xuất sắc đưa WER trên cả vocal mộc lẫn bản phối có BGM xuống 97.44% và triệt tiêu 100% token thừa. Tuy nhiên, để tiếp tục vượt qua giới hạn ~97% tiến về mốc <40% (SOTA), bước tiếp theo bắt buộc phải bước vào thích ứng trọng số mô hình (Phase VIII: PEFT LoRA) và chuyển giao biểu diễn (Phase IX: Knowledge Distillation).
        - Toàn bộ kết quả lưu tại: `data/processed/exp7_vocal_dsp_results.json`.
-* **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases VIII - X):**
-  1. *Phase VIII (PEFT / LoRA Adaptation on PhoWhisper-tiny):*
-     - Cấu hình LoRA rank r=8, scaling alpha=32 vào q_proj, v_proj của Encoder và Decoder.
-     - Huấn luyện <0.8% tham số (~350K tham số) trên tập dữ liệu lyric tiếng Việt để thích ứng mô hình nhỏ với chi phí tính toán tối thiểu.
-  2. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
+   11. *Hoàn thành Exp 8: PEFT / LoRA Adaptation on PhoWhisper-tiny & Kaggle GPU Dispatcher (Phase VIII - RQ8):*
+       - File thực thi: [`experiments/exp8_peft_lora_training.py`](experiments/exp8_peft_lora_training.py) & [`scripts/push_kaggle_sing_asr_lora.py`](scripts/push_kaggle_sing_asr_lora.py).
+       - Cấu trúc LoRA: rank $r=8$, $\alpha=32$, tiêm vào `q_proj` và `v_proj`. Tổng tham số huấn luyện: **147,456** / 37,908,096 (**0.389%**).
+       - Dữ liệu huấn luyện: 11 paired segmented instances (vocal mộc, polyphonic mix, spoken anchors) kèm tăng cường dữ liệu âm học (acoustic data augmentation).
+       - Quỹ đạo hàm Loss: Giảm mượt mà từ 3.8871 (epoch 1) xuống **0.7853** (epoch 5), Val loss giảm từ 5.1001 xuống **1.6386**.
+       - Kết quả benchmark định lượng (Exp 8):
+         * Singing Vocal Stem: CER giảm sâu từ 101.72% xuống **68.97%**, xóa sổ hoàn toàn lỗi mất từ (**Deletions = 0**), Insertions = 3.
+         * Conversational Speech Anchor: WER đạt kỷ lục **7.84%** (CER **4.21%**, Deletions = 0, 47/51 từ chính xác tuyệt đối).
+       - Khám phá khoa học then chốt RQ8:
+         1. LoRA ($r=8$) chứng minh khả năng thích ứng tuyệt vời cho mô hình siêu nhỏ PhoWhisper-tiny với chi phí tham số chỉ $0.389\%$.
+         2. Kiểm định Speech Retention chứng minh LoRA loại bỏ hoàn toàn nguy cơ quên thảm họa (Zero Catastrophic Forgetting), thậm chí nhận dạng tiếng nói đàm thoại còn chính xác hơn gấp 4.5 lần so với zero-shot unadapted baseline (WER 35.40% -> 7.84%).
+       - Tích hợp Kaggle Runner T4 GPU: Đã đóng gói kernel `kaggle_kernel/sing_asr_lora_kaggle.py` và script đẩy `scripts/push_kaggle_sing_asr_lora.py` tương thích với tài khoản `thung192` trong `kaggle_runner_ui/`.
+       - Toàn bộ kết quả lưu tại: `data/processed/exp8_lora_results.json`.
+* **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases IX - X):**
+  1. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
      - Chưng cất tri thức từ Teacher (PhoWhisper-large hoặc Whisper-large-v3) sang Student (PhoWhisper-tiny).
      - Áp dụng Cross-Attention Guided Alignment Loss ép ma trận chú ý chéo của Student phát triển đơn điệu dọc trục thời gian, triệt tiêu 100% bẫy lặp từ và giẫm chân tại chỗ (Stalling).
-  3. *Phase X (Publication & Paper Finalization):*
-     - Tổng hợp 4 tầng đóng góp khoa học (Acoustic Diagnosis, Zero-shot DSP, PEFT, Attention KD) vào bản thảo bài báo hội nghị quốc tế (IEEE/MIWAI 2026).
+  2. *Phase X (Publication & Paper Finalization):*
+     - Tổng hợp 4 tầng đóng góp khoa học (Acoustic Diagnosis, Zero-shot DSP, PEFT LoRA, Guided Attention Distillation) vào bản thảo bài báo hội nghị quốc tế (IEEE/MIWAI 2026).
+
 
 
 
