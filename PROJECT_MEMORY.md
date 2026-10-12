@@ -301,7 +301,27 @@ sing-asr/data/
        1. Adaptive Vowel TSM giải quyết triệt để vấn đề mất từ (Deletions giảm từ 12-27 về 0) nhờ giữ nguyên phụ âm đầu và nén nguyên âm ngân dài.
        2. Trên bản phối đầy đủ có nhạc nền, chuỗi phối hợp Adaptive TSM + PhoWhisper kéo WER xuống 125.64% và CER xuống 88.51%, thiết lập kỷ lục nhận dạng mới.
      - Toàn bộ kết quả lưu tại: `data/processed/exp6_deep_benchmark_results.json`.
-* **Kế hoạch tiếp theo:**
-  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 6 RQs (RQ1, RQ2, RQ3, RQ4, RQ5, RQ6) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
-  - Xây dựng giao diện demo tương tác Streamlit (`app/` hoặc `notebooks/`) hiển thị audio, trích xuất âm học thời gian thực, trực quan hóa ma trận Cross-Attention và nhận dạng ASR.
+   9. *Hoàn thành Streamlit Interactive Web Demonstration Hub:*
+      - File: [`app/streamlit_app.py`](app/streamlit_app.py).
+      - 4 Tab chức năng học thuật:
+        * Tab 1 (Transcribe & Benchmark): Audio player, DSP selector, engine selector (PhoWhisper-tiny, Whisper-tiny, Whisper-base), decoding constraints, bảng đối soát Levenshtein.
+        * Tab 2 (Acoustic DSP Analysis): Trực quan hóa Waveform, Spectrogram, F0 contour, Formants F1/F2 qua LPC, HNR và Spectral Tilt.
+        * Tab 3 (Cross-Attention Monitor): Đo lường eager cross-attention, Monotonicity Index, Stalling Ratio và Alignment Path.
+        * Tab 4 (Scientific Benchmark Summary): Tổng hợp ma trận số liệu thực nghiệm 6 RQs.
+      - Đã commit và đẩy lên GitHub repo (`https://github.com/huanight19RaH/sing-asr.git`).
+* **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases VII - X):**
+  1. *Phase VII (Advanced Musical & Vocal DSP):*
+     - Melody-Tone Decoupling (PSOLA F0 Flattening về thanh cữ 120-180 Hz) nhằm khôi phục tương quan thanh điệu tự nhiên.
+     - Vibrato Demodulation (lọc dao động FM/AM 5-7 Hz của nốt ngân dài).
+     - Transient-Preserving HPSS & Consonant Energy Boosting (+3 đến +6 dB cho phụ âm đầu).
+     - Bilinear VTLN Formant Warping nắn không gian nguyên âm F1, F2.
+  2. *Phase VIII (PEFT / LoRA Adaptation on PhoWhisper-tiny):*
+     - Cấu hình LoRA rank r=8, scaling alpha=32 vào q_proj, v_proj của Encoder và Decoder.
+     - Huấn luyện <0.8% tham số (~350K tham số) trên tập dữ liệu lyric tiếng Việt để thích ứng mô hình nhỏ với chi phí tính toán tối thiểu.
+  3. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
+     - Chưng cất tri thức từ Teacher (PhoWhisper-large hoặc Whisper-large-v3) sang Student (PhoWhisper-tiny).
+     - Áp dụng Cross-Attention Guided Alignment Loss ép ma trận chú ý chéo của Student phát triển đơn điệu dọc trục thời gian, triệt tiêu 100% bẫy lặp từ và giẫm chân tại chỗ (Stalling).
+  4. *Phase X (Publication & Paper Finalization):*
+     - Tổng hợp 4 tầng đóng góp khoa học (Acoustic Diagnosis, Zero-shot DSP, PEFT, Attention KD) vào bản thảo bài báo hội nghị quốc tế (IEEE/MIWAI 2026).
+
 
