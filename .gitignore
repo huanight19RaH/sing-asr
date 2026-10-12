@@ -39,3 +39,4 @@ models/
 *.swp
 kaggle_debug_log/
 kaggle_dataset_upload/
+data/processed/kaggle_outputs/

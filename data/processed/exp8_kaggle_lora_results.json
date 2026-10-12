@@ -1,0 +1,103 @@
+{
+  "experiment": "Exp 8: PEFT / LoRA Adaptation Benchmark on Kaggle T4 GPU",
+  "date": "2026-10-12",
+  "device": "cuda",
+  "gpu_name": "Tesla T4",
+  "training_time_sec": 4.14,
+  "loss_history": [
+    {
+      "epoch": 1,
+      "loss": 5.0205
+    },
+    {
+      "epoch": 2,
+      "loss": 3.9394
+    },
+    {
+      "epoch": 3,
+      "loss": 2.9243
+    },
+    {
+      "epoch": 4,
+      "loss": 2.3426
+    },
+    {
+      "epoch": 5,
+      "loss": 1.3098
+    },
+    {
+      "epoch": 6,
+      "loss": 0.8333
+    },
+    {
+      "epoch": 7,
+      "loss": 0.6152
+    },
+    {
+      "epoch": 8,
+      "loss": 0.4564
+    },
+    {
+      "epoch": 9,
+      "loss": 0.3721
+    },
+    {
+      "epoch": 10,
+      "loss": 0.2647
+    },
+    {
+      "epoch": 11,
+      "loss": 0.1978
+    },
+    {
+      "epoch": 12,
+      "loss": 0.1979
+    },
+    {
+      "epoch": 13,
+      "loss": 0.1707
+    },
+    {
+      "epoch": 14,
+      "loss": 0.1194
+    },
+    {
+      "epoch": 15,
+      "loss": 0.0957
+    }
+  ],
+  "pre_adaptation": {
+    "vocal": {
+      "wer": 1.4872,
+      "cer": 1.069,
+      "hypothesis": "con mưa thấm lạnh con dị ngãi nhưng sắp sửa tối điện riêng mình anh cô đơn giằng mình ngây là vì em tô màu xanh miền lành dừng chọn ô người nghiêng kỳ anh phải cố gắng ghẹ gì nhưng mà ông khi báo điều hành chôn dâu không bao giờ bao cô đâu em có thơ unk."
+    },
+    "poly": {
+      "wer": 1.359,
+      "cer": 0.9713,
+      "hypothesis": "cấm ưa thân anh còn gì ngoài những giấc giờ tôi đen riêng mình ngành cô đơn giềng mình anh là vì em tô màu xanh nên anh dành cho ôm lấy đi anh phải cố gắng để làm gì thêm bao lâu khi báo điều hành chôn dấu bao cô đó em có unk."
+    },
+    "speech": {
+      "wer": 0.2549,
+      "cer": 0.229,
+      "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản hi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm hành ổn định cho các ứng dụm học máy các hệ thống trý tuậy"
+    }
+  },
+  "post_adaptation": {
+    "vocal": {
+      "wer": 0.641,
+      "cer": 0.4655,
+      "hypothesis": "trời còn làm mây xanh ngắt cho mắt em buồn thương rồi còn làm từng giọt nắng còn làm lần nào ạt lần đầu tao làm lòng lại lại lại ờm ờ để lại lại những gìn vấn vương"
+    },
+    "poly": {
+      "wer": 0.7949,
+      "cer": 0.6149,
+      "hypothesis": "trên mươi tôi còn làm mây xanh ngắt cho mắt em buồn rồi thôi nào ta làm tương ừng để lại những tiếng hợp như thế nào ừ mình cô đời mình ờ xem mình mình ở đâu nào xem."
+    },
+    "speech": {
+      "wer": 0.1765,
+      "cer": 0.1355,
+      "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản ghi âm được chuẩn bị cẩn thận để đảm phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm ỉu tỉnh yên và tích lượng ủn tĩnh."
+    }
+  }
+}

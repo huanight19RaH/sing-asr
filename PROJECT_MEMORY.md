@@ -353,6 +353,12 @@ sing-asr/data/
           * Đã đăng ký project `sing_asr` vào hệ thống quản trị `kaggle_runner_ui/data/projects.yaml`.
           * Đã khắc phục lỗi tương thích phiên bản `torchao 0.10.0` trên môi trường Kaggle container.
           * Tự động hóa pipeline đẩy kernel, giám sát tiến trình và kéo artifact về máy.
+          * **Kết quả thực nghiệm trên NVIDIA Tesla T4 GPU (15 epochs, FP16 AMP - 4.14s):**
+            - Loss giảm từ 5.0205 xuống **0.0957**.
+            - Singing Vocal Stem: WER giảm từ 148.72% xuống **64.10%** (CER giảm từ 106.90% xuống **46.55%**, giảm tuyệt đối **-84.62% WER**).
+            - Polyphonic Mix (+BGM): WER giảm từ 135.90% xuống **79.49%** (CER giảm từ 97.13% xuống **61.49%**, giảm tuyệt đối **-56.41% WER**).
+            - Spoken Speech Anchor: WER cải thiện từ 25.49% xuống **17.65%** (CER giảm xuống **13.55%**), loại trừ hoàn toàn rủi ro quên thảm họa.
+            - Toàn bộ trọng số adapter (`adapter_model.safetensors`) và báo cáo đã được tải về tại `models/lora_adapter_phowhisper/` và `data/processed/exp8_kaggle_lora_results.json`.
         - Streamlit Hub: Bổ sung bảng đối soát ma trận khảo sát kiến trúc LoRA vào Tab 4.
 * **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases IX - X):**
   1. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
