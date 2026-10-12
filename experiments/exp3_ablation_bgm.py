@@ -13,7 +13,14 @@ Decomposes the WER gap into:
 """
 from pathlib import Path
 import json
+import sys
 import numpy as np
+
+# Reconfigure stdout for UTF-8 on Windows
+if sys.platform.startswith("win"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from dsp.audio_io import load_audio
 from acoustics.pipeline import extract_all_acoustic_features

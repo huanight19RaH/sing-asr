@@ -1,0 +1,17 @@
+{
+  "full_mix": {
+    "audio": "data/processed/vietnamese_song_clip_26s.wav",
+    "transcription": "Cân mưa thấm anh còn gì ngoài những sắp xưa tôi danh, sẵn mình anh, cô đơn, sẵn mình anh là vì em tôi một xanh. Mình anh dành cho ông lấy ý. Anh phải cô gắng đi làm gì, tên bao lâu. Khi bao điều anh chung sâu bao cô đâu, anh có thơ.",
+    "wer": 1.359,
+    "cer": 0.931,
+    "tonal_errors": 0
+  },
+  "isolated_vocal": {
+    "audio": "data\\processed\\separated\\vietnamese_song_clip_26s_vocals_16k.wav",
+    "transcription": "Còn người thấm lạnh con gì ngay những sắp xa tôi đến gì mình nâng, cô đơn giống như ngay ná vì em tôi mấu xanh. Vì anh nâng gìng cho cô ngay, em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em em",
+    "wer": 10.6923,
+    "cer": 7.1092,
+    "tonal_errors": 0
+  },
+  "delta_bgm_wer": -933.33
+}

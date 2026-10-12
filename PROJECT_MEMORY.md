@@ -243,7 +243,24 @@ sing-asr/data/
      - Báo cáo dữ liệu lưu tại: `data/processed/exp2_acoustic_segments.csv` và `data/processed/exp2_correlation_results.json`.
   4. *Đồng bộ mã nguồn:*
      - Khởi tạo remote GitHub: `https://github.com/huanight19RaH/sing-asr.git`.
+  5. *Thực nghiệm 3 (Exp3 BGM Ablation & Isolation — RQ3):*
+     - File thực thi: `experiments/exp3_ablation_bgm.py`.
+     - Sử dụng mô hình Demucs v4 (`HDEMUCS_HIGH_MUSDB`) tách vocal mộc và nhạc nền hòa âm (BGM).
+     - Kết quả trên Whisper-tiny:
+       * Full Polyphonic Mix (Vocal + BGM): WER = 135.90% (CER = 93.10%).
+       * Isolated Vocal Stem (A Cappella): WER = 1069.23% (CER = 710.92%).
+     - Phát hiện khoa học quan trọng: Tách vocal mộc loại bỏ được BGM nhưng bộc lộ hiện tượng ảo giác lặp vô tận (autoregressive repetition hallucination: chuỗi "em em em...") khi các nguyên âm ngân dài không có xung nhịp gõ đệm (percussive transients). Minh chứng thực nghiệm khẳng định BGM không phải là nguyên nhân duy nhất; các biến dạng âm học nội tại của thanh nhạc là nhân tố chi phối sự sụp đổ của ASR.
+     - Báo cáo dữ liệu lưu tại: `data/processed/exp3_ablation_results.json`.
+  6. *Thực nghiệm 4 (Exp4 Signal-Level Normalization & Zero-Shot Mitigation — RQ4):*
+     - File thực thi: `experiments/exp4_signal_normalization.py`.
+     - Đánh giá 8 điều kiện can thiệp DSP (Phase Vocoder Time Stretching & Pitch Shifting):
+       * Baseline (Raw Vocal): WER = 1069.23% (vòng lặp ảo giác lặp vô tận).
+       * Tempo-1.10x (co nén thời lượng nguyên âm ngân 10%): WER giảm từ 1069.23% xuống **94.87%** (giảm tuyệt đối **974.36%** WER), cắt đứt hoàn toàn vòng lặp ảo giác!
+       * Pitch--4st (hạ cao độ 4 bán âm về thanh cữ nói): WER giảm xuống **100.00%** (giảm **969.23%** WER), loại bỏ hoàn toàn hiện tượng lặp từ vô tận.
+       * Composite (T1.25x + P-3st): WER = 569.23%.
+     - Tổng hợp khoa học RQ4: Kỹ thuật co nén thời lượng nguyên âm (Phase Vocoder tempo compression 1.1x) và hạ thanh cữ cao độ (-4st) có thể triệt tiêu hiện tượng sụp đổ lặp autoregressive hallucination của Foundation ASR mà không cần tốn chi phí tái huấn luyện (zero-shot signal-level mitigation).
+     - Báo cáo dữ liệu lưu tại: `data/processed/exp4_normalization_results.json`.
 * **Kế hoạch tiếp theo:**
-  - Thực nghiệm 3 (Exp3 BGM Ablation & Isolation): Tách vocal qua Demucs v4 để phân lập ảnh hưởng của nhạc nền hòa âm so với bản chất âm học thanh nhạc.
-  - Thực nghiệm 4 (Exp4 Signal Normalization): Thử nghiệm giải pháp DSP (pitch flattening & tempo scaling) nhằm thu hẹp khoảng cách WER mà không cần fine-tune mô hình.
+  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 4 RQs (RQ1, RQ2, RQ3, RQ4) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
+  - Xây dựng giao diện demo tương tác Streamlit (`app/` hoặc `notebooks/`) hiển thị audio, trích xuất âm học thời gian thực và nhận dạng ASR.
 
