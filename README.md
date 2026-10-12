@@ -32,18 +32,21 @@ sing-asr/
 │   ├── dsp/                 # Digital Signal Processing foundations
 │   │   ├── framing.py       # Windowing (Hamming, Hanning), framing
 │   │   ├── stft.py          # Short-Time Fourier Transform & spectrograms
-│   │   └── filterbank.py    # Mel-scale filterbanks & MFCC extraction
+│   │   ├── filterbank.py    # Mel-scale filterbanks & MFCC extraction
+│   │   └── adaptive_tsm.py  # Non-linear adaptive vowel-selective TSM
 │   ├── acoustics/           # Acoustic feature extraction & phonetics
 │   │   ├── pitch.py         # F0 tracking, pitch range, contour variance
 │   │   ├── formants.py      # LPC-based formant estimation (F1, F2, F3)
 │   │   ├── duration.py      # Vowel elongation & pause ratio analysis
 │   │   └── voice_quality.py # HNR, jitter, shimmer, spectral tilt
 │   ├── asr/                 # Modern ASR inference engines
-│   │   ├── whisper_engine.py# Whisper (tiny/base/small/large-v3)
-│   │   └── qwen_engine.py   # Qwen3-ASR inference wrapper
+│   │   ├── whisper_engine.py   # Multi-model wrapper (Whisper & PhoWhisper)
+│   │   ├── attention_monitor.py# Cross-attention alignment & dwell tracker
+│   │   ├── lyrics_rescorer.py  # Phonotactic & Bang-Trac tonal rescorer
+│   │   └── qwen_engine.py      # Qwen3-ASR inference wrapper
 │   ├── perturbation/        # Controlled acoustic manipulation
 │   │   ├── pitch_shift.py   # Pitch shifting & normalization
-│   │   ├── time_stretch.py  # Temporal expansion & compression
+│   │   ├── time_stretch.py  # Temporal expansion & compression (Phase Vocoder)
 │   │   └── vocal_separator.py# Spleeter / Demucs BGM removal
 │   └── evaluation/          # Metrics & Statistical analysis
 │       ├── metrics.py       # Word Error Rate (WER), Character Error Rate (CER)
@@ -54,7 +57,8 @@ sing-asr/
 │   ├── exp2_acoustic_correlations.py  # Acoustic feature vs. error regression (RQ2)
 │   ├── exp3_ablation_bgm.py           # Accompanied vs. Vocal-only comparison (RQ3)
 │   ├── exp4_signal_normalization.py   # Signal-level DSP zero-shot normalization (RQ4)
-│   └── exp5_mitigation_benchmark.py   # Advanced decoding & PhoWhisper mitigation (RQ5)
+│   ├── exp5_mitigation_benchmark.py   # Advanced decoding & PhoWhisper mitigation (RQ5)
+│   └── exp6_deep_speech_benchmark.py  # Deep Speech DSP & Adaptive Vowel Normalization (RQ6)
 ├── notebooks/
 │   ├── 01_dsp_exploration.ipynb   # Spectrogram & waveform visualizations
 │   └── 02_error_analysis.ipynb    # Visualizing ASR failure modes

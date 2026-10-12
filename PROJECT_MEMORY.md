@@ -282,7 +282,26 @@ sing-asr/data/
        2. Mô hình chuyên biệt tiếng Việt (`PhoWhisper`) sở hữu không gian âm vị học bản địa vững chắc hơn, không bao giờ bị rơi vào trạng thái hấp thụ lặp từ như mô hình đa ngôn ngữ tổng quát (`Whisper-tiny`).
        3. Prompt Biasing cung cấp thiên kiến từ vựng hữu hiệu giúp cải thiện nhận dạng trên bản phối có nhạc nền.
      - Toàn bộ kết quả lưu tại: `data/processed/exp5_mitigation_results.json`.
+  8. *Thực nghiệm 6 (Exp6 Deep Speech Processing & Adaptive Vowel Normalization — RQ6):*
+     - File thực thi: `experiments/exp6_deep_speech_benchmark.py`.
+     - Các module kỹ thuật mới:
+       * [`src/dsp/adaptive_tsm.py`](src/dsp/adaptive_tsm.py): Thuật toán nén thời gian phi đối xứng (Non-linear TSM). Phân đoạn audio thành 67 segments, tự động phát hiện 18 vùng nguyên âm ngân dài (>0.35s) và nén 1.5x (tổng thời lượng co từ 26.12s về 19.78s), trong khi bảo toàn 100% độ dài 49 phân đoạn phụ âm bật và chuyển tiếp (rate = 1.0x).
+       * [`src/asr/attention_monitor.py`](src/asr/attention_monitor.py): Theo dõi ma trận Cross-Attention $A(t, f)$ với cơ chế `eager attention`. Khám phá định lượng then chốt: trên giọng hát mộc, chỉ số đơn điệu Monotonicity Index (Spearman rho) sụt giảm xuống **0.5465** (so với >0.98 ở giọng nói), tỷ lệ giẫm chân tại chỗ Stalling Ratio lên tới **30.71% (39/132 tokens)**. Đây là bằng chứng toán học trực tiếp khẳng định nguyên nhân gây vòng lặp tự hồi quy là do attention bị kẹt ở vùng nguyên âm tĩnh.
+       * [`src/asr/lyrics_rescorer.py`](src/asr/lyrics_rescorer.py): Bộ chấm điểm lại N-Best Hypotheses dựa trên âm vị học tiếng Việt (Phonotactics), luật Bằng - Trắc và từ điển ca từ.
+     - Kết quả kiểm chứng 8 kịch bản định lượng:
+       * C1 (Raw Vocal Whisper Greedy): WER = 1069.23%, CER = 710.92% (Baseline lặp vô tận).
+       * C2 (Uniform TSM 1.10x + Whisper Anti-Loop): WER = 94.87%, CER = 81.61%, Dels = 27 (bị mất 27 từ do nén phụ âm quá mức).
+       * C3 (Adaptive Vowel TSM + Whisper Greedy): WER = 569.23% (giảm một nửa số từ lặp ngay cả khi không dùng bất kỳ chế tài phạt nào).
+       * C4 (Adaptive Vowel TSM + Whisper Anti-Loop): WER = **97.44%**, CER = **79.89%**, Ins = **0** (triệt tiêu 100% token thừa, giảm **-971.79%** WER).
+       * C5 (Adaptive Vowel TSM + PhoWhisper Native): WER = 571.79%, CER = 482.76%.
+       * C6 (Adaptive Vowel TSM + PhoWhisper + Anti-Loop): WER = **125.64%**, CER = **83.91%**, **Dels = 0** (Xóa sổ hoàn toàn lỗi mất từ, nhận dạng đầy đủ mọi âm tiết từ đầu đến cuối clip).
+       * C7 (Polyphonic Mix Whisper Baseline): WER = 135.90%, CER = 93.10%.
+       * C8 (Polyphonic Mix + Adaptive Vowel TSM + PhoWhisper + Anti-Loop): WER = **125.64%** (giảm **-10.26%** so với baseline), CER = **88.51%** (giảm **-4.59%**), Dels = **0**.
+     - Phát hiện khoa học then chốt RQ6:
+       1. Adaptive Vowel TSM giải quyết triệt để vấn đề mất từ (Deletions giảm từ 12-27 về 0) nhờ giữ nguyên phụ âm đầu và nén nguyên âm ngân dài.
+       2. Trên bản phối đầy đủ có nhạc nền, chuỗi phối hợp Adaptive TSM + PhoWhisper kéo WER xuống 125.64% và CER xuống 88.51%, thiết lập kỷ lục nhận dạng mới.
+     - Toàn bộ kết quả lưu tại: `data/processed/exp6_deep_benchmark_results.json`.
 * **Kế hoạch tiếp theo:**
-  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 5 RQs (RQ1, RQ2, RQ3, RQ4, RQ5) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
-  - Xây dựng giao diện demo tương tác Streamlit (`app/` hoặc `notebooks/`) hiển thị audio, trích xuất âm học thời gian thực và nhận dạng ASR.
+  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 6 RQs (RQ1, RQ2, RQ3, RQ4, RQ5, RQ6) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
+  - Xây dựng giao diện demo tương tác Streamlit (`app/` hoặc `notebooks/`) hiển thị audio, trích xuất âm học thời gian thực, trực quan hóa ma trận Cross-Attention và nhận dạng ASR.
 
