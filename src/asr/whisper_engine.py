@@ -5,9 +5,14 @@ Supports Speech Processing (SLP301) CLO2.
 """
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 import time
 import soundfile as sf
 import numpy as np
+
+src_dir = str(Path(__file__).resolve().parent.parent)
+if src_dir not in sys.path:
+    sys.path.insert(0, src_dir)
 
 @dataclass
 class ASRTranscriptionResult:
@@ -31,33 +36,58 @@ class WhisperEngine:
         if self._pipe is None:
             from transformers import pipeline
             print(f"[sing-asr ASR] Loading model: {self.model_id} on {self.device}...")
+            # Default pipeline creation
             self._pipe = pipeline(
                 "automatic-speech-recognition",
                 model=self.model_id,
                 device=self.device,
-                generate_kwargs={"language": "vi", "task": "transcribe"}
             )
             print(f"[sing-asr ASR] Model loaded successfully.")
 
-    def transcribe(self, audio_path: str | Path) -> ASRTranscriptionResult:
+    def transcribe(
+        self,
+        audio_path: str | Path,
+        generate_kwargs: dict = None
+    ) -> ASRTranscriptionResult:
         """
-        Transcribe a real audio file in Vietnamese.
+        Transcribe a real audio file in Vietnamese with optional decoding constraints.
         """
         self._load_model()
         from dsp.audio_io import load_audio
-        
-        # Load audio into 16kHz mono float32 numpy array via soundfile (no ffmpeg needed!)
+
+        # Load audio into 16kHz mono float32 numpy array via soundfile
         audio_data, sr = load_audio(audio_path, target_sr=16000)
         duration_sec = float(len(audio_data) / sr)
+
+        # Build generation arguments
+        gen_kwargs = {}
+        if "phowhisper" not in self.model_id.lower():
+            # Multilingual Whisper requires language & task specification
+            gen_kwargs["language"] = "vi"
+            gen_kwargs["task"] = "transcribe"
         
+        if generate_kwargs:
+            gen_kwargs.update(generate_kwargs)
+
+        if "initial_prompt" in gen_kwargs:
+            prompt_text = gen_kwargs.pop("initial_prompt")
+            try:
+                import torch
+                p_ids = self._pipe.tokenizer.get_prompt_ids(prompt_text)
+                if not isinstance(p_ids, torch.Tensor):
+                    p_ids = torch.tensor(p_ids, dtype=torch.long)
+                gen_kwargs["prompt_ids"] = p_ids
+            except Exception as e:
+                print(f"[WhisperEngine] Prompt conversion warning: {e}")
+
         t0 = time.time()
-        # Feed dictionary to pipeline
-        result = self._pipe({"raw": audio_data, "sampling_rate": sr})
+        # Feed dictionary and kwargs to pipeline
+        result = self._pipe({"raw": audio_data, "sampling_rate": sr}, generate_kwargs=gen_kwargs)
         inf_time = time.time() - t0
-        
+
         raw_text = result.get("text", "").strip()
         rtf = inf_time / duration_sec if duration_sec > 0 else 0.0
-        
+
         return ASRTranscriptionResult(
             audio_path=str(audio_path),
             model_name=self.model_id,

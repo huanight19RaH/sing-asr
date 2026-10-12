@@ -50,9 +50,11 @@ sing-asr/
 │       ├── alignment.py     # Levenshtein distance & error categorization
 │       └── statistics.py    # Pearson/Spearman correlation & linear regression
 ├── experiments/
-│   ├── exp1_matched_baseline.py   # Spoken vs. Sung matched test
-│   ├── exp2_acoustic_correlations.py # Acoustic feature vs. error regression
-│   └── exp3_ablation_bgm.py       # Accompanied vs. Vocal-only comparison
+│   ├── exp1_matched_baseline.py       # Spoken vs. Sung matched test (RQ1)
+│   ├── exp2_acoustic_correlations.py  # Acoustic feature vs. error regression (RQ2)
+│   ├── exp3_ablation_bgm.py           # Accompanied vs. Vocal-only comparison (RQ3)
+│   ├── exp4_signal_normalization.py   # Signal-level DSP zero-shot normalization (RQ4)
+│   └── exp5_mitigation_benchmark.py   # Advanced decoding & PhoWhisper mitigation (RQ5)
 ├── notebooks/
 │   ├── 01_dsp_exploration.ipynb   # Spectrogram & waveform visualizations
 │   └── 02_error_analysis.ipynb    # Visualizing ASR failure modes

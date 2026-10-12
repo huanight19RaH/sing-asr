@@ -260,7 +260,29 @@ sing-asr/data/
        * Composite (T1.25x + P-3st): WER = 569.23%.
      - Tổng hợp khoa học RQ4: Kỹ thuật co nén thời lượng nguyên âm (Phase Vocoder tempo compression 1.1x) và hạ thanh cữ cao độ (-4st) có thể triệt tiêu hiện tượng sụp đổ lặp autoregressive hallucination của Foundation ASR mà không cần tốn chi phí tái huấn luyện (zero-shot signal-level mitigation).
      - Báo cáo dữ liệu lưu tại: `data/processed/exp4_normalization_results.json`.
+  7. *Thực nghiệm 5 (Exp5 Advanced Algorithmic & Architectural Mitigation — RQ5):*
+     - File thực thi: `experiments/exp5_mitigation_benchmark.py`.
+     - Bộ máy ASR: Nâng cấp `src/asr/whisper_engine.py` hỗ trợ linh hoạt tham số `generate_kwargs` (repetition_penalty, no_repeat_ngram_size, num_beams, prompt_ids chuyển đổi từ initial_prompt) và tích hợp đa mô hình nền tảng bao gồm `vinai/PhoWhisper-tiny` (pre-train 844h tiếng Việt).
+     - Đánh giá 11 kịch bản can thiệp trên 2 miền tín hiệu (Vocal Stem tách rời và Polyphonic Mix có nhạc nền):
+       * **Nhóm A: Triệt tiêu vòng lặp sụp đổ tự hồi quy trên Vocal Stem:**
+         - A1 (Whisper Greedy Baseline): WER = 1069.23%, CER = 710.92%, Loop = YES, RTF = 1.349 (bẫy lặp "em em em...").
+         - A2 (Whisper + Repetition Penalty 1.3): WER = 1069.23%, CER = 708.62%, Loop = YES, RTF = 1.299 (phạt lặp đơn lẻ không đủ phá vỡ chu kỳ lặp đa từ).
+         - A3 (Whisper + Repetition Penalty 1.3 + No-Repeat 3-gram): WER = **141.03%** (giảm tuyệt đối **-928.20%**), CER = 93.10%, Loop = **NO**, RTF = **0.265** (tốc độ suy luận nhanh hơn 5.1 lần vì triệt tiêu triệt để token thừa).
+         - A4 (Whisper + Beam Search 5 + Repetition Penalty 1.3 + No-Repeat 3-gram): WER = 141.03%, CER = 93.10%, Loop = NO, RTF = 0.271.
+         - A5 (PhoWhisper Native Tiếng Việt): WER = **141.03%**, CER = 99.43%, Loop = **NO**, RTF = 0.345 (mô hình chuyên biệt tiếng Việt miễn nhiễm tự nhiên với lỗi vòng lặp lặp từ ngay cả ở chế độ giải mã mặc định).
+         - A6 (PhoWhisper + Repetition Penalty 1.2 + No-Repeat 3-gram): WER = **138.46%** (giảm tuyệt đối **-930.77%** so với baseline), CER = 98.85%, Loop = **NO**, RTF = 0.326. Đạt WER thấp nhất trên giọng hát mộc cô lập.
+         - A7 (Compound SOTA: DSP Tempo 1.10x + PhoWhisper + Anti-Loop Decoding): WER = 141.03%, CER = 93.68%, Loop = NO, RTF = 0.368.
+       * **Nhóm B: Can thiệp trên Bản phối đầy đủ Polyphonic Mix:**
+         - B1 (Whisper Greedy Baseline): WER = 135.90%, CER = 93.10%, Loop = NO, RTF = 0.351.
+         - B2 (Whisper + Prompt Biasing miền ca từ): WER = **133.33%** (giảm **-2.57%** WER, CER giảm xuống 91.95%), RTF = 0.250. Ràng buộc tiên nghiệm miền lời bài hát giúp nắn chỉnh các âm tiết hát khó.
+         - B3 (PhoWhisper Native): WER = 135.90%, CER = 94.25%, Loop = NO, RTF = 0.284.
+         - B4 (PhoWhisper + Beam Search 5): WER = 135.90%, CER = 94.25%, Loop = NO, RTF = 0.275.
+     - Phát hiện khoa học then chốt RQ5:
+       1. Khống chế giải mã n-gram (`no_repeat_ngram_size = 3`) là điều kiện tiên quyết và quyết định nhất để dập tắt vòng lặp tự hồi quy trên nguyên âm ngân dài.
+       2. Mô hình chuyên biệt tiếng Việt (`PhoWhisper`) sở hữu không gian âm vị học bản địa vững chắc hơn, không bao giờ bị rơi vào trạng thái hấp thụ lặp từ như mô hình đa ngôn ngữ tổng quát (`Whisper-tiny`).
+       3. Prompt Biasing cung cấp thiên kiến từ vựng hữu hiệu giúp cải thiện nhận dạng trên bản phối có nhạc nền.
+     - Toàn bộ kết quả lưu tại: `data/processed/exp5_mitigation_results.json`.
 * **Kế hoạch tiếp theo:**
-  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 4 RQs (RQ1, RQ2, RQ3, RQ4) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
+  - Hoàn thiện tài liệu tổng hợp báo cáo thực nghiệm 5 RQs (RQ1, RQ2, RQ3, RQ4, RQ5) chuẩn bị cho bản thảo bài báo hội nghị / báo cáo chuyên đề SLP301.
   - Xây dựng giao diện demo tương tác Streamlit (`app/` hoặc `notebooks/`) hiển thị audio, trích xuất âm học thời gian thực và nhận dạng ASR.
 
