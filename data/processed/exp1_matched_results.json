@@ -1,0 +1,96 @@
+{
+  "audio_files": {
+    "speech": "data/processed/vietnamese_speech_real_01_16k.wav",
+    "singing": "data/processed/vietnamese_song_clip_26s.wav"
+  },
+  "acoustic_divergence": {
+    "Pitch Mean (F0, Hz)": {
+      "speech": 232.27,
+      "singing": 212.32,
+      "delta": -19.95
+    },
+    "Pitch Variance (CV_F0)": {
+      "speech": 0.99,
+      "singing": 0.4,
+      "delta": -0.59
+    },
+    "Pitch Range (Semitones)": {
+      "speech": 42.8,
+      "singing": 38.89,
+      "delta": -3.91
+    },
+    "Vibrato Rate (Hz)": {
+      "speech": 4.99,
+      "singing": 3.56,
+      "delta": -1.43
+    },
+    "Speech Rate (Syllables/s)": {
+      "speech": 6.8,
+      "singing": 5.66,
+      "delta": -1.14
+    },
+    "Active Speech Ratio": {
+      "speech": 0.62,
+      "singing": 0.86,
+      "delta": 0.23
+    },
+    "First Formant F1 (Hz)": {
+      "speech": 1053.4,
+      "singing": 518.7,
+      "delta": -534.7
+    },
+    "Second Formant F2 (Hz)": {
+      "speech": 2221.1,
+      "singing": 1698.1,
+      "delta": -523.0
+    },
+    "Third Formant F3 (Hz)": {
+      "speech": 3356.8,
+      "singing": 2925.7,
+      "delta": -431.1
+    },
+    "Formant Dispersion (FD, Hz)": {
+      "speech": 1151.7,
+      "singing": 1203.5,
+      "delta": 51.8
+    },
+    "Harmonic-to-Noise Ratio (dB)": {
+      "speech": 3.59,
+      "singing": 3.38,
+      "delta": -0.21
+    },
+    "Spectral Tilt (dB)": {
+      "speech": 22.95,
+      "singing": 17.03,
+      "delta": -5.92
+    }
+  },
+  "speech_evaluation": {
+    "reference": "Đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện AI. Mỗi bản ghi đã được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng, nhịp điệu tự nhiên và chất lượng âm thanh nhất quán cho các ứng dụng học máy. Các hệ thống trí tuệ nhân tạo phụ thuộc vào một lượng lớn dữ liệu giọng nói chất lượng cao để cải thiện hiệu suất của chúng. Bằng cách ghi âm các câu này một cách rõ ràng và tự nhiên, bạn đang đóng góp vào sự phát triển của các công nghệ nhận dạng giọng nói tốt hơn.",
+    "transcription": "Đây là bộ giữ liệu âm thành giọng nói, mà bạn có thể sử dụng cho một lịch hình luận chỉ tựa nhân tạo. Mỗi bạn khi âm được chuẩn bị cần thân. Để đảm bảo phát âm gió rằng, nhịp điều tự nhiên và chất lượng âm thành uống đến cho các âm giụng học máy. Các hệ thông chỉ tựa nhân tạo, phút thuật và một lượng lớn giữ liệu giọng nói chất lượng cao để cải thiện hiệu sất của chúng. Bản các khi âm các câu này một cách gió rằng và tự nhiên, bạn đang ngọng có vào sự phát triển của các công nghệ nhận giản giọng giọng nói tốt hơn.",
+    "wer": 0.354,
+    "cer": 0.1752,
+    "substitutions": 36,
+    "deletions": 0,
+    "insertions": 4,
+    "tonal_errors": 6,
+    "inference_time_sec": 18.47,
+    "real_time_factor": 0.707
+  },
+  "singing_evaluation": {
+    "reference": "Trời còn làm mây xanh ngắt cho mắt em buồn. Trời còn làm mưa bay bay cho hạt sầu lên mắt người thương. Lời ru nào buông lơi theo từng giọt nắng, để lại niềm thương nhớ vấn vương.",
+    "transcription": "Cân mưa thấm anh còn gì ngoài những sắp xưa tôi danh, sẵn mình anh, cô đơn, sẵn mình anh là vì em tôi một xanh. Mình anh dành cho ông lấy ý. Anh phải cô gắng đi làm gì, tên bao lâu. Khi bao điều anh chung sâu bao cô đâu, anh có thơ.",
+    "wer": 1.359,
+    "cer": 0.931,
+    "substitutions": 37,
+    "deletions": 0,
+    "insertions": 16,
+    "tonal_errors": 0,
+    "inference_time_sec": 8.04,
+    "real_time_factor": 0.308
+  },
+  "gap": {
+    "delta_wer": 100.5,
+    "delta_cer": 75.58
+  }
+}

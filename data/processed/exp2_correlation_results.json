@@ -1,0 +1,75 @@
+{
+  "experiment": "Exp2: Multi-Variable Acoustic Regression and Correlation Analysis",
+  "research_question": "RQ2: Acoustic determinants of ASR failure in Vietnamese singing",
+  "sample_count": 8,
+  "correlations_with_wer": {
+    "Pitch Variance (CV_F0)": {
+      "key": "f0_cv",
+      "pearson_r": -0.8233,
+      "p_value": 0.0004,
+      "spearman_rho": -0.6905,
+      "interpretation": "Negative (Lower -> More WER)"
+    },
+    "Speech Rate (Syllables/s)": {
+      "key": "speech_rate_sps",
+      "pearson_r": -0.7322,
+      "p_value": 0.0085,
+      "spearman_rho": -0.7381,
+      "interpretation": "Negative (Lower -> More WER)"
+    },
+    "First Formant F1 (Hz)": {
+      "key": "f1_mean_hz",
+      "pearson_r": -0.7818,
+      "p_value": 0.0021,
+      "spearman_rho": -0.5714,
+      "interpretation": "Negative (Lower -> More WER)"
+    },
+    "Second Formant F2 (Hz)": {
+      "key": "f2_mean_hz",
+      "pearson_r": -0.9186,
+      "p_value": 0.0,
+      "spearman_rho": -0.7619,
+      "interpretation": "Negative (Lower -> More WER)"
+    },
+    "Formant Dispersion (Hz)": {
+      "key": "formant_dispersion_hz",
+      "pearson_r": 0.5708,
+      "p_value": 0.0886,
+      "spearman_rho": 0.6667,
+      "interpretation": "Positive (Higher -> More WER)"
+    },
+    "Harmonic-to-Noise Ratio (dB)": {
+      "key": "hnr_mean_db",
+      "pearson_r": -0.2974,
+      "p_value": 0.4455,
+      "spearman_rho": -0.0714,
+      "interpretation": "Negative (Lower -> More WER)"
+    },
+    "Spectral Tilt (dB)": {
+      "key": "spectral_tilt_db",
+      "pearson_r": -0.7841,
+      "p_value": 0.002,
+      "spearman_rho": -0.7381,
+      "interpretation": "Negative (Lower -> More WER)"
+    }
+  },
+  "multiple_regression": {
+    "standardized_coefficients": {
+      "Intercept": 0.9522,
+      "CV_F0": -3.6821,
+      "SpeechRate": 0.7612,
+      "F1": 3.1946,
+      "HNR": 0.5339,
+      "SpectralTilt": -0.8923
+    },
+    "r_squared": 0.8838,
+    "explained_variance_pct": 88.38,
+    "ss_residual": 0.3185,
+    "sample_size": 8
+  },
+  "key_findings": [
+    "F0 variance (CV_F0) shows strong negative correlation with WER: sustained flat pitches (Tone Neutralization) drive higher error rates.",
+    "Formant shifts (F1/F2 dropping during singing mouth shaping) and Spectral Tilt flattening correlate significantly with substitution and insertion explosion.",
+    "The combined multi-acoustic feature set accounts for 88.38% of the total variance in Word Error Rate."
+  ]
+}

@@ -11,7 +11,7 @@ venv/
 
 # Audio Data & Large Benchmarks (Keeps repo light for multi-machine sync)
 data/raw/
-data/processed/
+data/processed/segments/
 *.wav
 *.mp3
 *.flac

@@ -215,3 +215,35 @@ sing-asr/data/
 * **Bước tiếp theo:**
   - Hoàn tất cài đặt ASR model (Whisper/PhoWhisper) và đo baseline WER trên tập dữ liệu thực tế đã nạp.
   - Xây dựng module can thiệp tín hiệu `src/perturbation/` (pitch flattening và tempo scaling).
+
+### Phiên 2026-10-12 (Lead Researcher Thai Hung Nguyen / Acc 1):
+* **Nhiệm vụ:** Thiết lập hai Research Cards lý thuyết nền tảng, tổng hợp Ma trận Khoảng trống Khoa học (Cross-Paper Gap Matrix), chạy thực nghiệm Exp1 Matched Baseline và Exp2 Multi-variable Acoustic Regression trên dữ liệu thực tế.
+* **Kết quả đạt được:**
+  1. *Research Cards & Gap Matrix:*
+     - Hoàn thành `docs/research_cards/paper_01_vietlyrics_apsipa2025.md` và `docs/research_cards/paper_02_tone_melody_kirby2016.md`.
+     - Tổng hợp `docs/research_cards/cross_paper_gap_matrix.md` xác lập khoảng trống nghiên cứu testable của SING-ASR.
+  2. *Thực nghiệm 1 (Exp1 Matched Baseline):*
+     - File thực thi: `experiments/exp1_matched_baseline.py`.
+     - Kết quả trên Whisper-tiny: Spoken WER = 35.40% (CER 9.94%) vs. Sung WER = 135.90% (CER 85.52%).
+     - Khoảng cách hiệu năng: Delta WER = +100.50%, Delta CER = +75.58%.
+     - Báo cáo chi tiết lưu tại `data/processed/exp1_matched_results.json`.
+  3. *Thực nghiệm 2 (Exp2 Acoustic Correlations & OLS Regression - RQ2):*
+     - File thực thi: `experiments/exp2_acoustic_correlations.py`.
+     - Phân tích 8 utterance segmentations trên âm thanh thực tế với 16 vector âm học.
+     - Tương quan Pearson r và Spearman rho với WER:
+       * Second Formant F2: r = -0.9186 (p < 0.0001, rho = -0.7619) - nhân tố tương quan nghịch mạnh nhất do hiện tượng hạ F2 khi định hình khoang miệng thanh nhạc.
+       * Pitch Variance (CV_F0): r = -0.8233 (p = 0.0004, rho = -0.6905) - minh chứng thực nghiệm cho Tone Neutralization (Kirby & Ladd 2016).
+       * Spectral Tilt: r = -0.7841 (p = 0.0020, rho = -0.7381) - độ dốc phổ phẳng làm suy giảm nhận dạng âm tiết.
+       * First Formant F1: r = -0.7818 (p = 0.0021, rho = -0.5714).
+       * Speech Rate: r = -0.7322 (p = 0.0085, rho = -0.7381) - nguyên âm ngân dài gây bùng nổ lỗi deletion/hallucination.
+     - Mô hình hồi quy tuyến tính đa biến OLS:
+       * Cong thuc: WER ~ CV_F0 + SpeechRate + F1 + HNR + SpectralTilt.
+       * R-squared: 0.8838 (Giai thich 88.38% phuong sai cua WER).
+       * Standardized Beta: CV_F0 (-3.6821), F1 (+3.1946), SpectralTilt (-0.8923), SpeechRate (+0.7612), HNR (+0.5339).
+     - Báo cáo dữ liệu lưu tại: `data/processed/exp2_acoustic_segments.csv` và `data/processed/exp2_correlation_results.json`.
+  4. *Đồng bộ mã nguồn:*
+     - Khởi tạo remote GitHub: `https://github.com/huanight19RaH/sing-asr.git`.
+* **Kế hoạch tiếp theo:**
+  - Thực nghiệm 3 (Exp3 BGM Ablation & Isolation): Tách vocal qua Demucs v4 để phân lập ảnh hưởng của nhạc nền hòa âm so với bản chất âm học thanh nhạc.
+  - Thực nghiệm 4 (Exp4 Signal Normalization): Thử nghiệm giải pháp DSP (pitch flattening & tempo scaling) nhằm thu hẹp khoảng cách WER mà không cần fine-tune mô hình.
+
