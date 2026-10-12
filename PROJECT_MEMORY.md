@@ -3,7 +3,7 @@
 **Tên dự án:** `sing-asr`  
 **Đề tài đầy đủ:** *Acoustic Factors Behind ASR Failure in Vietnamese Speech and Singing: A Controlled Comparative Study*  
 **Bối cảnh:** Môn Xử lý Tiếng nói (Speech Processing - SLP301) – Đại học FPT Đà Nẵng  
-**Tác giả & Phòng Lab:** Thái Hùng Nguyễn (AIT Laboratory, Department of Information Technology)  
+**Tác giả & Phòng Lab:** Thái Hưng Nguyễn (AIT Laboratory, Department of Information Technology)  
 **Tích hợp đa dự án:** Cung cấp acoustic feature extraction engine (`src/acoustics/`) cho **View 3 (Acoustic Biomarkers)** của dự án **AURA Psychiatric AI**.
 
 ---

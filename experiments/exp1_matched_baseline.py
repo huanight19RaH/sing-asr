@@ -8,7 +8,12 @@ Saves benchmark report to data/processed/exp1_matched_results.json.
 from pathlib import Path
 import csv
 import json
+import sys
 import numpy as np
+
+# Reconfigure stdout for UTF-8 on Windows
+if sys.platform.startswith("win"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 from dsp.audio_io import load_audio
 from acoustics.pipeline import extract_all_acoustic_features
@@ -23,6 +28,7 @@ def run_experiment_1():
     
     # 1. Real audio paths
     speech_wav = "data/processed/vietnamese_speech_real_01_16k.wav"
+
     song_wav = "data/processed/vietnamese_song_clip_26s.wav"
     
     # Ground truth reference text for spoken audio (from dataset metadata)
