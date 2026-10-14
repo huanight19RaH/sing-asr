@@ -40,4 +40,5 @@ models/
 kaggle_debug_log/
 kaggle_dataset_upload/
 data/processed/kaggle_outputs/
+data/processed/kaggle_outputs_phase9c/
 kaggle_kernel/latest_output/

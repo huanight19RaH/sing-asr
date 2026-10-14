@@ -410,10 +410,26 @@ sing-asr/data/
           * Đóng gói dataset mới (13.60 MB) thành công lên Kaggle Dataset: `thung192/sing-asr-benchmark-data`.
           * Tích hợp hàm `create_expanded_benchmark_corpus(root_dir)` trong [`src/train/dataset.py`](src/train/dataset.py).
         - Streamlit Hub: Đã cập nhật mô hình `"PhoWhisper-tiny + Regularized Champion (Phase IX.B)"` và bảng tổng hợp ma trận Phase IX.B vào Tab 4 của [`app/streamlit_app.py`](app/streamlit_app.py).
+    16. *Hoàn thành Exp 9.C: Large Multi-Domain Benchmark & Adaptation Suite (Phase IX.C):*
+        - Mở rộng quy mô bộ dữ liệu đa miền lên **58 mẫu audio chuẩn hóa** ([`data/processed/large_benchmark_manifest.json`](data/processed/large_benchmark_manifest.json)), kết hợp 4 miền âm học tiếng Việt:
+          * Miền 1 (Singing Audio - 13 mẫu): Toàn bộ cấu trúc Verse 1, 2, Chorus, Bridge, Outro ca khúc Trịnh Công Sơn và các cặp đối chiếu.
+          * Miền 2 (Mozilla Common Voice 27.0 - 15 mẫu): Trích xuất trực tiếp từ bản lưu trữ chính thức `cv-corpus-27.0`, đại diện cho tiếng nói đọc văn bản đa dạng theo lứa tuổi và giới tính.
+          * Miền 3 (VietSuperSpeech - 15 mẫu): Thu nạp từ `thanhnew2001/VietSuperSpeech` (dev split), đại diện cho khẩu ngữ đàm thoại đời thực, vlogs, và tiếng lóng.
+          * Miền 4 (VIVOS Test Benchmark - 15 mẫu): Thu âm phòng thu chuẩn studio từ 15 người nói bản xứ riêng biệt.
+        - Đóng gói dữ liệu nhị phân `singing_audio_data.npz` (15.26 MB) và cập nhật phiên bản 3 lên Kaggle Dataset: `thung192/sing-asr-benchmark-data` (trạng thái: `ready`).
+        - Thực nghiệm thích nghi và kiểm thử toàn diện trên Kaggle GPU (NVIDIA Tesla T4):
+          * Thời gian huấn luyện: **69.91 giây** (8 epochs, FP16 AMP).
+          * Best Epoch: **Epoch 7**.
+          * Kết quả trên miền Singing: WER giảm từ **462.18%** (Zero-shot baseline với 524 lỗi lặp vô tận) xuống **100.43%** (CER **81.67%**, số lỗi lặp chèn từ giảm $90.6\%$ từ 524 xuống chỉ còn 49; trên câu hát đơn lẻ đạt WER kỷ lục **7.69%** và CER **3.51%**). Tốc độ giải mã đạt RTF **0.0384** (nhanh gấp 26 lần thời gian thực).
+          * Kết quả trên miền Mozilla Common Voice: WER giảm từ **212.95%** xuống **102.49%** (CER **84.11%**, lỗi chèn giảm từ 95 xuống 11).
+          * Kết quả trên miền VietSuperSpeech: WER giảm từ **173.82%** xuống **106.58%** (CER **83.43%**, lỗi chèn giảm từ 218 xuống 17).
+          * Kết quả trên miền VIVOS Studio: WER giảm từ **156.30%** xuống **102.73%** (CER **83.57%**, lỗi chèn giảm từ 89 xuống chỉ còn 3).
+        - Trọng số mô hình đã lưu tại: [`models/large_regularized_champion_phowhisper/`](models/large_regularized_champion_phowhisper/) và báo cáo đầy đủ tại [`data/processed/exp9c_large_benchmark_results.json`](data/processed/exp9c_large_benchmark_results.json).
+        - Ứng dụng Streamlit: Tích hợp mô hình `"PhoWhisper-tiny + Multi-Domain Large Champion (Phase IX.C)"` vào giao diện và hiển thị bảng đối soát 4 miền tại Tab 4.
 * **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phase X):**
   1. *Phase X (Publication & Paper Finalization):*
      - Hoàn thiện bản thảo bài báo khoa học chuẩn IEEE / Springer MIWAI 2026: *Robust Singing Voice Recognition for Tonal Languages via Progressive Acoustic Conditioning and Monotonic Cross-Attention Distillation*.
-     - Tổng hợp 4 tầng đóng góp: (1) Phân tích định lượng âm học 16 biến & suy sụp tự hồi quy (RQ1-3), (2) Chuỗi xử lý tín hiệu DSP thanh nhạc zero-shot (RQ4-7), (3) Thích ứng tham số hiệu quả PEFT LoRA (RQ8), và (4) Chưng cất chú ý chéo đơn điệu & kiểm soát Bias-Variance (RQ9-9.B).
+     - Tổng hợp 4 tầng đóng góp: (1) Phân tích định lượng âm học 16 biến & suy sụp tự hồi quy (RQ1-3), (2) Chuỗi xử lý tín hiệu DSP thanh nhạc zero-shot (RQ4-7), (3) Thích ứng tham số hiệu quả PEFT LoRA (RQ8), và (4) Chưng cất chú ý chéo đơn điệu & kiểm soát Bias-Variance trên bộ dữ liệu đa miền (RQ9-9.C).
 
 
 

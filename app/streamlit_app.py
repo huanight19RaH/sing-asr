@@ -156,6 +156,7 @@ with st.sidebar:
     model_choice = st.selectbox(
         "ASR Foundation Model:",
         [
+            "PhoWhisper-tiny + Multi-Domain Large Champion (Phase IX.C)",
             "PhoWhisper-tiny + Regularized Champion (Phase IX.B)",
             "vinai/PhoWhisper-tiny",
             "PhoWhisper-tiny + LoRA Adapted (Phase VIII)",
@@ -520,6 +521,32 @@ with tab4:
             })
         st.dataframe(table_rows_9b, use_container_width=True)
         st.caption(f"Champion Best Epoch: {data_exp9b.get('best_epoch')} | Multi-Domain Pareto Score: {data_exp9b.get('champion_pareto_score'):.2f}%")
+
+    # Load Exp 9.C Large Multi-Domain results if exists
+    exp9c_path = root_dir / "data/processed/exp9c_large_benchmark_results.json"
+    if exp9c_path.exists():
+        with open(exp9c_path, "r", encoding="utf-8") as f:
+            data_exp9c = json.load(f)
+        st.write("**Phase IX.C: Large Multi-Domain Benchmark & Adaptation (58 Items Across 4 Domains - Exp 9.C):**")
+        base_sum = data_exp9c.get("baseline_summary", {})
+        champ_sum = data_exp9c.get("champion_summary", {})
+        table_rows_9c = []
+        for domain_name in base_sum.keys():
+            b_info = base_sum.get(domain_name, {})
+            c_info = champ_sum.get(domain_name, {})
+            table_rows_9c.append({
+                "Domain": domain_name.replace("_", " ").title(),
+                "Samples": b_info.get("samples_count", 0),
+                "Baseline WER (%)": f"{b_info.get('mean_wer', 0) * 100:.2f}%",
+                "Baseline CER (%)": f"{b_info.get('mean_cer', 0) * 100:.2f}%",
+                "Baseline Ins / Del": f"{b_info.get('total_insertions', 0)} / {b_info.get('total_deletions', 0)}",
+                "Champion WER (%)": f"{c_info.get('mean_wer', 0) * 100:.2f}%",
+                "Champion CER (%)": f"{c_info.get('mean_cer', 0) * 100:.2f}%",
+                "Champion Ins / Del": f"{c_info.get('total_insertions', 0)} / {c_info.get('total_deletions', 0)}",
+                "Speed (RTF)": f"{c_info.get('mean_rtf', 0):.4f}"
+            })
+        st.dataframe(table_rows_9c, use_container_width=True)
+        st.caption(f"Device: {data_exp9c.get('device')} (Tesla T4) | Training Time: {data_exp9c.get('training_time_sec', 0):.2f}s | Best Epoch: {data_exp9c.get('best_epoch')} | Total Benchmark Audio Items: {data_exp9c.get('total_benchmark_items')}")
 
     st.markdown(r"""
     ### Key Academic Discoveries:
