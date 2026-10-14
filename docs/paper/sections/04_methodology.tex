@@ -1,0 +1,42 @@
+\section{Proposed Adaptation Methodology}
+\subsection{Tier 1: Front-End Progressive Acoustic Conditioning}
+To normalize singing inputs prior to neural decoding, we implement a multi-stage acoustic conditioning pipeline:
+\begin{itemize}
+    \item \textbf{Harmonic-Percussive Consonant Boosting:} Using Harmonic-Percussive Source Separation (HPSS) via median filtering on spectrograms \cite{fitzgerald2010harmonic}, we extract transient percussive energy containing unvoiced consonant bursts and apply a $+4.6$\,dB gain ($1.70\times$). This sharpens consonant onsets that are otherwise masked by high-amplitude vowel resonance.
+    \item \textbf{Adaptive Vowel Time-Scale Modification (TSM):} Utilizing Waveform Similarity Overlap-Add (WSOLA) \cite{verhelst1993overlap}, sustained vocal frames exceeding $1.2$\,s are non-linearly compressed by up to $1.45\times$, compressing duration to speech-like distributions while preserving acoustic pitch and formant envelopes.
+    \item \textbf{Melody-Tone Decoupling:} High vocal registers are pitch-shifted towards speaking fundamental frequencies ($\sim 145$\,Hz) using phase vocoder resynthesis, mitigating pitch-induced harmonic distortion.
+\end{itemize}
+
+\subsection{Tier 2: Deep Bias-Variance Regularized LoRA Adaptation}
+We adapt the pre-trained PhoWhisper architecture \cite{phan2022phowhisper} ($38.8$M parameters) using Low-Rank Adaptation (LoRA) \cite{hu2021lora,mangrulkar2022peft}. Rather than restricting adaptation solely to self-attention projections, we inject low-rank decomposition matrices across both multi-head attention ($W_q, W_k, W_v, W_o$) and feed-forward MLP projections ($fc_1, fc_2$):
+\begin{equation}
+W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} B A
+\end{equation}
+where $r = 16$ and scaling hyperparameter $\alpha = 32$. This expands trainable parameters to $1,081,344$ ($2.784\%$ parameter budget), providing sufficient expressive rank to model singing articulation shifts.
+
+To prevent severe overfitting on limited singing targets, we enforce strict bias-variance regularization:
+\begin{itemize}
+    \item Utterance-level Cepstral Mean and Variance Normalization (CMVN) on acoustic input features.
+    \item L1 parameter sparsity penalty ($\lambda_{\text{L1}} = 10^{-4}$) to prevent excessive parameter deviation from pre-trained weights.
+    \item Decoupled AdamW weight decay ($0.05$) \cite{loshchilov2018decoupled} and structured dropout ($p=0.10$).
+    \item Label-smoothed cross-entropy loss ($\epsilon = 0.10$) \cite{szegedy2016rethinking} to soften target confidence on ambiguous singing vowel transitions.
+\end{itemize}
+
+\subsection{Tier 3: Monotonic Cross-Attention Knowledge Distillation}
+During autoregressive Transformer decoding, cross-attention weights $A_{t, f} \in \mathbb{R}^{T \times F}$ capture the mapping between decoder token step $t \in [1, T]$ and acoustic encoder frame $f \in [1, F]$ \cite{vaswani2017attention,bahdanau2015neural}. To suppress horizontal attention stagnation, we formulate a compound distillation loss \cite{hinton2015distilling,tachibana2018efficiently,he2019monotonic}:
+\begin{equation}
+\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \gamma \mathcal{L}_{\text{diag}} + \lambda \mathcal{L}_{\text{mono}} + \mu \mathcal{L}_{\text{replay}}
+\end{equation}
+where:
+\begin{itemize}
+    \item $\mathcal{L}_{\text{diag}}$ applies an adaptive Gaussian diagonality penalty \cite{tachibana2018efficiently}:
+    \begin{equation}
+    \mathcal{L}_{\text{diag}} = \sum_{t=1}^T \sum_{f=1}^F A_{t, f} \left( 1 - \exp\left( -\frac{(f - \mu_t)^2}{2\sigma_t^2} \right) \right)
+    \end{equation}
+    where $\mu_t = \frac{t}{T} F$ defines the ideal linear progression trajectory, and $\sigma_t$ adapts dynamically to local vowel duration.
+    \item $\mathcal{L}_{\text{mono}}$ enforces forward-only progression of attention centroids $c_t = \sum_f f \cdot A_{t, f}$ \cite{he2019monotonic}:
+    \begin{equation}
+    \mathcal{L}_{\text{mono}} = \sum_{t=2}^T \max\left(0, c_{t-1} - c_t\right)
+    \end{equation}
+    \item $\mathcal{L}_{\text{replay}}$ computes cross-entropy over paired conversational speech anchors (Common Voice and VietSuperSpeech) to prevent catastrophic forgetting of spoken language acoustics.
+\end{itemize}

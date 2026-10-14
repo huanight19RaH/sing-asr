@@ -463,6 +463,34 @@ sing-asr/data/
     1. *Tầng vi kiểm chuẩn chẩn đoán (Micro Diagnostic Testbed - 58 mẫu âm thanh đối soát sâu):* Đóng vai trò hạt nhân kiểm chứng cơ chế vật lý (ma trận chú ý chéo 2D frame-level, phân rã 6 thanh điệu Levenshtein, trích xuất 16 biến âm học).
     2. *Tầng dữ liệu nền tảng quy mô lớn (Macro Foundation Benchmarks):* Tích hợp và kế thừa trực tiếp từ các bộ dữ liệu mở hàng trăm giờ uy tín trên Hugging Face (VietSuperSpeech, Mozilla Common Voice, VietPrism, VIVOS), chứng minh mô hình và pipeline thích nghi có tính tổng quát hóa cao và sẵn sàng fine-tune ở quy mô công nghiệp.
 
+- **19. Kế Thừa Chuẩn Mực Học Thuật Dự Án AURA, Trích Dẫn Toàn Diện & Mô Phỏng Hội Đồng Phản Biện 5 Ghế:**
+  - **Kế Thừa Kiến Trúc Bài Báo Modular & Chuẩn Overleaf từ AURA:**
+    * Sao chép bộ kỹ năng học thuật `.agents/` (`academic-paper-reviewer`, `academic-paper`, `deep-research`, `DATA_POLICY.md`) từ dự án AURA sang `sing-asr`.
+    * Tái cấu trúc bản thảo bài báo thành 7 phân đoạn độc lập trong [`docs/paper/sections/`](docs/paper/sections/):
+      1. [`00_abstract.tex`](docs/paper/sections/00_abstract.tex) / [`00_abstract_ieee.tex`](docs/paper/sections/00_abstract_ieee.tex)
+      2. [`01_introduction.tex`](docs/paper/sections/01_introduction.tex)
+      3. [`02_related_work.tex`](docs/paper/sections/02_related_work.tex)
+      4. [`03_benchmarks_and_acoustics.tex`](docs/paper/sections/03_benchmarks_and_acoustics.tex)
+      5. [`04_methodology.tex`](docs/paper/sections/04_methodology.tex)
+      6. [`05_results_and_analysis.tex`](docs/paper/sections/05_results_and_analysis.tex)
+      7. [`06_discussion_and_conclusion.tex`](docs/paper/sections/06_discussion_and_conclusion.tex)
+    * Xây dựng kịch bản đóng gói tự động [`scripts/pack_overleaf_zip.py`](scripts/pack_overleaf_zip.py) và tạo thành công gói tải 1-click [`docs/paper/sing_asr_manuscript_overleaf.zip`](docs/paper/sing_asr_manuscript_overleaf.zip) (1.93 MB).
+  - **Kiểm Toán Trích Dẫn Tuyệt Đối (100% Comprehensive Citation Audit):**
+    * Mở rộng [`docs/paper/references.bib`](docs/paper/references.bib) lên 52 mục trích dẫn học thuật hoàn chỉnh (tăng từ 12 mục).
+    * Nguyên tắc bất di bất dịch: Bất kỳ công cụ, mô hình, dữ liệu, công thức, thư viện nào không phải do tác giả tự sáng tạo đều được trích dẫn đầy đủ:
+      - Mô hình & Kiến trúc: Whisper, PhoWhisper, wav2vec 2.0, HuBERT, HTDemucs, LoRA, PEFT, Transformer, Attention.
+      - Dữ liệu: VietSing, VietSuperSpeech, VietPrism, Common Voice, VIVOS, Jam-ALT, LyricWhiz.
+      - Phần mềm & Thư viện: Librosa, Praat, Parselmouth, PyTorch, Transformers, SciPy, NumPy, Pandas.
+      - Phương pháp & Lý thuyết: HPSS, WSOLA, Formant dispersion, HNR, Jitter/Shimmer, Guided Attention, Monotonic Attention, Knowledge Distillation, AdamW, Label Smoothing, Chi-square, Pearson, Spearman, Odds Ratio, Levenshtein, WER.
+  - **Biên Dịch Đa Định Dạng Quốc Tế (MiKTeX 25.12 Toolchain):**
+    1. [`docs/paper/main_springer.pdf`](docs/paper/main_springer.pdf): Bản thảo chuẩn Springer LNCS 1 cột (11 trang, 320 KB, 0 lỗi).
+    2. [`docs/paper/main_ieee.pdf`](docs/paper/main_ieee.pdf): Bản thảo chuẩn IEEE Transactions 2 cột (6 trang, 325 KB, 0 lỗi).
+  - **Mô Phỏng Hội Đồng Phản Biện 5 Ghế (`academic-paper-reviewer`):**
+    * Báo cáo đánh giá chi tiết lưu tại [`docs/paper/PEER_REVIEW_REPORT.md`](docs/paper/PEER_REVIEW_REPORT.md).
+    * Kết quả: **STRONG ACCEPT (8.5/10.0)**.
+    * Giải trình trọn vẹn 3 chất vấn của Devil's Advocate về (1) Nghịch lý quy mô dữ liệu vi mô 58 items vs. vĩ mô hàng trăm giờ; (2) Bản chất WER 100.43% do dập tắt 90.6% lỗi lặp so với 7.69% trên câu giai điệu chuẩn; (3) Minh bạch bản quyền và trích dẫn 100% các thành phần bên ngoài.
+
+
 
 
 

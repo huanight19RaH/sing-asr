@@ -48,6 +48,8 @@ kaggle_kernel/latest_output/
 *.bbl
 *.blg
 *.out
+manuscript/
+
 *.synctex.gz
 *.fls
 *.fdb_latexmk

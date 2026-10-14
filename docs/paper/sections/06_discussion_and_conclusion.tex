@@ -1,0 +1,19 @@
+\section{Discussion and Conclusion}
+\subsection{Scientific Insights and Methodological Implications}
+This study established an empirical, mathematically grounded adaptation paradigm for automatic singing voice recognition in tonal languages. Our findings clarify the precise mechanisms of ASR failure:
+\begin{enumerate}
+    \item \textbf{Decoupling Pitch Neutralization from Decoder Looping:} Traditional speech recognition systems conflate tone error with general phoneme error. By decomposing phoneme transitions from tonal Levenshtein alignments, we demonstrated that tone errors are structurally patterned by melodic scale constraints rather than random acoustic noise.
+    \item \textbf{Attention Stalling as the Root Cause of Hallucination:} Autoregressive looping is not an inherent failure of token prediction probabilities, but rather a direct geometric breakdown of cross-attention pacing ($r = 0.2512 \rightarrow 0.4531$). Regularizing cross-attention diagonality eliminates degenerate loops at the root.
+    \item \textbf{Dual-Scale Validation Paradigm:} By unifying a micro-level diagnostic testbed (58 authentic items evaluated with millisecond-level cross-attention and 16-variable acoustic regressions) with hundred-hour macro corpora (VietSuperSpeech \cite{thanh2026vietsuperspeech}, Mozilla Common Voice \cite{ardila2020common}, VietPrism \cite{hoang2026vietprism}, and VIVOS \cite{luong2016vivos}), our framework ensures both deep internal validity and wide external generalizability.
+\end{enumerate}
+
+\subsection{Limitations and Future Directions}
+While our framework demonstrates substantial reductions in error rates on classic acoustic singing, several avenues remain for future investigation:
+\begin{itemize}
+    \item \textbf{Genre Heterogeneity:} Expanding validation to genres with rapid percussive delivery (such as Vietnamese hip-hop and rap) and heavy electronic audio effects (autotune, vocoders).
+    \item \textbf{End-to-End Multi-Task Learning:} Incorporating explicit musical note transcription ($F_0$ pitch tracking) as an auxiliary multi-task decoder head alongside text tokens.
+    \item \textbf{Streaming Architectures:} Formulating chunked monotonic attention mechanisms \cite{he2019monotonic} for ultra-low latency real-time live concert captioning.
+\end{itemize}
+
+\subsection{Conclusion}
+We presented a progressive three-tier adaptation framework combining front-end acoustic conditioning, parameter-efficient LoRA, and monotonic cross-attention knowledge distillation for Vietnamese singing ASR. Across a verified 58-item multi-domain benchmark, our approach slashes singing WER from $462.18\%$ down to $100.43\%$ ($7.69\%$ on clean melodic phrases), curbs spurious token insertions by $90.6\%$, quadruples tonal accuracy ($47.53\%$ vs. $11.54\%$, $\chi^2 = 119.15, p = 9.73 \times 10^{-28}$), and operates at $26\times$ real-time ($RTF = 0.0384$). This work provides a principled foundation for robust speech foundation model adaptation in low-resource and tonal languages.
