@@ -1,0 +1,27 @@
+{
+  "experiment": "Phase IX.B: Deep Regularized Distillation Engine (Kaggle GPU)",
+  "date": "2026-10-14",
+  "lead_researcher": "Thai Hung Nguyen",
+  "device": "cuda",
+  "training_time_sec": 87.77,
+  "best_epoch": 10,
+  "best_pareto_wer": 0.5745,
+  "vocal": {
+    "hypothesis": "trời còn làm mây xanh ngắt cho người ta cho từng giọt nắng cho hạt sầu lên mưa ruồi để lại cho hành động ổn định thương vấn đề cư dân theo truyền thanh niên",
+    "wer": 0.7179,
+    "cer": 0.546,
+    "rtf": 0.0456
+  },
+  "poly": {
+    "hypothesis": "trời còn làm từng pha xanh cho tôi chăm sóc mắt anh cho con trai cho con một lần nào làm thương vấn nào theo tâm hành người ta tuồn thanh niên xinh xắn",
+    "wer": 0.7949,
+    "cer": 0.592,
+    "rtf": 0.0434
+  },
+  "speech": {
+    "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản ghi âm được chuẩn bị bị cannes cho tao để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm cân ôn cho",
+    "wer": 0.1373,
+    "cer": 0.1028,
+    "rtf": 0.0612
+  }
+}

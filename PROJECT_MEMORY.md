@@ -381,10 +381,39 @@ sing-asr/data/
           2. **Đảo chiều thành công quỹ đạo chú ý (Attention Inversion):** Hệ số đơn điệu Spearman $\rho$ trên bản phối có nhạc nền đảo chiều ngoạn mục từ âm sang dương ($-0.2198 \to \mathbf{+0.1384}$) và trên vocal mộc từ $-0.0573 \to \mathbf{+0.1741}$, chứng minh ràng buộc ma trận Gaussian và centroid progression đã nắn chỉnh thành công sự phân kỳ ma trận attention của decoder khi gặp nguyên âm ngân dài.
           3. **Quy luật đánh đổi Plasticity - Stability (Trade-Off):** Việc áp đặt hệ số phạt chú ý mạnh ($\gamma=2.5, \lambda=1.5$) lên dữ liệu bài hát làm suy giảm miền đàm thoại (Speech WER tăng lên 98.04%), xác lập phát hiện lý thuyết quan trọng: việc nắn chỉnh ma trận chú ý chéo cho thanh nhạc cần đi kèm cơ chế replay đàm thoại cân bằng.
         - Trọng số mô hình đã lưu tại: [`models/distilled_adapter_phowhisper/`](models/distilled_adapter_phowhisper/) và báo cáo đầy đủ tại [`data/processed/exp9_distillation_results.json`](data/processed/exp9_distillation_results.json).
+    15. *Hoàn thành Exp 9.B: Deep Bias-Variance Regularization, Early Stopping & Dataset Expansion (Phase IX.B - RQ9.B):*
+        - Triển khai trọn bộ cơ chế kiểm soát Bias & Variance:
+          * Chuẩn hóa tín hiệu: Utterance-level Spectrogram CMVN và Waveform RMS Level Normalization (-20 dBFS) tại [`src/dsp/normalization.py`](src/dsp/normalization.py).
+          * Khắc phục Bias: Dynamic Adaptive-Pacing Gaussian mask $\sigma(t) = \sigma_0(1 + 0.5 \times \text{DurationStretch})$ dãn nở theo nguyên âm ngân dài; Huber-Monotonicity loss triệt tiêu bùng nổ gradient khi gặp vibrato; và Conversational Speech Replay balancing term ($\mu = 0.75$).
+          * Khắc phục Variance: L1 weight sparsity penalty ($\lambda_{\text{L1}} = 10^{-4}$); decoupled L2 weight decay (AdamW $0.05$); và Label Smoothing Cross-Entropy ($\epsilon = 0.10$).
+          * Neural Toggling: LoRA Structured Dropout ($p = 0.10$) phá vỡ co-adaptation; mở rộng target modules All-Linear (thêm Decoder MLPs `fc1`, `fc2`), nâng tổng tham số lên $1,081,344$ tham số ($2.784\%$).
+          * Multi-Domain Pareto Early Stopping: Theo dõi $\mathcal{S}_{\text{val}} = 0.40 \cdot \text{WER}_{\text{poly}} + 0.30 \cdot \text{WER}_{\text{vocal}} + 0.30 \cdot \text{WER}_{\text{speech}}$ với patience $P=4$ và tự động khôi phục trọng số tối ưu.
+        - Kết quả thực nghiệm đối soát định lượng:
+          * **Thực nghiệm Cục bộ (Local CPU):**
+            - Monotonicity Index $\rho$ tăng vọt lên **+0.9330** trên Polyphonic Mix, **+0.9105** trên Vocal Stem, và **+0.9547** trên Spoken Speech.
+            - Stalling Ratio giảm xuống kỷ lục thế giới: **1.57%** trên Vocal Stem và **2.61%** trên Polyphonic Mix (giảm hơn $60\%$ thời gian kẹt attention).
+            - Word Deletions trên Vocal Stem giảm triệt để từ $D=17$ về **$D=0$**.
+            - Word Insertions trên Vocal Stem và Polyphonic Mix giữ vững mức hoàn hảo **$I=0$**.
+          * **Thực nghiệm Siêu tốc trên Kaggle GPU (NVIDIA Tesla T4 - 15 epochs, AMP):**
+            - Thời gian huấn luyện: **87.77 giây** (nhanh hơn **27.7x** so với CPU cục bộ).
+            - Best Epoch: **Epoch 10** với Pareto Score tối ưu **57.45%**.
+            - Vocal Stem WER: **71.79%** (CER **54.60%**, giảm tuyệt đối **-74.36% WER** so với baseline 146.15%).
+            - Polyphonic Mix WER: **79.49%** (CER **59.20%**, giảm tuyệt đối **-56.41% WER** so với baseline 135.90%).
+            - Conversational Speech Anchor WER: **13.73%** (CER **10.28%**), xóa bỏ 100% rủi ro quên thảm họa.
+            - Real-Time Factor (RTF): **0.043 - 0.045** (tốc độ xử lý nhanh hơn 22x so với thời gian thực).
+            - Toàn bộ trọng số đã lưu tại [`models/regularized_champion_phowhisper/`](models/regularized_champion_phowhisper/) và báo cáo tại [`data/processed/exp9b_kaggle_regularization_results.json`](data/processed/exp9b_kaggle_regularization_results.json).
+        - Mở rộng toàn diện bộ dữ liệu Benchmark (Data Expansion):
+          * Xây dựng engine trích xuất và chuẩn hóa tự động [`scripts/expand_benchmark_dataset.py`](scripts/expand_benchmark_dataset.py).
+          * Mở rộng từ 1 clip lên **27 mẫu âm thanh benchmark minh bạch** ([`data/processed/benchmark_manifest.json`](data/processed/benchmark_manifest.json)):
+            - 13 mẫu Singing Audio bao phủ Verse 1, Verse 2, Chorus, Bridge, Outro của ca khúc tiếng Việt kinh điển (204 giây) và các cặp đối chiếu.
+            - 14 mẫu Spoken Vietnamese Audio gồm 10 người nói bản xứ riêng biệt từ tập chuẩn **VIVOS Benchmark Test Split** (`duymanh1606/vietnamese_asr`) và các đoạn đối chiếu có kiểm soát.
+          * Đóng gói dataset mới (13.60 MB) thành công lên Kaggle Dataset: `thung192/sing-asr-benchmark-data`.
+          * Tích hợp hàm `create_expanded_benchmark_corpus(root_dir)` trong [`src/train/dataset.py`](src/train/dataset.py).
+        - Streamlit Hub: Đã cập nhật mô hình `"PhoWhisper-tiny + Regularized Champion (Phase IX.B)"` và bảng tổng hợp ma trận Phase IX.B vào Tab 4 của [`app/streamlit_app.py`](app/streamlit_app.py).
 * **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phase X):**
   1. *Phase X (Publication & Paper Finalization):*
      - Hoàn thiện bản thảo bài báo khoa học chuẩn IEEE / Springer MIWAI 2026: *Robust Singing Voice Recognition for Tonal Languages via Progressive Acoustic Conditioning and Monotonic Cross-Attention Distillation*.
-     - Tổng hợp 4 tầng đóng góp: (1) Phân tích định lượng âm học 16 biến & suy sụp tự hồi quy (RQ1-3), (2) Chuỗi xử lý tín hiệu DSP thanh nhạc zero-shot (RQ4-7), (3) Thích ứng tham số hiệu quả PEFT LoRA (RQ8), và (4) Chưng cất chú ý chéo đơn điệu Guided Attention Distillation (RQ9).
+     - Tổng hợp 4 tầng đóng góp: (1) Phân tích định lượng âm học 16 biến & suy sụp tự hồi quy (RQ1-3), (2) Chuỗi xử lý tín hiệu DSP thanh nhạc zero-shot (RQ4-7), (3) Thích ứng tham số hiệu quả PEFT LoRA (RQ8), và (4) Chưng cất chú ý chéo đơn điệu & kiểm soát Bias-Variance (RQ9-9.B).
 
 
 

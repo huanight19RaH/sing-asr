@@ -32,10 +32,15 @@ class WhisperEngine:
         self.device = device
         self.lora_dir = Path(lora_dir) if lora_dir else None
         if not self.lora_dir:
-            if ("distill" in model_id.lower() or "phase ix" in model_id.lower()) and (Path(src_dir).parent / "models" / "distilled_adapter_phowhisper").exists():
-                self.lora_dir = Path(src_dir).parent / "models" / "distilled_adapter_phowhisper"
-            elif "lora" in model_id.lower() and (Path(src_dir).parent / "models" / "lora_adapter_phowhisper").exists():
-                self.lora_dir = Path(src_dir).parent / "models" / "lora_adapter_phowhisper"
+            champ_dir = Path(src_dir).parent / "models" / "regularized_champion_phowhisper"
+            dist_dir = Path(src_dir).parent / "models" / "distilled_adapter_phowhisper"
+            lora_dir_base = Path(src_dir).parent / "models" / "lora_adapter_phowhisper"
+            if any(k in model_id.lower() for k in ["champion", "phase ix.b", "regular"]) and champ_dir.exists():
+                self.lora_dir = champ_dir
+            elif any(k in model_id.lower() for k in ["distill", "phase ix"]) and dist_dir.exists():
+                self.lora_dir = dist_dir
+            elif "lora" in model_id.lower() and lora_dir_base.exists():
+                self.lora_dir = lora_dir_base
         self._pipe = None
         self._lora_model = None
         self._processor = None

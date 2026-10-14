@@ -40,3 +40,4 @@ models/
 kaggle_debug_log/
 kaggle_dataset_upload/
 data/processed/kaggle_outputs/
+kaggle_kernel/latest_output/

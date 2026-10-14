@@ -156,6 +156,7 @@ with st.sidebar:
     model_choice = st.selectbox(
         "ASR Foundation Model:",
         [
+            "PhoWhisper-tiny + Regularized Champion (Phase IX.B)",
             "vinai/PhoWhisper-tiny",
             "PhoWhisper-tiny + LoRA Adapted (Phase VIII)",
             "PhoWhisper-tiny + Attention Distilled (Phase IX)",
@@ -495,6 +496,30 @@ with tab4:
                 "Speech CER (%)": f"{spe.get('cer', 0) * 100:.2f}%"
             })
         st.dataframe(table_rows_9, use_container_width=True)
+
+    # Load Exp 9.B results if exists
+    exp9b_path = root_dir / "data/processed/exp9b_regularization_results.json"
+    if exp9b_path.exists():
+        with open(exp9b_path, "r", encoding="utf-8") as f:
+            data_exp9b = json.load(f)
+        st.write("**Phase IX.B: Deep Bias-Variance Regularization & Pareto Early Stopping Champion (Exp 9.B - RQ9.B):**")
+        champ_m = data_exp9b.get("champion_metrics", {})
+        table_rows_9b = []
+        for dom, dom_data in champ_m.items():
+            met = dom_data.get("metrics", {})
+            table_rows_9b.append({
+                "Acoustic Domain": dom.replace("_", " ").title(),
+                "WER (%)": f"{met.get('wer', 0) * 100:.2f}%",
+                "CER (%)": f"{met.get('cer', 0) * 100:.2f}%",
+                "Substitutions": met.get("substitutions", 0),
+                "Deletions": met.get("deletions", 0),
+                "Insertions": met.get("insertions", 0),
+                "Monotonicity rho": f"{dom_data.get('monotonicity_rho', 0):.4f}",
+                "Stalling Ratio (%)": f"{dom_data.get('stalling_ratio', 0) * 100:.1f}%",
+                "Latency": f"{dom_data.get('latency_sec', 0):.2f}s"
+            })
+        st.dataframe(table_rows_9b, use_container_width=True)
+        st.caption(f"Champion Best Epoch: {data_exp9b.get('best_epoch')} | Multi-Domain Pareto Score: {data_exp9b.get('champion_pareto_score'):.2f}%")
 
     st.markdown(r"""
     ### Key Academic Discoveries:

@@ -1,0 +1,199 @@
+{
+  "metadata": {
+    "experiment": "Phase IX.B - Deep Bias-Variance Regularization & Early Stopping",
+    "lead_researcher": "Thai Hung Nguyen",
+    "timestamp": "2026-10-14 12:17:28",
+    "device": "CPU (Intel / Safe Environment)",
+    "regularization_mechanisms": [
+      "Utterance-level Spectrogram CMVN",
+      "Waveform RMS Level Normalization (-20 dBFS)",
+      "LoRA All-Linear Targets (q, k, v, out, fc1, fc2)",
+      "LoRA Structured Dropout (p = 0.10)",
+      "Decoupled L2 Weight Decay (0.05)",
+      "L1 Weight Sparsity Penalty (lambda = 1e-4)",
+      "Label Smoothing Cross-Entropy (0.10)",
+      "Dynamic Adaptive-Pacing Gaussian Mask sigma(t)",
+      "Smooth Huber-Monotonicity Penalty (delta = 1.0)",
+      "Multi-Task Conversational Speech Replay Term (mu = 0.75)",
+      "Multi-Domain Pareto Early Stopping (patience = 4)"
+    ]
+  },
+  "training_history": [
+    {
+      "loss_total": 51.0689,
+      "loss_ce": 6.2393,
+      "loss_attn": 0.6796,
+      "loss_mono": 69.5646,
+      "loss_l1": 11323.0251,
+      "epoch": 1,
+      "val_wer_poly": 302.56,
+      "val_wer_vocal": 100.0,
+      "val_wer_speech": 100.0,
+      "pareto_score": 181.024
+    },
+    {
+      "loss_total": 25.5426,
+      "loss_ce": 5.8881,
+      "loss_attn": 0.7206,
+      "loss_mono": 21.1035,
+      "loss_l1": 11413.0492,
+      "epoch": 2,
+      "val_wer_poly": 97.44,
+      "val_wer_vocal": 100.0,
+      "val_wer_speech": 121.57,
+      "pareto_score": 105.447
+    },
+    {
+      "loss_total": 14.0245,
+      "loss_ce": 5.4105,
+      "loss_attn": 0.6983,
+      "loss_mono": 8.9814,
+      "loss_l1": 11472.1318,
+      "epoch": 3,
+      "val_wer_poly": 97.44,
+      "val_wer_vocal": 97.44,
+      "val_wer_speech": 119.61,
+      "pareto_score": 104.091
+    },
+    {
+      "loss_total": 13.6168,
+      "loss_ce": 5.5583,
+      "loss_attn": 0.7323,
+      "loss_mono": 5.8097,
+      "loss_l1": 11502.486,
+      "epoch": 4,
+      "val_wer_poly": 100.0,
+      "val_wer_vocal": 97.44,
+      "val_wer_speech": 121.57,
+      "pareto_score": 105.703
+    },
+    {
+      "loss_total": 8.9491,
+      "loss_ce": 5.3305,
+      "loss_attn": 0.7672,
+      "loss_mono": 3.7854,
+      "loss_l1": 11521.3786,
+      "epoch": 5,
+      "val_wer_poly": 100.0,
+      "val_wer_vocal": 100.0,
+      "val_wer_speech": 101.96000000000001,
+      "pareto_score": 100.588
+    },
+    {
+      "loss_total": 10.8156,
+      "loss_ce": 5.4181,
+      "loss_attn": 0.7539,
+      "loss_mono": 3.1137,
+      "loss_l1": 11529.4893,
+      "epoch": 6,
+      "val_wer_poly": 294.87,
+      "val_wer_vocal": 100.0,
+      "val_wer_speech": 98.04,
+      "pareto_score": 177.36
+    },
+    {
+      "loss_total": 9.5867,
+      "loss_ce": 5.3913,
+      "loss_attn": 0.7743,
+      "loss_mono": 1.8808,
+      "loss_l1": 11531.8408,
+      "epoch": 7,
+      "val_wer_poly": 294.87,
+      "val_wer_vocal": 107.69,
+      "val_wer_speech": 98.04,
+      "pareto_score": 179.667
+    },
+    {
+      "loss_total": 9.1775,
+      "loss_ce": 5.083,
+      "loss_attn": 0.7636,
+      "loss_mono": 2.6651,
+      "loss_l1": 11532.2074,
+      "epoch": 8,
+      "val_wer_poly": 294.87,
+      "val_wer_vocal": 107.69,
+      "val_wer_speech": 98.04,
+      "pareto_score": 179.667
+    }
+  ],
+  "best_epoch": 5,
+  "champion_pareto_score": 100.588,
+  "champion_metrics": {
+    "polyphonic_mix": {
+      "hypothesis": "tôi thấy trong lòng em lại tiếp theo tao thuê thanh niên trung tuền thuê trang trường trai thuê trang trung thuê trang trung thuê trang trung thuê trung thuê trung thuê trung thuê trung trung thu.",
+      "metrics": {
+        "wer": 1.0,
+        "cer": 0.8161,
+        "substitutions": 37,
+        "deletions": 2,
+        "insertions": 0,
+        "hits": 0,
+        "ref_word_count": 39,
+        "tonal_errors": 0
+      },
+      "latency_sec": 4.922,
+      "monotonicity_rho": 0.933,
+      "stalling_ratio": 0.0261,
+      "alignment": {
+        "matches": 0,
+        "substitutions": 37,
+        "deletions": 2,
+        "insertions": 0,
+        "tone_substitutions": 0,
+        "consonant_vowel_substitutions": 37,
+        "hallucination_detected": false
+      }
+    },
+    "vocal_stem": {
+      "hypothesis": "điểm thuyết trong bản ánh sáng sinh môi trường phát huyết tích thanh niên tiếp tục thành trung quốc thu thoát theo trang thơ thít thú thủ thoát thí thúc thút thít thít thím sóng thít thít thít thítítítítítítítítítítítítítítítít",
+      "metrics": {
+        "wer": 1.0,
+        "cer": 0.9943,
+        "substitutions": 39,
+        "deletions": 0,
+        "insertions": 0,
+        "hits": 0,
+        "ref_word_count": 39,
+        "tonal_errors": 0
+      },
+      "latency_sec": 4.927,
+      "monotonicity_rho": 0.9105,
+      "stalling_ratio": 0.0157,
+      "alignment": {
+        "matches": 0,
+        "substitutions": 39,
+        "deletions": 0,
+        "insertions": 0,
+        "tone_substitutions": 0,
+        "consonant_vowel_substitutions": 39,
+        "hallucination_detected": false
+      }
+    },
+    "spoken_speech": {
+      "hypothesis": "đây tham gia sản xuất phát sóng tốt nhất là báo cáo các bạn hãy chứng minh tuết trong sự kinh hoàng đế giết tiền than sút sinh sĩ tao thu� niên theo thuyết tiết thít thị thành trang thương thí sinh thành thu khoét toil giết thít thít thím sót tín sót t",
+      "metrics": {
+        "wer": 1.0196,
+        "cer": 0.8364,
+        "substitutions": 49,
+        "deletions": 0,
+        "insertions": 3,
+        "hits": 2,
+        "ref_word_count": 51,
+        "tonal_errors": 0
+      },
+      "latency_sec": 4.832,
+      "monotonicity_rho": 0.9547,
+      "stalling_ratio": 0.0236,
+      "alignment": {
+        "matches": 2,
+        "substitutions": 49,
+        "deletions": 0,
+        "insertions": 3,
+        "tone_substitutions": 0,
+        "consonant_vowel_substitutions": 49,
+        "hallucination_detected": false
+      }
+    }
+  },
+  "historical_benchmarks": {}
+}

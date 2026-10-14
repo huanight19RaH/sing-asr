@@ -1,0 +1,272 @@
+[
+  {
+    "id": "sng_sec_01_verse1_p1",
+    "modality": "singing",
+    "category": "verse1",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_01_verse1_p1.wav",
+    "duration_sec": 8.5,
+    "text": "Trời còn làm mây xanh ngắt cho mắt em buồn",
+    "normalized_text": "trời còn làm mây xanh ngắt cho mắt em buồn",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_02_verse1_p2",
+    "modality": "singing",
+    "category": "verse1",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_02_verse1_p2.wav",
+    "duration_sec": 9.0,
+    "text": "Trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+    "normalized_text": "trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_03_verse1_p3",
+    "modality": "singing",
+    "category": "verse1",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_03_verse1_p3.wav",
+    "duration_sec": 8.6,
+    "text": "Lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+    "normalized_text": "lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_04_verse2_p1",
+    "modality": "singing",
+    "category": "verse2",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_04_verse2_p1.wav",
+    "duration_sec": 16.5,
+    "text": "Đường nào dài một mai ta đón đưa em một lần nào cho hai bàn tay mơ",
+    "normalized_text": "đường nào dài một mai ta đón đưa em một lần nào cho hai bàn tay mơ",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_05_verse2_p2",
+    "modality": "singing",
+    "category": "verse2",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_05_verse2_p2.wav",
+    "duration_sec": 15.5,
+    "text": "Bàn tay em năm ngón anh ru ru trên ngàn",
+    "normalized_text": "bàn tay em năm ngón anh ru ru trên ngàn",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_06_chorus_p1",
+    "modality": "singing",
+    "category": "chorus",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_06_chorus_p1.wav",
+    "duration_sec": 19.0,
+    "text": "Còn tuổi nào cho nhau trời xanh như mắt em ngày nào",
+    "normalized_text": "còn tuổi nào cho nhau trời xanh như mắt em ngày nào",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_07_chorus_p2",
+    "modality": "singing",
+    "category": "chorus",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_07_chorus_p2.wav",
+    "duration_sec": 17.0,
+    "text": "Bàn tay làm sao níu một lần người xa người",
+    "normalized_text": "bàn tay làm sao níu một lần người xa người",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_08_re_verse",
+    "modality": "singing",
+    "category": "verse3",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_08_re_verse.wav",
+    "duration_sec": 23.0,
+    "text": "Mây mùa thu trôi mau cho mắt em buồn bàn tay làm sao níu một lần người xa người",
+    "normalized_text": "mây mùa thu trôi mau cho mắt em buồn bàn tay làm sao níu một lần người xa người",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_sec_09_outro",
+    "modality": "singing",
+    "category": "outro",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_sec_09_outro.wav",
+    "duration_sec": 30.0,
+    "text": "Lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+    "normalized_text": "lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+    "source": "Trinh Cong Son - Con Tuoi Nao Cho Em (Full Track)"
+  },
+  {
+    "id": "sng_seg_01",
+    "modality": "singing",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_seg_01.wav",
+    "duration_sec": 7.0,
+    "text": "Trời còn làm mây xanh ngắt cho mắt em buồn",
+    "normalized_text": "trời còn làm mây xanh ngắt cho mắt em buồn",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "sng_seg_02",
+    "modality": "singing",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_seg_02.wav",
+    "duration_sec": 8.0,
+    "text": "Trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+    "normalized_text": "trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "sng_seg_03",
+    "modality": "singing",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_seg_03.wav",
+    "duration_sec": 5.5,
+    "text": "Lời ru nào buông lơi theo từng giọt nắng",
+    "normalized_text": "lời ru nào buông lơi theo từng giọt nắng",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "sng_seg_04",
+    "modality": "singing",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/singing/sng_seg_04.wav",
+    "duration_sec": 5.6,
+    "text": "Để lại niềm thương nhớ vấn vương",
+    "normalized_text": "để lại niềm thương nhớ vấn vương",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "vivos_test_vivosdev02_01",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev02_01.wav",
+    "duration_sec": 2.562,
+    "text": "CŨNG KHIẾN CHO HỌ DÈ DẶT",
+    "normalized_text": "cũng khiến cho họ dè dặt",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV02)"
+  },
+  {
+    "id": "vivos_test_vivosdev03_02",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev03_02.wav",
+    "duration_sec": 1.656,
+    "text": "PHÙ HỢP CHO MỌI CÂN NẶNG",
+    "normalized_text": "phù hợp cho mọi cân nặng",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV03)"
+  },
+  {
+    "id": "vivos_test_vivosdev01_03",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev01_03.wav",
+    "duration_sec": 3.438,
+    "text": "KHI TRẪM KHỎI BỆNH THÌ SẼ CHÉM ĐẦU",
+    "normalized_text": "khi trẫm khỏi bệnh thì sẽ chém đầu",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV01)"
+  },
+  {
+    "id": "vivos_test_vivosdev04_04",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev04_04.wav",
+    "duration_sec": 3.75,
+    "text": "CON NHỎ MỞ CÁI TÚI GÚT ĐEO TRÊN CỔ",
+    "normalized_text": "con nhỏ mở cái túi gút đeo trên cổ",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV04)"
+  },
+  {
+    "id": "vivos_test_vivosdev05_05",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev05_05.wav",
+    "duration_sec": 4.062,
+    "text": "HÃY TƯỞNG TƯỢNG RẰNG BẠN LÀ LÀ GIÁM ĐỐC DỰ ÁN TRONG MỘT CÔNG TY LỚN",
+    "normalized_text": "hãy tưởng tượng rằng bạn là là giám đốc dự án trong một công ty lớn",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV05)"
+  },
+  {
+    "id": "vivos_test_vivosdev06_06",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev06_06.wav",
+    "duration_sec": 2.688,
+    "text": "ĐƠN GIẢN LÀ TÁN GẪU VỚI NHAU",
+    "normalized_text": "đơn giản là tán gẫu với nhau",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV06)"
+  },
+  {
+    "id": "vivos_test_vivosdev07_07",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev07_07.wav",
+    "duration_sec": 3.469,
+    "text": "HẰNG NĂM CHÚNG TA THẢI RA HÀNG TỈ THIẾT BỊ ĐIỆN TỬ",
+    "normalized_text": "hằng năm chúng ta thải ra hàng tỉ thiết bị điện tử",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV07)"
+  },
+  {
+    "id": "vivos_test_vivosdev08_08",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev08_08.wav",
+    "duration_sec": 3.406,
+    "text": "CÂY CỔ THỤ ẤY BẤT CHỢT BỊ BỆNH TẬT QUẬT NGÃ",
+    "normalized_text": "cây cổ thụ ấy bất chợt bị bệnh tật quật ngã",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV08)"
+  },
+  {
+    "id": "vivos_test_vivosdev09_09",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev09_09.wav",
+    "duration_sec": 3.312,
+    "text": "LÀM RỜM RỢP BIỂN MÂY LAU LÁCH PHẤT PHƠ",
+    "normalized_text": "làm rờm rợp biển mây lau lách phất phơ",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV09)"
+  },
+  {
+    "id": "vivos_test_vivosdev10_10",
+    "modality": "speech",
+    "category": "vivos_test_benchmark",
+    "audio_path": "data/processed/benchmark_suite/speech/vivos_test_vivosdev10_10.wav",
+    "duration_sec": 2.812,
+    "text": "KHI BỊ CÔNG AN THỘP CỔ KHẨN CẤP",
+    "normalized_text": "khi bị công an thộp cổ khẩn cấp",
+    "source": "VIVOS Test Benchmark (Speaker VIVOSDEV10)"
+  },
+  {
+    "id": "spk_seg_01",
+    "modality": "speech",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/speech/spk_seg_01.wav",
+    "duration_sec": 6.5,
+    "text": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng",
+    "normalized_text": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "spk_seg_02",
+    "modality": "speech",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/speech/spk_seg_02.wav",
+    "duration_sec": 6.5,
+    "text": "cho mục đích huấn luyện trí tuệ nhân tạo",
+    "normalized_text": "cho mục đích huấn luyện trí tuệ nhân tạo",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "spk_seg_03",
+    "modality": "speech",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/speech/spk_seg_03.wav",
+    "duration_sec": 6.5,
+    "text": "mỗi bản ghi âm được chuẩn bị cẩn thận",
+    "normalized_text": "mỗi bản ghi âm được chuẩn bị cẩn thận",
+    "source": "Matched Pairs Experiment"
+  },
+  {
+    "id": "spk_seg_04",
+    "modality": "speech",
+    "category": "matched_pair",
+    "audio_path": "data/processed/benchmark_suite/speech/spk_seg_04.wav",
+    "duration_sec": 6.6,
+    "text": "để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm thanh ổn định",
+    "normalized_text": "để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm thanh ổn định",
+    "source": "Matched Pairs Experiment"
+  }
+]

@@ -31,11 +31,15 @@ class VietnameseSingingDataset(Dataset):
         self,
         processor: WhisperProcessor,
         items: list[dict],
-        augment: bool = False
+        augment: bool = False,
+        normalize_cmvn: bool = False,
+        normalize_rms: bool = False
     ):
         self.processor = processor
         self.items = items
         self.augment = augment
+        self.normalize_cmvn = normalize_cmvn
+        self.normalize_rms = normalize_rms
 
     def __len__(self):
         return len(self.items)
@@ -45,6 +49,12 @@ class VietnameseSingingDataset(Dataset):
         audio = item["audio"].copy()
         sr = item.get("sr", 16000)
         text = item["text"]
+        is_speech = item.get("id", "").startswith("spoken")
+
+        # Waveform RMS energy normalization
+        if self.normalize_rms:
+            from dsp.normalization import normalize_waveform_rms
+            audio = normalize_waveform_rms(audio, target_dbfs=-20.0)
 
         # On-the-fly acoustic augmentation
         if self.augment:
@@ -64,6 +74,11 @@ class VietnameseSingingDataset(Dataset):
             return_tensors="pt"
         ).input_features[0]
 
+        # Utterance-level Cepstral Mean & Variance Normalization (CMVN)
+        if self.normalize_cmvn:
+            from dsp.normalization import apply_spectrogram_cmvn
+            input_features = apply_spectrogram_cmvn(input_features)
+
         # Tokenize labels
         labels = self.processor.tokenizer(text).input_ids
 
@@ -71,7 +86,8 @@ class VietnameseSingingDataset(Dataset):
             "input_features": input_features,
             "labels": torch.tensor(labels, dtype=torch.long),
             "text": text,
-            "id": item.get("id", f"sample_{idx}")
+            "id": item.get("id", f"sample_{idx}"),
+            "is_speech": is_speech
         }
 
 
@@ -81,6 +97,7 @@ def collate_fn_whisper(batch, processor: WhisperProcessor):
     """
     input_features = torch.stack([item["input_features"] for item in batch])
     label_list = [item["labels"] for item in batch]
+    is_speech_flags = torch.tensor([item.get("is_speech", False) for item in batch], dtype=torch.bool)
 
     # Pad labels to max length in batch
     padded_labels = torch.nn.utils.rnn.pad_sequence(
@@ -91,7 +108,8 @@ def collate_fn_whisper(batch, processor: WhisperProcessor):
 
     return {
         "input_features": input_features,
-        "labels": padded_labels
+        "labels": padded_labels,
+        "is_speech": is_speech_flags
     }
 
 
@@ -179,4 +197,33 @@ def create_singing_paired_corpus(root_dir: Path) -> list[dict]:
             "text": "mỗi bản ghi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm thanh ổn định"
         })
 
+    return corpus
+
+
+def create_expanded_benchmark_corpus(root_dir: Path) -> list[dict]:
+    """
+    Loads all multi-track singing and multi-speaker VIVOS speech items from benchmark_manifest.json.
+    """
+    import json
+    manifest_file = root_dir / "data/processed/benchmark_manifest.json"
+    if not manifest_file.exists():
+        return create_singing_paired_corpus(root_dir)
+
+    with open(manifest_file, "r", encoding="utf-8") as f:
+        manifest = json.load(f)
+
+    corpus = []
+    for item in manifest:
+        audio_path = root_dir / item["audio_path"]
+        if audio_path.exists():
+            audio, sr = load_audio(audio_path, target_sr=16000)
+            corpus.append({
+                "id": item["id"],
+                "audio": audio,
+                "sr": sr,
+                "text": item["text"],
+                "modality": item.get("modality", "singing"),
+                "category": item.get("category", "general"),
+                "is_speech": (item.get("modality") == "speech")
+            })
     return corpus
