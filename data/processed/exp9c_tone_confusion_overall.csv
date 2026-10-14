@@ -1,0 +1,7 @@
+,Pred_ngang,Pred_huyen,Pred_sac,Pred_hoi,Pred_nga,Pred_nang
+Ref_ngang,67,52,41,16,3,16
+Ref_huyen,48,48,22,6,1,9
+Ref_sac,37,12,34,12,2,14
+Ref_hoi,12,8,10,8,0,5
+Ref_nga,9,2,3,1,0,3
+Ref_nang,19,13,13,8,1,15

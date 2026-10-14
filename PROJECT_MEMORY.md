@@ -426,6 +426,24 @@ sing-asr/data/
           * Kết quả trên miền VIVOS Studio: WER giảm từ **156.30%** xuống **102.73%** (CER **83.57%**, lỗi chèn giảm từ 89 xuống chỉ còn 3).
         - Trọng số mô hình đã lưu tại: [`models/large_regularized_champion_phowhisper/`](models/large_regularized_champion_phowhisper/) và báo cáo đầy đủ tại [`data/processed/exp9c_large_benchmark_results.json`](data/processed/exp9c_large_benchmark_results.json).
         - Ứng dụng Streamlit: Tích hợp mô hình `"PhoWhisper-tiny + Multi-Domain Large Champion (Phase IX.C)"` vào giao diện và hiển thị bảng đối soát 4 miền tại Tab 4.
+    17. *Hoàn thành Module Phân tích Chuyên sâu (Tonal Confusion Matrix & 2D Cross-Attention Heatmaps):*
+        - **Module 1 (Ma trận Nhầm lẫn Thanh điệu 6 Thanh tiếng Việt - `src/evaluation/tone_analysis.py`):**
+          * Xây dựng engine phân rã thanh điệu 6 thanh tiếng Việt (Ngang, Huyền, Sắc, Hỏi, Ngã, Nặng) và đối soát Levenshtein âm tiết.
+          * Phân tích đối chiếu trên toàn bộ 58 mẫu benchmark đa miền:
+            - Độ chính xác thanh điệu (Tonal Accuracy): Miền Singing đạt **47.53%** (77/162 âm tiết), cao vượt trội so với tiếng nói chưa thích nghi (**11.54%** trên 823 âm tiết).
+            - Kiểm định thống kê Chi-Square: $\chi^2 = 119.15, p = 9.73 \times 10^{-28}$, Odds Ratio $= 6.94$ (ý nghĩa thống kê cực đại).
+            - Tỷ lệ mất âm tiết thanh điệu (Tone Deletions): Tiếng hát chỉ mất **8.64%** (14/162), trong khi tiếng nói đàm thoại nhanh mất tới **48.72%** (401/823), $\chi^2 = 87.56, p = 8.19 \times 10^{-21}$, Odds Ratio $= 0.10$.
+            - Tỷ lệ lặp chèn âm tiết (Tone Insertions): Tiếng hát còn dư địa **30.25%** (49/162) do đặc thù ngân nga giai điệu, so với tiếng nói **3.65%** (30/823), $\chi^2 = 92.72, p = 6.03 \times 10^{-22}$, Odds Ratio $= 8.30$.
+            - Hiện tượng Triệt tiêu Thanh điệu (Melodic Tone Neutralization): Thanh Ngang bị nhầm nhiều nhất sang Huyền ($22.9\%$) và Nặng ($8.6\%$); thanh Huyền bị kéo sang Ngang ($30.8\%$) và Sắc ($11.5\%$); thanh Sắc bị kéo sang Ngang ($33.3\%$) do cao độ giai điệu đè nén đường contour ngữ âm.
+          * Xuất bản biểu đồ nhiệt học thuật chuẩn xuất bản: [`docs/figures/tone_confusion_matrix_domains.png`](docs/figures/tone_confusion_matrix_domains.png) và [`docs/figures/tone_error_distribution.png`](docs/figures/tone_error_distribution.png).
+          * Lưu dữ liệu ma trận: [`data/processed/exp9c_tone_analysis_results.json`](data/processed/exp9c_tone_analysis_results.json) và các file CSV ma trận tại [`data/processed/exp9c_tone_confusion_singing.csv`](data/processed/exp9c_tone_confusion_singing.csv).
+        - **Module 2 (2D Cross-Attention Heatmap Engine - `src/evaluation/attention_visualizer.py`):**
+          * Xây dựng engine trích xuất ma trận chú ý chéo decoder-encoder ($T_{\text{tokens}} \times F_{\text{frames}}$) qua forward pass trực tiếp (`attn_implementation="eager"`).
+          * Đo lường chỉ số Đơn điệu hóa căn chỉnh (Pearson correlation $r$ giữa vị trí token $t$ và frame cực đại $f^*_t$):
+            - Mô hình Baseline Zero-Shot: $r = \mathbf{0.2512}$ ($p = 0.128$, không có ý nghĩa thống kê), phản ánh sự phân tán chú ý và trôi dạt ngang (horizontal stalling / attention collapse) khi gặp trường đoạn rung ngân.
+            - Mô hình Regularized Champion (Ours): $r = \mathbf{0.4531}$ ($p = \mathbf{0.00486} < 0.01$, ý nghĩa thống kê cao), chứng minh cơ chế chưng cất chú ý chéo đã ép decoder bám sát trục đường chéo thời gian thực (sharp monotonic diagonal guidance).
+          * Xuất bản biểu đồ nhiệt 2D độ phân giải cao 300 DPI: [`docs/figures/cross_attention_alignment_comparison.png`](docs/figures/cross_attention_alignment_comparison.png) và số liệu chi tiết tại [`data/processed/attention_alignment_stats.json`](data/processed/attention_alignment_stats.json).
+        - **Cập nhật Giao diện Dashboard Streamlit (`app/streamlit_app.py`):** Tích hợp hiển thị trực tiếp 3 biểu đồ nghiên cứu và 5 thẻ metrics thống kê vào Tab 4.
 * **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phase X):**
   1. *Phase X (Publication & Paper Finalization):*
      - Hoàn thiện bản thảo bài báo khoa học chuẩn IEEE / Springer MIWAI 2026: *Robust Singing Voice Recognition for Tonal Languages via Progressive Acoustic Conditioning and Monotonic Cross-Attention Distillation*.

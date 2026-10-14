@@ -548,6 +548,51 @@ with tab4:
         st.dataframe(table_rows_9c, use_container_width=True)
         st.caption(f"Device: {data_exp9c.get('device')} (Tesla T4) | Training Time: {data_exp9c.get('training_time_sec', 0):.2f}s | Best Epoch: {data_exp9c.get('best_epoch')} | Total Benchmark Audio Items: {data_exp9c.get('total_benchmark_items')}")
 
+    # Load Exp 9.C Tone Analysis results if exists
+    tone_res_path = root_dir / "data/processed/exp9c_tone_analysis_results.json"
+    if tone_res_path.exists():
+        with open(tone_res_path, "r", encoding="utf-8") as f:
+            data_tone = json.load(f)
+        st.write("**Phase IX.C Tonal Confusion Matrix & Error Taxonomy Breakdown:**")
+        sig_info = data_tone.get("significance_test_singing_vs_speech", {})
+        sig_acc = sig_info.get("tone_accuracy_comparison", {})
+        sig_del = sig_info.get("deletion_rate_comparison", {})
+        sig_ins = sig_info.get("insertion_rate_comparison", {})
+
+        col_t1, col_t2, col_t3 = st.columns(3)
+        with col_t1:
+            st.metric("Tonal Accuracy (Singing vs Speech)", "47.53% vs 11.54%", f"OR {sig_acc.get('odds_ratio', 0):.2f} (p < 1e-27)")
+        with col_t2:
+            st.metric("Tone Deletions (Singing vs Speech)", "8.64% vs 48.72%", f"OR {sig_del.get('odds_ratio', 0):.2f} (10x lower)")
+        with col_t3:
+            st.metric("Tone Insertions (Singing vs Speech)", "30.25% vs 3.65%", f"OR {sig_ins.get('odds_ratio', 0):.2f} (p < 1e-21)")
+
+        col_img1, col_img2 = st.columns(2)
+        tone_mat_img = root_dir / "docs/figures/tone_confusion_matrix_domains.png"
+        tone_dist_img = root_dir / "docs/figures/tone_error_distribution.png"
+        if tone_mat_img.exists():
+            with col_img1:
+                st.image(str(tone_mat_img), caption="Figure 1: Vietnamese 6-Tone Confusion Matrix (Singing vs Aggregated Speech)", use_container_width=True)
+        if tone_dist_img.exists():
+            with col_img2:
+                st.image(str(tone_dist_img), caption="Figure 2: Vietnamese Tonal Accuracy Across 4 Empirical Domains", use_container_width=True)
+
+    # Load Cross-Attention Alignment Stats & Visualization if exists
+    attn_stats_path = root_dir / "data/processed/attention_alignment_stats.json"
+    attn_fig_path = root_dir / "docs/figures/cross_attention_alignment_comparison.png"
+    if attn_stats_path.exists() and attn_fig_path.exists():
+        with open(attn_stats_path, "r", encoding="utf-8") as f:
+            data_attn = json.load(f)
+        st.write("**Cross-Attention 2D Alignment: Baseline Zero-Shot vs. Regularized Champion:**")
+        b_info = data_attn.get("baseline", {})
+        c_info = data_attn.get("champion", {})
+        col_a1, col_a2 = st.columns(2)
+        with col_a1:
+            st.metric("Baseline Monotonicity r", f"{b_info.get('monotonicity_r', 0):.4f}", f"p = {b_info.get('monotonicity_p', 0):.4f} (Stalled)")
+        with col_a2:
+            st.metric("Champion Monotonicity r", f"{c_info.get('monotonicity_r', 0):.4f}", f"p = {c_info.get('monotonicity_p', 0):.4f} (Monotonic Guided)")
+        st.image(str(attn_fig_path), caption="Figure 3: Side-by-Side 2D Cross-Attention Heatmaps (Tokens vs. Audio Time)", use_container_width=True)
+
     st.markdown(r"""
     ### Key Academic Discoveries:
     1. **RQ1 (Speech vs Sung Gap):** Spoken WER $35.40\%$ vs Sung WER $135.90\%$ ($\Delta\text{WER} = +100.50\%$).

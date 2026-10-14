@@ -1,0 +1,17 @@
+{
+  "sample_audio": "data/processed/large_benchmark_suite/singing/sng_sec_02_verse1_p2.wav",
+  "duration_sec": 9.0,
+  "baseline": {
+    "text": "sau cơn mưa thân anh còn dì ngoài những sắc sỡ tối đen riêng mình ngay cô đơn giản.",
+    "monotonicity_r": 0.2512,
+    "monotonicity_p": 0.12820888690824989,
+    "num_tokens": 38
+  },
+  "champion": {
+    "text": "sau căn mưa thắt nắng còn dì ngoài những sắc sơ tối đen riêng mình ngại cô đơn giản",
+    "monotonicity_r": 0.4531,
+    "monotonicity_p": 0.004861462279822683,
+    "num_tokens": 37
+  },
+  "figure_saved_to": "docs/figures/cross_attention_alignment_comparison.png"
+}
