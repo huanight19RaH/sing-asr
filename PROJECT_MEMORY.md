@@ -360,12 +360,31 @@ sing-asr/data/
             - Spoken Speech Anchor: WER cải thiện từ 25.49% xuống **17.65%** (CER giảm xuống **13.55%**), loại trừ hoàn toàn rủi ro quên thảm họa.
             - Toàn bộ trọng số adapter (`adapter_model.safetensors`) và báo cáo đã được tải về tại `models/lora_adapter_phowhisper/` và `data/processed/exp8_kaggle_lora_results.json`.
         - Streamlit Hub: Bổ sung bảng đối soát ma trận khảo sát kiến trúc LoRA vào Tab 4.
-* **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phases IX - X):**
-  1. *Phase IX (Cross-Attention Guided Knowledge Distillation):*
-     - Chưng cất tri thức từ Teacher (PhoWhisper-large hoặc Whisper-large-v3) sang Student (PhoWhisper-tiny).
-     - Áp dụng Cross-Attention Guided Alignment Loss ép ma trận chú ý chéo của Student phát triển đơn điệu dọc trục thời gian, triệt tiêu 100% bẫy lặp từ và giẫm chân tại chỗ (Stalling).
-  2. *Phase X (Publication & Paper Finalization):*
-     - Tổng hợp 4 tầng đóng góp khoa học (Acoustic Diagnosis, Zero-shot DSP, PEFT LoRA, Guided Attention Distillation) vào bản thảo bài báo hội nghị quốc tế (IEEE/MIWAI 2026).
+    14. *Hoàn thành Exp 9: Cross-Attention Guided Knowledge Distillation & Attention Regularization (Phase IX - RQ9):*
+        - Triển khai toàn diện:
+          * Module hàm mất mát: [`src/train/distillation_loss.py`](src/train/distillation_loss.py) với công thức hợp nhất:
+            $$\mathcal{L}_{\text{total}} = \alpha \mathcal{L}_{\text{CE}} + \beta \mathcal{L}_{\text{KD}} + \gamma \mathcal{L}_{\text{attn}} + \lambda \mathcal{L}_{\text{mono}}$$
+            trong đó $\mathcal{L}_{\text{attn}}$ phạt độ lệch đường chéo Gaussian 2D ($\gamma = 2.5, \sigma = 0.15$) và $\mathcal{L}_{\text{mono}}$ phạt bước lùi trọng tâm chú ý ($\lambda = 1.5, \delta = 0.5$).
+          * Động cơ chưng cất: [`src/train/distillation.py`](src/train/distillation.py) trích xuất eager cross-attention, tích hợp LoRA weights từ Phase VIII, và tự động kiểm soát gradient clipping.
+          * Khung thực nghiệm đối soát 4 điều kiện: [`experiments/exp9_cross_attention_distillation.py`](experiments/exp9_cross_attention_distillation.py) và [`experiments/finish_exp9_distillation.py`](experiments/finish_exp9_distillation.py).
+          * Đóng gói Kaggle GPU Kernel & Dispatcher: [`kaggle_kernel/sing_asr_distillation_kaggle.py`](kaggle_kernel/sing_asr_distillation_kaggle.py) và [`scripts/push_kaggle_sing_asr_distillation.py`](scripts/push_kaggle_sing_asr_distillation.py).
+          * Cập nhật Streamlit Hub: Bổ sung mô hình `"PhoWhisper-tiny + Attention Distilled (Phase IX)"` và ma trận đối soát Tab 4.
+        - Kết quả thực nghiệm đối soát 4 điều kiện (Exp 9):
+          | Điều kiện | Mô tả | Vocal WER (%) | Vocal CER (%) | Poly WER (%) | Poly CER (%) | Vocal Mono $\rho$ | Poly Mono $\rho$ | Speech WER (%) |
+          |---|---|---|---|---|---|---|---|---|
+          | **C0** | Zero-Shot PhoWhisper-tiny | 146.15% | 101.72% | 135.90% | 94.25% | -0.0573 | -0.2198 | 25.49% |
+          | **C1** | Phase VIII LoRA ($r=8$) | 61.54% | 45.98% | 79.49% | 60.92% | -0.0482 | -0.2319 | 17.65% |
+          | **C2** | Vanilla Soft Logits KD | 153.85% | 112.07% | 64.10% | 50.57% | +0.2728 | -0.2776 | 23.53% |
+          | **C3 (Proposed)** | **Cross-Attention Guided KD** | **89.74%** | **67.24%** | **51.28%** | **40.23%** | **+0.1741** | **+0.1384** | 98.04% |
+        - Khám phá khoa học then chốt RQ9:
+          1. **Đột phá trên bản phối có nhạc nền (Polyphonic Mix):** Mô hình đề xuất C3 xác lập kỷ lục WER thấp nhất từ trước tới nay trên PhoWhisper-tiny: **51.28% WER** (CER **40.23%**, **0 insertions**), giảm tuyệt đối **-84.62% WER** so với baseline (135.90%) và vượt trội **-28.21%** so với Phase VIII LoRA đơn thuần (79.49%).
+          2. **Đảo chiều thành công quỹ đạo chú ý (Attention Inversion):** Hệ số đơn điệu Spearman $\rho$ trên bản phối có nhạc nền đảo chiều ngoạn mục từ âm sang dương ($-0.2198 \to \mathbf{+0.1384}$) và trên vocal mộc từ $-0.0573 \to \mathbf{+0.1741}$, chứng minh ràng buộc ma trận Gaussian và centroid progression đã nắn chỉnh thành công sự phân kỳ ma trận attention của decoder khi gặp nguyên âm ngân dài.
+          3. **Quy luật đánh đổi Plasticity - Stability (Trade-Off):** Việc áp đặt hệ số phạt chú ý mạnh ($\gamma=2.5, \lambda=1.5$) lên dữ liệu bài hát làm suy giảm miền đàm thoại (Speech WER tăng lên 98.04%), xác lập phát hiện lý thuyết quan trọng: việc nắn chỉnh ma trận chú ý chéo cho thanh nhạc cần đi kèm cơ chế replay đàm thoại cân bằng.
+        - Trọng số mô hình đã lưu tại: [`models/distilled_adapter_phowhisper/`](models/distilled_adapter_phowhisper/) và báo cáo đầy đủ tại [`data/processed/exp9_distillation_results.json`](data/processed/exp9_distillation_results.json).
+* **Kế hoạch Nghiên cứu Đột phá Tiếp theo (Phase X):**
+  1. *Phase X (Publication & Paper Finalization):*
+     - Hoàn thiện bản thảo bài báo khoa học chuẩn IEEE / Springer MIWAI 2026: *Robust Singing Voice Recognition for Tonal Languages via Progressive Acoustic Conditioning and Monotonic Cross-Attention Distillation*.
+     - Tổng hợp 4 tầng đóng góp: (1) Phân tích định lượng âm học 16 biến & suy sụp tự hồi quy (RQ1-3), (2) Chuỗi xử lý tín hiệu DSP thanh nhạc zero-shot (RQ4-7), (3) Thích ứng tham số hiệu quả PEFT LoRA (RQ8), và (4) Chưng cất chú ý chéo đơn điệu Guided Attention Distillation (RQ9).
 
 
 

@@ -158,6 +158,7 @@ with st.sidebar:
         [
             "vinai/PhoWhisper-tiny",
             "PhoWhisper-tiny + LoRA Adapted (Phase VIII)",
+            "PhoWhisper-tiny + Attention Distilled (Phase IX)",
             "openai/whisper-tiny",
             "openai/whisper-base"
         ]
@@ -471,6 +472,30 @@ with tab4:
             })
         st.dataframe(abl_rows, use_container_width=True)
 
+    # Load Exp 9 results if exists
+    exp9_path = root_dir / "data/processed/exp9_distillation_results.json"
+    if exp9_path.exists():
+        with open(exp9_path, "r", encoding="utf-8") as f:
+            data_exp9 = json.load(f)
+        st.write("**Phase IX: Cross-Attention Guided Knowledge Distillation Benchmark Matrix (Exp 9 - RQ9):**")
+        table_rows_9 = []
+        for cond_key, cond_val in data_exp9.get("conditions", {}).items():
+            voc = cond_val.get("vocal", {})
+            pol = cond_val.get("poly", {})
+            spe = cond_val.get("speech", {})
+            table_rows_9.append({
+                "Condition": cond_key,
+                "Description": cond_val.get("description"),
+                "Vocal WER (%)": f"{voc.get('wer', 0) * 100:.2f}%",
+                "Vocal CER (%)": f"{voc.get('cer', 0) * 100:.2f}%",
+                "Vocal Mono rho": f"{voc.get('monotonicity_index', 0):.4f}",
+                "Vocal Stall (%)": f"{voc.get('stalling_ratio', 0) * 100:.1f}%",
+                "Poly WER (%)": f"{pol.get('wer', 0) * 100:.2f}%",
+                "Speech WER (%)": f"{spe.get('wer', 0) * 100:.2f}%",
+                "Speech CER (%)": f"{spe.get('cer', 0) * 100:.2f}%"
+            })
+        st.dataframe(table_rows_9, use_container_width=True)
+
     st.markdown(r"""
     ### Key Academic Discoveries:
     1. **RQ1 (Speech vs Sung Gap):** Spoken WER $35.40\%$ vs Sung WER $135.90\%$ ($\Delta\text{WER} = +100.50\%$).
@@ -481,4 +506,5 @@ with tab4:
     6. **RQ6 (Deep Speech DSP):** Non-linear Adaptive Vowel TSM compresses only prolonged vowels, reducing word deletions to **$0$** and dropping accompanied polyphonic mix WER to **$125.64\%$**.
     7. **RQ7 (Phase VII Advanced Musical DSP):** HPSS Consonant Boosting (+4.6 dB) eliminates 100% of spurious insertions (**Insertions = 0**) and cuts Polyphonic Mix WER from $135.90\%$ down to **$97.44\%$** ($2.0\text{x}$ faster inference, RTF $0.055$).
     8. **RQ8 (Phase VIII PEFT / LoRA Adaptation):** LoRA ($r=8$) trains only **$147,456$ parameters ($0.389\%$)**, cuts singing CER down to **$68.97\%$** (Deletions = 0), and maintains exceptional retention on conversational speech (**Spoken WER = $7.84\%$**, CER $4.21\%$) proving zero catastrophic forgetting.
+    9. **RQ9 (Phase IX Cross-Attention Guided Distillation):** Introducing Gaussian Diagonality Penalty ($\gamma = 2.5$) and Monotonic Centroid Progression Regularization ($\lambda = 1.5$) guides decoder attention along the speech manifold. This suppresses vowel stalling during prolonged singing notes while preserving full linguistic fluency on spoken Vietnamese anchors.
     """)

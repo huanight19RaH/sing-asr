@@ -1,0 +1,188 @@
+{
+  "experiment": "Exp 9: Cross-Attention Guided Knowledge Distillation",
+  "date": "2026-10-14",
+  "lead_researcher": "Thai Hung Nguyen",
+  "device": "cpu",
+  "conditions": {
+    "C0_ZeroShot_Baseline": {
+      "description": "Unadapted Zero-Shot PhoWhisper-tiny",
+      "vocal": {
+        "hypothesis": "trời còn làm mây xanh ngắt cho mắt em buồn trời còn làm mưa bay bay cho hạt sầu lên mắt người thương lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+        "wer": 1.4615,
+        "cer": 1.0172,
+        "substitutions": 6,
+        "deletions": 22,
+        "insertions": 29,
+        "rtf": 0.124,
+        "monotonicity_index": -0.0573,
+        "stalling_ratio": 0.731
+      },
+      "poly": {
+        "hypothesis": "trời còn làm mây xanh ngắt cho mắt em buồn trời còn làm mưa bay bay cho hạt sầu lên mắt người thương lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+        "wer": 1.359,
+        "cer": 0.9425,
+        "substitutions": 8,
+        "deletions": 18,
+        "insertions": 27,
+        "rtf": 0.118,
+        "monotonicity_index": -0.2198,
+        "stalling_ratio": 0.795
+      },
+      "speech": {
+        "hypothesis": "đây là bộ dữ liệu âm thanh giọng nói mà bạn có thể sử dụng cho mục đích huấn luyện trí tuệ nhân tạo mỗi bản ghi âm được chuẩn bị cẩn thận để đảm bảo phát âm rõ ràng nhịp điệu tự nhiên và chất lượng âm thanh ổn định",
+        "wer": 0.2549,
+        "cer": 0.229,
+        "substitutions": 4,
+        "deletions": 5,
+        "insertions": 4,
+        "rtf": 0.115,
+        "monotonicity_index": 0.4497,
+        "stalling_ratio": 0.333
+      }
+    },
+    "C1_LoRA_FineTuned_Only": {
+      "description": "PhoWhisper-tiny + LoRA adapted with CE loss (Phase VIII)",
+      "vocal": {
+        "wer": 0.6154,
+        "cer": 0.4598,
+        "substitutions": 5,
+        "deletions": 0,
+        "insertions": 19,
+        "rtf": 0.142,
+        "monotonicity_index": -0.0482,
+        "stalling_ratio": 0.754
+      },
+      "poly": {
+        "wer": 0.7949,
+        "cer": 0.6092,
+        "substitutions": 8,
+        "deletions": 1,
+        "insertions": 22,
+        "rtf": 0.138,
+        "monotonicity_index": -0.2319,
+        "stalling_ratio": 0.823
+      },
+      "speech": {
+        "wer": 0.1765,
+        "cer": 0.1308,
+        "substitutions": 3,
+        "deletions": 2,
+        "insertions": 4,
+        "rtf": 0.135,
+        "monotonicity_index": 0.4797,
+        "stalling_ratio": 0.303
+      }
+    },
+    "C2_Vanilla_Logit_KD": {
+      "description": "Distillation with Cross-Entropy + Soft Logits KL Divergence",
+      "train_history": [
+        {
+          "epoch": 1,
+          "loss_total": 2.1206,
+          "loss_ce": 2.1206,
+          "loss_attn": 0.8079,
+          "loss_mono": 23501.1335
+        },
+        {
+          "epoch": 2,
+          "loss_total": 2.2597,
+          "loss_ce": 2.2597,
+          "loss_attn": 0.8123,
+          "loss_mono": 16595.2118
+        },
+        {
+          "epoch": 3,
+          "loss_total": 1.4418,
+          "loss_ce": 1.4418,
+          "loss_attn": 0.8012,
+          "loss_mono": 27998.9284
+        }
+      ],
+      "vocal": {
+        "wer": 1.5385,
+        "cer": 1.1207,
+        "substitutions": 7,
+        "deletions": 12,
+        "insertions": 41,
+        "rtf": 0.146,
+        "monotonicity_index": 0.2728,
+        "stalling_ratio": 0.833
+      },
+      "poly": {
+        "wer": 0.641,
+        "cer": 0.5057,
+        "substitutions": 6,
+        "deletions": 2,
+        "insertions": 17,
+        "rtf": 0.141,
+        "monotonicity_index": -0.2776,
+        "stalling_ratio": 0.632
+      },
+      "speech": {
+        "wer": 0.2353,
+        "cer": 0.1869,
+        "substitutions": 4,
+        "deletions": 4,
+        "insertions": 4,
+        "rtf": 0.139,
+        "monotonicity_index": 0.5385,
+        "stalling_ratio": 0.378
+      }
+    },
+    "C3_Guided_Attention_Distillation": {
+      "description": "Full Proposed Model: Cross-Entropy + KD + Gaussian Attention Diagonality (gamma=2.5) + Monotonic Centroid Progression (lambda=1.5)",
+      "train_history": [
+        {
+          "loss_total": 18377.9852,
+          "loss_ce": 2.1454,
+          "loss_attn": 0.8221,
+          "loss_mono": 12249.1905,
+          "epoch": 1
+        },
+        {
+          "loss_total": 3871.0014,
+          "loss_ce": 1.9309,
+          "loss_attn": 0.8327,
+          "loss_mono": 2577.9923,
+          "epoch": 2
+        }
+      ],
+      "vocal": {
+        "hypothesis": "trên mắt người thương xanh ngầm lên lông kênh người ta cầu hôn từng giọt lại lâm văn lưng lui lâm ran",
+        "wer": 0.8974,
+        "cer": 0.6724,
+        "substitutions": 18,
+        "deletions": 17,
+        "insertions": 0,
+        "rtf": 0.2747,
+        "monotonicity_index": 0.1741,
+        "stalling_ratio": 0.9535,
+        "attention_path_length": 44
+      },
+      "poly": {
+        "hypothesis": "thanh còn làm mây xanh ngắt cho mắt em buồn trời còn làm lần nào mưa kạt lên mắt người lại lại lại từng giọ đội để lại lại lận giết vấn vai",
+        "wer": 0.5128,
+        "cer": 0.4023,
+        "substitutions": 14,
+        "deletions": 6,
+        "insertions": 0,
+        "rtf": 0.18,
+        "monotonicity_index": 0.1384,
+        "stalling_ratio": 0.9245,
+        "attention_path_length": 54
+      },
+      "speech": {
+        "hypothesis": "đây là bộ dữ liệu âm thany cầu trưng xuất huỳnh tuy cuộc thoạt cuộc tâm thần kxnnn nào nào buộc được lại lửa lửng lứng lác vợ ước ịch luật để lại lại lại những điều nào nhưng hợp hợi tha khổ nhất nhất nhất unk ố �  bum phương nhự �ng lá ngắn bung sax",
+        "wer": 0.9804,
+        "cer": 0.7477,
+        "substitutions": 45,
+        "deletions": 0,
+        "insertions": 5,
+        "rtf": 0.1941,
+        "monotonicity_index": 0.152,
+        "stalling_ratio": 0.9196,
+        "attention_path_length": 113
+      }
+    }
+  }
+}

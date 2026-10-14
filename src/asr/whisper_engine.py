@@ -31,10 +31,11 @@ class WhisperEngine:
         self.model_id = model_id
         self.device = device
         self.lora_dir = Path(lora_dir) if lora_dir else None
-        if "lora" in model_id.lower() and not self.lora_dir:
-            default_lora = Path(src_dir).parent / "models" / "lora_adapter_phowhisper"
-            if default_lora.exists():
-                self.lora_dir = default_lora
+        if not self.lora_dir:
+            if ("distill" in model_id.lower() or "phase ix" in model_id.lower()) and (Path(src_dir).parent / "models" / "distilled_adapter_phowhisper").exists():
+                self.lora_dir = Path(src_dir).parent / "models" / "distilled_adapter_phowhisper"
+            elif "lora" in model_id.lower() and (Path(src_dir).parent / "models" / "lora_adapter_phowhisper").exists():
+                self.lora_dir = Path(src_dir).parent / "models" / "lora_adapter_phowhisper"
         self._pipe = None
         self._lora_model = None
         self._processor = None
