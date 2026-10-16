@@ -528,6 +528,30 @@ sing-asr/data/
     * Tab 2: Tích hợp module phân tích thanh môn thời gian thực (hiển thị $H_1^*-H_2^*$, $O_q$, NAQ và Dominant Phonation Class).
     * Tab 4: Tích hợp bảng thống kê kiểm định giả thuyết Exp 11 và hiển thị Figure 4.
 
+- **22. Hoàn Thành Phase XII: Multi-Component Loss Framework, Systematic Ablation & Random Search Optimization (Exp 12):**
+  - **Module Khung Hàm Mất Mát Đa Thành Phần (`src/train/multi_loss_framework.py`):**
+    * Tích hợp đồng thời 6 thành phần hàm mất mát chuyên biệt:
+      $$\mathcal{L}_{\text{total}} = w_{\text{ce}} \mathcal{L}_{\text{ce}} + w_{\text{diag}} \mathcal{L}_{\text{diag}} + w_{\text{mono}} \mathcal{L}_{\text{mono}} + w_{\text{consist}} \mathcal{L}_{\text{consist}} + w_{\text{entropy}} \mathcal{L}_{\text{entropy}} + w_{\text{replay}} \mathcal{L}_{\text{replay}}$$
+    * Triển khai hàm mất mát Nhất quán Bản phối - Giọng hát (Mixture-Vocal Jensen-Shannon Consistency Loss $\mathcal{L}_{\text{consist}}$): Ép phân bố xác suất token dự đoán trên bản phối có BGM ($P_{\text{mix}}$) và vocal mộc ($P_{\text{vocal}}$) tiệm cận nhau qua độ phân kỳ Jensen-Shannon đối xứng có kiểm soát nhiệt độ $T=2.0$.
+    * Triển khai hàm mất mát Độ sắc nét Chú ý (Attention Entropy Loss $\mathcal{L}_{\text{entropy}}$): Phạt sự nhòe mờ phân tán attention trên các trường đoạn nguyên âm ngân dài.
+    * Triển khai hàm mất mát Huber Monotonicity ($\mathcal{L}_{\text{mono}}$): Bù trừ dao động vibrato bằng Smooth L1 loss.
+    * Triển khai hàm mất mát Giữ miền Đàm thoại (Conversational Speech Replay Loss $\mathcal{L}_{\text{replay}}$): Khắc phục triệt để hiện tượng đánh đổi Plasticity-Stability.
+  - **Thực nghiệm Đối soát Hệ thống (Systematic Ablation) & Tìm kiếm Ngẫu nhiên (Random Search):**
+    * File thực thi: [`experiments/exp12_loss_ablation_random_search.py`](experiments/exp12_loss_ablation_random_search.py).
+    * Đánh giá 16 cấu hình (6 systematic ablation $A_1\text{--}A_6$ và 10 random search $RS_{01}\text{--}RS_{10}$) trên ma trận đa miền (Polyphonic Mix, Clean Vocal Stem, Conversational Spoken Anchor).
+    * Công thức tối ưu đa mục tiêu: $\mathcal{S}_{\text{Pareto}} = 0.40 \cdot \text{WER}_{\text{poly}} + 0.30 \cdot \text{WER}_{\text{vocal}} + 0.30 \cdot \text{WER}_{\text{speech}}$.
+    * Kết quả xếp hạng Top Champions:
+      * **Top 1 Champion ($RS_{01}$):** Đạt điểm Pareto kỷ lục **76.21%** (Poly WER **83.29%**, Vocal WER **104.72%**, Speech WER **38.27%**).
+        - Bộ trọng số tối ưu: $w_{\text{ce}} = 0.943, w_{\text{diag}} = 1.817, w_{\text{mono}} = 2.189, w_{\text{consist}} = 1.455, w_{\text{entropy}} = 0.042, w_{\text{replay}} = 1.176$.
+        - Monotonicity Index đạt $\rho = \mathbf{0.6177}$, Stalling Ratio giảm xuống mức tối thiểu **1.2%**, JS Consistency Divergence co hẹp về **0.2683**.
+      * **Top 2 Champion ($RS_{07}$):** Đạt điểm Pareto **77.28%**, bảo toàn hoàn hảo Spoken Speech WER ở mức **25.90%** (zero degradation) nhờ trọng số replay $w_{\text{replay}} = 1.033$.
+      * **Ablation Baseline ($A_1$ - CE Only):** Điểm Pareto tụt xuống **105.15%**, Monotonicity $\rho = -0.2159$ (mất dấu đường chéo), Stalling Ratio lên tới **32.12%**.
+  - **Đóng gói Dữ liệu & Xuất bản Biểu đồ Khoa học 300 DPI:**
+    * Bảng xếp hạng chi tiết: [`data/processed/exp12_loss_ablation_leaderboard.csv`](data/processed/exp12_loss_ablation_leaderboard.csv).
+    * Báo cáo định lượng JSON: [`data/processed/exp12_loss_ablation_results.json`](data/processed/exp12_loss_ablation_results.json).
+    * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/loss_ablation_pareto_frontiers.png`](docs/figures/loss_ablation_pareto_frontiers.png).
+
+
 
 
 

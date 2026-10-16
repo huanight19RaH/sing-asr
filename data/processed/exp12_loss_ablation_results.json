@@ -1,0 +1,655 @@
+{
+  "experiment": "Exp 12: Multi-Component Loss Ablation & Random Search Optimization",
+  "phase": "Phase XII",
+  "lead_researcher": "Thai Hung Nguyen",
+  "date": "2026-10-16",
+  "total_configurations_tested": 16,
+  "champion_configuration": {
+    "config_name": "RS_01",
+    "weights": {
+      "name": "RS_01",
+      "w_ce": 0.943,
+      "w_diag": 1.817,
+      "w_mono": 2.189,
+      "w_consist": 1.455,
+      "w_entropy": 0.042,
+      "w_replay": 1.176,
+      "sigma": 0.15,
+      "min_progression": 0.5,
+      "temperature": 2.0,
+      "label_smoothing": 0.05
+    },
+    "polyphonic_mix": {
+      "wer": 83.29,
+      "cer": 62.31,
+      "insertions": 0,
+      "deletions": 4
+    },
+    "vocal_stem": {
+      "wer": 104.72,
+      "cer": 74.82,
+      "insertions": 0,
+      "deletions": 6
+    },
+    "spoken_speech": {
+      "wer": 38.27,
+      "cer": 25.21
+    },
+    "attention_dynamics": {
+      "monotonicity_rho": 0.6177,
+      "stalling_ratio_pct": 1.2
+    },
+    "consistency_js_div": 0.2683,
+    "pareto_score": 76.21
+  },
+  "configurations": [
+    {
+      "config_name": "RS_01",
+      "weights": {
+        "name": "RS_01",
+        "w_ce": 0.943,
+        "w_diag": 1.817,
+        "w_mono": 2.189,
+        "w_consist": 1.455,
+        "w_entropy": 0.042,
+        "w_replay": 1.176,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 83.29,
+        "cer": 62.31,
+        "insertions": 0,
+        "deletions": 4
+      },
+      "vocal_stem": {
+        "wer": 104.72,
+        "cer": 74.82,
+        "insertions": 0,
+        "deletions": 6
+      },
+      "spoken_speech": {
+        "wer": 38.27,
+        "cer": 25.21
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.6177,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.2683,
+      "pareto_score": 76.21
+    },
+    {
+      "config_name": "RS_07",
+      "weights": {
+        "name": "RS_07",
+        "w_ce": 0.782,
+        "w_diag": 1.927,
+        "w_mono": 0.799,
+        "w_consist": 1.406,
+        "w_entropy": 0.159,
+        "w_replay": 1.033,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 89.86,
+        "cer": 67.54,
+        "insertions": 0,
+        "deletions": 4
+      },
+      "vocal_stem": {
+        "wer": 111.91,
+        "cer": 81.17,
+        "insertions": 5,
+        "deletions": 11
+      },
+      "spoken_speech": {
+        "wer": 25.9,
+        "cer": 17.2
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.3835,
+        "stalling_ratio_pct": 5.57
+      },
+      "consistency_js_div": 0.259,
+      "pareto_score": 77.28
+    },
+    {
+      "config_name": "RS_02",
+      "weights": {
+        "name": "RS_02",
+        "w_ce": 0.94,
+        "w_diag": 2.858,
+        "w_mono": 0.582,
+        "w_consist": 1.011,
+        "w_entropy": 0.136,
+        "w_replay": 1.127,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 92.76,
+        "cer": 69.65,
+        "insertions": 0,
+        "deletions": 4
+      },
+      "vocal_stem": {
+        "wer": 105.96,
+        "cer": 76.39,
+        "insertions": 4,
+        "deletions": 10
+      },
+      "spoken_speech": {
+        "wer": 32.32,
+        "cer": 21.48
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.4692,
+        "stalling_ratio_pct": 3.15
+      },
+      "consistency_js_div": 0.3132,
+      "pareto_score": 78.59
+    },
+    {
+      "config_name": "RS_04",
+      "weights": {
+        "name": "RS_04",
+        "w_ce": 0.957,
+        "w_diag": 2.395,
+        "w_mono": 1.968,
+        "w_consist": 0.838,
+        "w_entropy": 0.34,
+        "w_replay": 1.093,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 92.96,
+        "cer": 71.23,
+        "insertions": 0,
+        "deletions": 6
+      },
+      "vocal_stem": {
+        "wer": 95.81,
+        "cer": 69.88,
+        "insertions": 0,
+        "deletions": 6
+      },
+      "spoken_speech": {
+        "wer": 48.8,
+        "cer": 31.58
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.818,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.3308,
+      "pareto_score": 80.57
+    },
+    {
+      "config_name": "RS_08",
+      "weights": {
+        "name": "RS_08",
+        "w_ce": 0.925,
+        "w_diag": 1.437,
+        "w_mono": 2.131,
+        "w_consist": 1.649,
+        "w_entropy": 0.142,
+        "w_replay": 0.488,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 79.88,
+        "cer": 61.85,
+        "insertions": 0,
+        "deletions": 4
+      },
+      "vocal_stem": {
+        "wer": 106.27,
+        "cer": 75.97,
+        "insertions": 1,
+        "deletions": 5
+      },
+      "spoken_speech": {
+        "wer": 60.91,
+        "cer": 40.16
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.5886,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.2492,
+      "pareto_score": 82.11
+    },
+    {
+      "config_name": "A6_Full_Compound",
+      "weights": {
+        "name": "A6_Full_Compound",
+        "w_ce": 1.0,
+        "w_diag": 2.0,
+        "w_mono": 1.2,
+        "w_consist": 1.0,
+        "w_entropy": 0.1,
+        "w_replay": 0.6,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 92.01,
+        "cer": 71.73,
+        "insertions": 0,
+        "deletions": 6
+      },
+      "vocal_stem": {
+        "wer": 108.15,
+        "cer": 76.89,
+        "insertions": 2,
+        "deletions": 7
+      },
+      "spoken_speech": {
+        "wer": 49.75,
+        "cer": 32.26
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.4825,
+        "stalling_ratio_pct": 2.53
+      },
+      "consistency_js_div": 0.3117,
+      "pareto_score": 84.17
+    },
+    {
+      "config_name": "RS_10",
+      "weights": {
+        "name": "RS_10",
+        "w_ce": 0.926,
+        "w_diag": 2.842,
+        "w_mono": 1.31,
+        "w_consist": 1.224,
+        "w_entropy": 0.058,
+        "w_replay": 0.315,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 85.87,
+        "cer": 65.29,
+        "insertions": 0,
+        "deletions": 5
+      },
+      "vocal_stem": {
+        "wer": 102.36,
+        "cer": 73.76,
+        "insertions": 0,
+        "deletions": 8
+      },
+      "spoken_speech": {
+        "wer": 75.81,
+        "cer": 49.02
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.5824,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.2969,
+      "pareto_score": 87.8
+    },
+    {
+      "config_name": "RS_09",
+      "weights": {
+        "name": "RS_09",
+        "w_ce": 0.921,
+        "w_diag": 0.919,
+        "w_mono": 0.74,
+        "w_consist": 0.213,
+        "w_entropy": 0.278,
+        "w_replay": 0.865,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 113.52,
+        "cer": 86.72,
+        "insertions": 11,
+        "deletions": 7
+      },
+      "vocal_stem": {
+        "wer": 122.09,
+        "cer": 88.79,
+        "insertions": 11,
+        "deletions": 9
+      },
+      "spoken_speech": {
+        "wer": 21.82,
+        "cer": 14.32
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.2769,
+        "stalling_ratio_pct": 14.99
+      },
+      "consistency_js_div": 0.4449,
+      "pareto_score": 88.58
+    },
+    {
+      "config_name": "RS_05",
+      "weights": {
+        "name": "RS_05",
+        "w_ce": 0.945,
+        "w_diag": 1.084,
+        "w_mono": 1.327,
+        "w_consist": 0.279,
+        "w_entropy": 0.062,
+        "w_replay": 0.883,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 114.89,
+        "cer": 88.75,
+        "insertions": 9,
+        "deletions": 6
+      },
+      "vocal_stem": {
+        "wer": 117.88,
+        "cer": 83.7,
+        "insertions": 6,
+        "deletions": 9
+      },
+      "spoken_speech": {
+        "wer": 27.6,
+        "cer": 17.23
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.2544,
+        "stalling_ratio_pct": 8.29
+      },
+      "consistency_js_div": 0.4324,
+      "pareto_score": 89.6
+    },
+    {
+      "config_name": "RS_06",
+      "weights": {
+        "name": "RS_06",
+        "w_ce": 0.936,
+        "w_diag": 3.403,
+        "w_mono": 1.017,
+        "w_consist": 0.867,
+        "w_entropy": 0.17,
+        "w_replay": 0.389,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 91.95,
+        "cer": 69.0,
+        "insertions": 0,
+        "deletions": 5
+      },
+      "vocal_stem": {
+        "wer": 102.34,
+        "cer": 74.92,
+        "insertions": 0,
+        "deletions": 9
+      },
+      "spoken_speech": {
+        "wer": 75.43,
+        "cer": 49.45
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.7166,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.3229,
+      "pareto_score": 90.11
+    },
+    {
+      "config_name": "RS_03",
+      "weights": {
+        "name": "RS_03",
+        "w_ce": 0.911,
+        "w_diag": 2.968,
+        "w_mono": 1.276,
+        "w_consist": 0.609,
+        "w_entropy": 0.199,
+        "w_replay": 0.264,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 95.71,
+        "cer": 70.91,
+        "insertions": 0,
+        "deletions": 6
+      },
+      "vocal_stem": {
+        "wer": 99.43,
+        "cer": 72.01,
+        "insertions": 0,
+        "deletions": 8
+      },
+      "spoken_speech": {
+        "wer": 78.47,
+        "cer": 51.84
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.7268,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.3656,
+      "pareto_score": 91.66
+    },
+    {
+      "config_name": "A4_CE_Consistency",
+      "weights": {
+        "name": "A4_CE_Consistency",
+        "w_ce": 1.0,
+        "w_diag": 0.0,
+        "w_mono": 0.0,
+        "w_consist": 1.2,
+        "w_entropy": 0.0,
+        "w_replay": 0.0,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 111.47,
+        "cer": 86.46,
+        "insertions": 9,
+        "deletions": 6
+      },
+      "vocal_stem": {
+        "wer": 145.4,
+        "cer": 104.02,
+        "insertions": 23,
+        "deletions": 12
+      },
+      "spoken_speech": {
+        "wer": 28.01,
+        "cer": 19.02
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": -0.1825,
+        "stalling_ratio_pct": 32.1
+      },
+      "consistency_js_div": 0.3003,
+      "pareto_score": 96.61
+    },
+    {
+      "config_name": "A2_CE_Diagonality",
+      "weights": {
+        "name": "A2_CE_Diagonality",
+        "w_ce": 1.0,
+        "w_diag": 2.0,
+        "w_mono": 0.0,
+        "w_consist": 0.0,
+        "w_entropy": 0.0,
+        "w_replay": 0.0,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 118.9,
+        "cer": 89.98,
+        "insertions": 8,
+        "deletions": 8
+      },
+      "vocal_stem": {
+        "wer": 120.51,
+        "cer": 86.45,
+        "insertions": 10,
+        "deletions": 12
+      },
+      "spoken_speech": {
+        "wer": 55.37,
+        "cer": 36.31
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.165,
+        "stalling_ratio_pct": 13.82
+      },
+      "consistency_js_div": 0.4982,
+      "pareto_score": 100.32
+    },
+    {
+      "config_name": "A5_CE_Diag_Mono",
+      "weights": {
+        "name": "A5_CE_Diag_Mono",
+        "w_ce": 1.0,
+        "w_diag": 2.5,
+        "w_mono": 1.5,
+        "w_consist": 0.0,
+        "w_entropy": 0.0,
+        "w_replay": 0.0,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 113.47,
+        "cer": 85.8,
+        "insertions": 5,
+        "deletions": 7
+      },
+      "vocal_stem": {
+        "wer": 102.61,
+        "cer": 73.86,
+        "insertions": 0,
+        "deletions": 7
+      },
+      "spoken_speech": {
+        "wer": 84.72,
+        "cer": 54.35
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.5451,
+        "stalling_ratio_pct": 1.2
+      },
+      "consistency_js_div": 0.4709,
+      "pareto_score": 101.59
+    },
+    {
+      "config_name": "A1_CE_Only",
+      "weights": {
+        "name": "A1_CE_Only",
+        "w_ce": 1.0,
+        "w_diag": 0.0,
+        "w_mono": 0.0,
+        "w_consist": 0.0,
+        "w_entropy": 0.0,
+        "w_replay": 0.0,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 135.43,
+        "cer": 100.0,
+        "insertions": 18,
+        "deletions": 8
+      },
+      "vocal_stem": {
+        "wer": 143.87,
+        "cer": 104.71,
+        "insertions": 22,
+        "deletions": 12
+      },
+      "spoken_speech": {
+        "wer": 26.07,
+        "cer": 17.2
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": -0.2159,
+        "stalling_ratio_pct": 32.12
+      },
+      "consistency_js_div": 0.4794,
+      "pareto_score": 105.15
+    },
+    {
+      "config_name": "A3_CE_Monotonicity",
+      "weights": {
+        "name": "A3_CE_Monotonicity",
+        "w_ce": 1.0,
+        "w_diag": 0.0,
+        "w_mono": 1.5,
+        "w_consist": 0.0,
+        "w_entropy": 0.0,
+        "w_replay": 0.0,
+        "sigma": 0.15,
+        "min_progression": 0.5,
+        "temperature": 2.0,
+        "label_smoothing": 0.05
+      },
+      "polyphonic_mix": {
+        "wer": 129.93,
+        "cer": 99.66,
+        "insertions": 18,
+        "deletions": 8
+      },
+      "vocal_stem": {
+        "wer": 130.23,
+        "cer": 93.9,
+        "insertions": 12,
+        "deletions": 8
+      },
+      "spoken_speech": {
+        "wer": 47.57,
+        "cer": 30.69
+      },
+      "attention_dynamics": {
+        "monotonicity_rho": 0.0857,
+        "stalling_ratio_pct": 19.43
+      },
+      "consistency_js_div": 0.4851,
+      "pareto_score": 105.31
+    }
+  ]
+}
