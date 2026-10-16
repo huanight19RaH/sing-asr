@@ -3,15 +3,16 @@
 \subsection{Scientific Insights and Theoretical Implications}
 This study established an empirical, mathematically grounded adaptation paradigm for automatic singing voice recognition in tonal languages. Our findings resolve fundamental debates in musical speech processing:
 \begin{enumerate}
-    \item \textbf{Phonation Invariance Resolves Tone Neutralization:} While musical melody overrides the fundamental frequency ($F_0$) contour, glottal source parameters (formant-corrected spectral tilt $H_1^*-H_2^*$ and Open Quotient $O_q$) provide a physical mechanism by which vocal fold constriction preserves lexical tone contrasts. In particular, $87.6\%$ of creaky glottalization cues are preserved in \textit{Ng\~a} and \textit{N\d{a}ng} tones.
-    \item \textbf{Monotonic Chunkwise Alignment Eliminates Latency-Accuracy Trade-Offs:} By replacing quadratic full-sequence attention with Monotonic Chunkwise Attention (MoChA), the decoder eliminates horizontal attention stalling over prolonged vowels. Operating on $160$\,ms chunks, the engine runs at $8.50$\,ms latency ($RTF = 0.1091$) with $98.72\%$ accuracy retention.
-    \item \textbf{Regional Sparsity Overcomes Dialectal Confusion:} Vietnamese singing exhibits deep regional divergences in final consonants and tone mergers. Routing acoustic features dynamically through Northern, Central, and Southern LoRA experts resolves regional lexical confusions without ballooning active inference parameters.
+    \item \textbf{Phonation Invariance and Tone Preservation:} While musical melody overrides the fundamental frequency ($F_0$) contour, glottal source parameters (formant-corrected spectral tilt $H_1^*-H_2^*$ and Open Quotient $O_q$) provide a physical mechanism by which vocal fold constriction preserves lexical tone contrasts. In particular, $87.6\%$ of creaky glottalization cues are preserved in \textit{Ng\~{a}} and \textit{N\d{a}ng} tones.
+    \item \textbf{Monotonic Chunkwise Alignment:} By replacing quadratic full-sequence attention with Monotonic Chunkwise Attention (MoChA), the decoder eliminates horizontal attention stalling over prolonged vowels. Operating on $160$\,ms chunks, the engine runs at $8.50$\,ms latency ($RTF = 0.1091$) with $98.72\%$ accuracy retention.
+    \item \textbf{Regional Sparsity and Dialect Routing:} Vietnamese singing exhibits deep regional divergences in final consonants and tone mergers. Routing acoustic features dynamically through Northern, Central, and Southern LoRA experts resolves regional lexical confusions without ballooning active inference parameters.
 \end{enumerate}
 
 \subsection{Limitations and Future Horizons}
 While our framework establishes substantial reductions in error rates across classic, pop, conversational, and studio acoustics, several avenues remain for ongoing investigation:
 \begin{itemize}
     \item \textbf{Fast-Paced Rap and Hip-Hop:} Extending the framework to rapid rhythmic delivery ($7\text{--}10$ syllables per second) where syllable boundaries compress near the frame hop limit.
+    \item \textbf{Macro Corpus Scaling:} While our 58-clip multi-domain benchmark rigorously isolates physical acoustic phenomena and streaming latency, expanding macro pretraining on the 647-hour VietLyrics dataset will establish broader coverage across Indie, Rock, and highly auto-tuned electronic vocals.
     \item \textbf{Triple-Head Multi-Task Decoding:} Jointly decoding text lyrics, musical notes (MIDI pitch and duration), and lexical tone classes within a unified representation head.
     \item \textbf{Edge Device Optimization:} Quantizing the LoRA-MoE weights to 4-bit INT4 precision for on-device real-time embedded karaoke systems.
 \end{itemize}

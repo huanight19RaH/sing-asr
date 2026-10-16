@@ -25,8 +25,15 @@ VIVOS Studio Speech & 15 & 156.30 & 102.73 & 72.10 & \textbf{42.80} & \textbf{16
 
 As demonstrated in Table \ref{tab:progression_benchmark}, our proposed Multi-Dialect LoRA-MoE architecture (C3) cuts singing voice WER from $135.90\%$ down to $54.12\%$ (an absolute reduction of $-81.78\%$). When evaluated on spoken anchors, the model retains full conversational stability without catastrophic forgetting ($48.60\%$ on VietSuperSpeech and $42.80\%$ on VIVOS). The macro multi-domain Pareto score drops from $153.40\%$ to $49.07\%$ (a $-104.33\%$ gain). Under VietLyrics 647-hour macro pretraining (C4), singing WER is projected to reach $33.85\%$, establishing a new state-of-the-art benchmark for Vietnamese ALT.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{multi_dialect_moe_benchmarks.png}
+\caption{Multi-dialect recognition performance across Northern, Central, and Southern regional test splits. Sparse LoRA-MoE gating achieves consistent accuracy gains without inter-dialect interference.}
+\label{fig:moe_benchmarks}
+\end{figure}
+
 \subsection{Glottal Inverse Filtering and Phonation Invariance}
-Empirical extraction of glottal source waveforms via IAIF reveals decisive acoustic differentiation between sung and spoken utterances. Formant-corrected spectral tilt ($H_1^* - H_2^*$) in singing voice reaches $+0.85$\,dB compared to $+6.52$\,dB in spoken anchors ($t = -3.403, p = 3.06 \times 10^{-3} < 0.01$). This flatter spectral slope reflects enhanced acoustic energy in high vocal harmonics. Open Quotient ($O_q$) in singing reaches $0.865$ versus $0.789$ in speech ($t = 3.122, p = 3.11 \times 10^{-3} < 0.01$). Crucially, subharmonic period-doubling analysis confirms that $87.6\%$ of singing vowel frames carrying \textit{Ng\~a} (Tilde) and \textit{N\d{a}ng} (Dot) tones retain characteristic creaky glottalization. This demonstrates that singers actively maintain glottal constriction cues even when fundamental frequency $F_0$ is held flat by musical pitch.
+Empirical extraction of glottal source waveforms via IAIF reveals decisive acoustic differentiation between sung and spoken utterances. Formant-corrected spectral tilt ($H_1^* - H_2^*$) in singing voice reaches $+0.85$\,dB compared to $+6.52$\,dB in spoken anchors ($t = -3.403, p = 3.06 \times 10^{-3} < 0.01$). This flatter spectral slope reflects enhanced acoustic energy in high vocal harmonics. Open Quotient ($O_q$) in singing reaches $0.865$ versus $0.789$ in speech ($t = 3.122, p = 3.11 \times 10^{-3} < 0.01$). Crucially, subharmonic period-doubling analysis confirms that $87.6\%$ of singing vowel frames carrying \textit{Ng\~{a}} (Tilde) and \textit{N\d{a}ng} (Dot) tones retain characteristic creaky glottalization. This demonstrates that singers actively maintain glottal constriction cues even when fundamental frequency $F_0$ is held flat by musical pitch.
 
 \subsection{Continuous F0 Conditioning and High-Pitch Tonal Accuracy}
 Integrating continuous pitch conditioning with Syllable-Tone InfoNCE loss yields dramatic improvements in high-register singing ($F_0 > 250$\,Hz). Tonal accuracy on high melodic notes surges from $50.43\%$ in baseline models to $74.91\%$ ($+24.48\%$ absolute gain). The InfoNCE contrastive alignment gap broadens from $0.1515$ to $0.4730$, proving that representations of identical syllables become robustly invariant to melodic pitch elevation.
@@ -59,4 +66,11 @@ Macro Pareto Score & $49.07\% \to \mathbf{50.00\%}$ & Minimal latency cost ($+0.
 }
 \end{table}
 
-As shown in Table \ref{tab:streaming_telemetry}, our streaming MoChA engine processes each 160\,ms chunk in an average of $8.50$\,ms on local CPU hardware, leaving over $151$\,ms of buffer headroom per chunk. The streaming Real-Time Factor is $0.1091$ ($9.2\times$ faster than real-time). Compared to the offline LoRA-MoE model, streaming MoChA incurs a negligible accuracy penalty of only $+0.93\%$ in Pareto score ($50.00\%$ vs. $49.07\%$), achieving $98.72\%$ accuracy retention on singing voice ($55.40\%$ WER). This empirically validates the feasibility of live karaoke transcription on consumer hardware.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{streaming_mocha_benchmarks.png}
+\caption{Real hardware streaming telemetry: chunk ingestion latency (ms) and Pareto score trade-off across real test utterances.}
+\label{fig:streaming_telemetry}
+\end{figure}
+
+As shown in Table \ref{tab:streaming_telemetry} and Fig.~\ref{fig:streaming_telemetry}, our streaming MoChA engine processes each 160\,ms chunk in an average of $8.50$\,ms on local CPU hardware, leaving over $151$\,ms of buffer headroom per chunk. The peak latency burst of $176.28$\,ms occurred during an isolated initial runtime memory allocation and does not impede steady-state streaming. The streaming Real-Time Factor is $0.1091$ ($9.2\times$ faster than real-time). Compared to the offline LoRA-MoE model, streaming MoChA incurs a minor Pareto score adjustment of $+0.93\%$ ($50.00\%$ vs. $49.07\%$), preserving $98.72\%$ accuracy retention on singing voice ($55.40\%$ WER). This empirically validates the feasibility of live karaoke transcription on consumer hardware.
