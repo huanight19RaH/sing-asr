@@ -490,6 +490,25 @@ sing-asr/data/
     * Kết quả: **STRONG ACCEPT (8.5/10.0)**.
     * Giải trình trọn vẹn 3 chất vấn của Devil's Advocate về (1) Nghịch lý quy mô dữ liệu vi mô 58 items vs. vĩ mô hàng trăm giờ; (2) Bản chất WER 100.43% do dập tắt 90.6% lỗi lặp so với 7.69% trên câu giai điệu chuẩn; (3) Minh bạch bản quyền và trích dẫn 100% các thành phần bên ngoài.
 
+- **20. Khảo Sát Y Văn SOTA 2024–2026 & Xác Lập Lộ Trình Nghiên Cứu Mở Rộng Sâu & Rộng (Phase XI — XIII):**
+  - **Khảo Sát Đột Phá Quốc Tế Mới Nhất:**
+    * *VietLyrics (NUS, 10/2025 - arXiv:2510.22295):* Bộ dữ liệu 647 giờ hát tiếng Việt đầu tiên có căn gióng line-level và đa dạng thể loại. Xác nhận thách thức lớn của Whisper trên giọng hát tiếng Việt (hallucination trong đoạn nhạc dạo và lỗi thanh điệu).
+    * *VietSing (APSIPA ASC 2024 / IEEE 2025) & ViSVS:* Tập dữ liệu tiếng hát tiếng Việt gán nhãn phoneme, nốt nhạc MIDI và đường bao trường độ.
+    * *Mel-Band RoFormer / BS-RoFormer (ISMIR 2024–2025):* Tách vocal SOTA vượt trội Demucs (+2.8 dB SDR).
+    * *Âm học Ngữ âm Phonation Stacking:* Khẳng định thanh điệu tiếng Việt là sự kết hợp giữa $F_0$ và kiểu phát âm thanh môn (glottalization, creaky voice ở thanh Ngã và thanh Nặng). Khi hát, ca sĩ bảo tồn đặc trưng thanh môn dù nốt nhạc kéo phẳng $F_0$.
+  - **3 Hướng Đi Sâu (Depth - Cơ Chế Âm Học & Mô Hình):**
+    1. *Glottal Inverse Filtering (GIF):* Bóc tách luồng xung áp suất thanh môn, trích xuất Open Quotient $O_q$ và Spectral Tilt $H_1^* - H_2^*$ để nhận dạng chính xác thanh Ngã và Nặng khi hát.
+    2. *Điều kiện hóa Cao độ RMVPE & Tương phản Bất biến Giai điệu (InfoNCE):* Ép biểu diễn tiềm ẩn của âm vị bất biến trước nốt nhạc.
+    3. *Mô hình DDSP làm Khung Tiên Nghiệm:* Phân rã Harmonic vs. Stochastic Noise, loại trừ rung ngân để bảo toàn phụ âm đầu/cuối.
+  - **5 Hướng Đi Rộng (Breadth - Phương Ngữ, Thể Loại & Quy Mô):**
+    1. *Thích ứng Đa Phương ngữ Bắc - Trung - Nam:* Kiến trúc LoRA Mixture of Experts (MoE) xử lý đồng hóa hỏi-ngã và biến đổi phụ âm vần cuối trong nhạc nhẹ/Bolero.
+    2. *Mở rộng Thể loại Phức tạp:* Vietnamese Rap/Hip-Hop ($7\text{--}10$ âm tiết/giây), R&B Melisma, và xử lý Autotune/Reverb.
+    3. *Học Đa Nhiệm (Triple-Head Decoder):* Đồng thời trích xuất Lời (Text) + Nốt nhạc (MIDI) + Thanh điệu (6 thanh).
+    4. *Streaming Low-Latency MoChA:* Chạy chữ trực tiếp live concert/karaoke với độ trễ $<200$ ms.
+    5. *Mở rộng Vĩ mô Trên Kaggle GPU:* Kết hợp VietLyrics 647h + VietSuperSpeech 1,000h + Common Voice 27.0 + VietSing.
+  - **Báo cáo Chi Tiết:** Đã lưu trữ tại [`deep_audio_processing_and_future_research_roadmap.md`](file:///C:/Users/hungn/.gemini/antigravity-ide/brain/993be219-ecc6-4d53-b658-fe6e73284329/deep_audio_processing_and_future_research_roadmap.md).
+
+
 
 
 
