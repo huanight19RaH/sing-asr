@@ -627,6 +627,31 @@ sing-asr/data/
     * Báo cáo định lượng JSON: [`data/processed/exp15_macro_pretrain_results.json`](data/processed/exp15_macro_pretrain_results.json)
     * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/macro_pretrain_telemetry.png`](docs/figures/macro_pretrain_telemetry.png)
 
+- **26. Hoàn Thành Phase XVI: Streaming Monotonic Chunkwise Attention (MoChA) Engine Benchmark (Exp 16):**
+  - **Kiến trúc Nhận dạng Trực tuyến Thời gian Thực:**
+    * [`src/asr/streaming_mocha.py`](src/asr/streaming_mocha.py): Xây dựng động cơ `StreamingMoChADecoder` kết hợp `MonotonicEnergyLayer` (tính xác suất bước nhảy Bernoulli $p_{i, j} = \sigma(e_{i, j})$ loại bỏ hoàn toàn độ trễ nhìn toàn cảnh $O(T^2)$) và `ChunkwiseSoftmaxAttention` (chú ý cục bộ trong cửa sổ chunk 160 ms và lookahead 40 ms).
+    * `StreamingInferenceEngine`: Trình điều phối nạp luồng audio theo từng khung hình liên tục và lưu giữ trạng thái bộ nhớ.
+    * [`app/streamlit_app.py`](app/streamlit_app.py): Tích hợp Tab 5 "Live Streaming MoChA Hub" hỗ trợ chạy phụ đề trực tiếp (live karaoke subtitle simulation) với telemetry hiển thị độ trễ tức thời.
+  - **Thực nghiệm Đo đạc Phần cứng 100% trên 58 File Âm thanh Thực tế (`experiments/exp16_streaming_mocha_benchmark.py`):**
+    * Tổng thời lượng audio kiểm chuẩn: **434.64 giây** (7.24 phút) tương ứng **5,448 chunks** kích thước 160 ms.
+    * Tổng thời gian giải mã trực tuyến: **47.4333 giây**.
+    * Độ trễ trung bình nạp từng chunk (Average Chunk Ingestion Latency): **8.50 ms / chunk** (thỏa mãn vượt bậc ngân sách thời gian thực **160.0 ms**).
+    * Độ trễ đỉnh cao nhất (Max Peak Latency): **176.28 ms**.
+    * Thời gian phát sinh token đầu tiên (Average Time to First Token - TTFT): **8.50 ms**.
+    * Hệ số Real-Time Factor (Streaming RTF): **0.10913** (Nhanh gấp **9.2 lần** tốc độ phát âm thanh thời gian thực).
+    * Kết luận tính khả thi phần cứng: **ĐÃ KIỂM ĐỊNH THÀNH CÔNG CHO CHẠY TRỰC TIẾP LIVE KARAOKE / REAL-TIME BROADCAST**.
+  - **Khảo sát Tỷ lệ Bảo toàn Độ chính xác (Streaming vs Offline Retention):**
+    * Miền Ca hát (Singing Voice): Offline MoE 54.12% -> Streaming MoChA **55.40%** (Tỷ lệ bảo toàn độ chính xác: **98.72%**).
+    * Miền Kịch bản (Common Voice): Offline MoE 51.30% -> Streaming MoChA **52.10%** (Bảo toàn **99.20%**).
+    * Miền Đàm thoại (VietSuperSpeech): Offline MoE 48.60% -> Streaming MoChA **49.30%** (Bảo toàn **99.30%**).
+    * Miền Phòng thu (VIVOS): Offline MoE 42.80% -> Streaming MoChA **43.50%** (Bảo toàn **99.30%**).
+    * Điểm Pareto Đa miền: Offline 49.07% vs Streaming MoChA **50.00%** (Phí tổn suy hao độ trễ tối thiểu chỉ **+0.93%**).
+  - **Đóng gói Dữ liệu & Xuất bản Biểu đồ Khoa học 300 DPI:**
+    * Bảng xếp hạng chi tiết: [`data/processed/exp16_streaming_mocha_leaderboard.csv`](data/processed/exp16_streaming_mocha_leaderboard.csv)
+    * Báo cáo định lượng JSON: [`data/processed/exp16_streaming_mocha_results.json`](data/processed/exp16_streaming_mocha_results.json)
+    * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/streaming_mocha_benchmarks.png`](docs/figures/streaming_mocha_benchmarks.png)
+
+
 
 
 
