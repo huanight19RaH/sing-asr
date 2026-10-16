@@ -1,0 +1,5 @@
+Condition_ID,Condition_Name,Pareto_Score_Pct,Polyphonic_WER_Pct,Polyphonic_CER_Pct,Vocal_Stem_WER_Pct,Vocal_Stem_CER_Pct,Spoken_Speech_WER_Pct,High_Pitch_Tone_Accuracy_Pct,Positive_Similarity,Negative_Similarity,Alignment_Gap
+C0_Champion_Baseline,Phase XII Champion (No Pitch Conditioning),76.15,82.74,61.23,105.24,74.72,38.27,50.43,0.5359,0.3844,0.1515
+C1_Pitch_Additive,Additive Pitch-Conditioned Encoder,72.62,78.12,57.81,97.78,69.42,40.11,58.17,0.6223,0.416,0.2063
+C2_Pitch_Gated,Gated Pitch-Conditioned Encoder,68.94,75.21,55.66,93.34,66.27,36.19,64.41,0.6696,0.3684,0.3012
+C3_Pitch_Gated_InfoNCE,Proposed Phase XIII: Gated Pitch + Syllable InfoNCE,62.82,68.43,50.64,86.37,61.32,31.78,74.91,0.8026,0.3296,0.473

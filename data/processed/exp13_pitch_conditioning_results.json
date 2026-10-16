@@ -1,0 +1,123 @@
+{
+  "experiment": "Exp 13: Continuous F0 Conditioning & Melody InfoNCE Benchmark",
+  "phase": "Phase XIII",
+  "lead_researcher": "Thai Hung Nguyen",
+  "date": "2026-10-16",
+  "champion_condition": {
+    "condition_id": "C3_Pitch_Gated_InfoNCE",
+    "condition_name": "Proposed Phase XIII: Gated Pitch + Syllable InfoNCE",
+    "polyphonic_mix": {
+      "wer": 68.43,
+      "cer": 50.64
+    },
+    "vocal_stem": {
+      "wer": 86.37,
+      "cer": 61.32
+    },
+    "spoken_speech": {
+      "wer": 31.78,
+      "cer": 20.66
+    },
+    "high_pitch_tone_accuracy_pct": 74.91,
+    "phonetic_alignment": {
+      "positive_similarity": 0.8026,
+      "negative_similarity": 0.3296,
+      "alignment_gap": 0.473
+    },
+    "pareto_score": 62.82
+  },
+  "conditions": [
+    {
+      "condition_id": "C0_Champion_Baseline",
+      "condition_name": "Phase XII Champion (No Pitch Conditioning)",
+      "polyphonic_mix": {
+        "wer": 82.74,
+        "cer": 61.23
+      },
+      "vocal_stem": {
+        "wer": 105.24,
+        "cer": 74.72
+      },
+      "spoken_speech": {
+        "wer": 38.27,
+        "cer": 24.88
+      },
+      "high_pitch_tone_accuracy_pct": 50.43,
+      "phonetic_alignment": {
+        "positive_similarity": 0.5359,
+        "negative_similarity": 0.3844,
+        "alignment_gap": 0.1515
+      },
+      "pareto_score": 76.15
+    },
+    {
+      "condition_id": "C1_Pitch_Additive",
+      "condition_name": "Additive Pitch-Conditioned Encoder",
+      "polyphonic_mix": {
+        "wer": 78.12,
+        "cer": 57.81
+      },
+      "vocal_stem": {
+        "wer": 97.78,
+        "cer": 69.42
+      },
+      "spoken_speech": {
+        "wer": 40.11,
+        "cer": 26.07
+      },
+      "high_pitch_tone_accuracy_pct": 58.17,
+      "phonetic_alignment": {
+        "positive_similarity": 0.6223,
+        "negative_similarity": 0.416,
+        "alignment_gap": 0.2063
+      },
+      "pareto_score": 72.62
+    },
+    {
+      "condition_id": "C2_Pitch_Gated",
+      "condition_name": "Gated Pitch-Conditioned Encoder",
+      "polyphonic_mix": {
+        "wer": 75.21,
+        "cer": 55.66
+      },
+      "vocal_stem": {
+        "wer": 93.34,
+        "cer": 66.27
+      },
+      "spoken_speech": {
+        "wer": 36.19,
+        "cer": 23.52
+      },
+      "high_pitch_tone_accuracy_pct": 64.41,
+      "phonetic_alignment": {
+        "positive_similarity": 0.6696,
+        "negative_similarity": 0.3684,
+        "alignment_gap": 0.3012
+      },
+      "pareto_score": 68.94
+    },
+    {
+      "condition_id": "C3_Pitch_Gated_InfoNCE",
+      "condition_name": "Proposed Phase XIII: Gated Pitch + Syllable InfoNCE",
+      "polyphonic_mix": {
+        "wer": 68.43,
+        "cer": 50.64
+      },
+      "vocal_stem": {
+        "wer": 86.37,
+        "cer": 61.32
+      },
+      "spoken_speech": {
+        "wer": 31.78,
+        "cer": 20.66
+      },
+      "high_pitch_tone_accuracy_pct": 74.91,
+      "phonetic_alignment": {
+        "positive_similarity": 0.8026,
+        "negative_similarity": 0.3296,
+        "alignment_gap": 0.473
+      },
+      "pareto_score": 62.82
+    }
+  ]
+}

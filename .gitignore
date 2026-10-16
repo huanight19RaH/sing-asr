@@ -24,7 +24,8 @@ data/processed/segments/
 
 # Checkpoints & Model weights
 checkpoints/
-models/
+/models/
+!src/models/
 *.pt
 *.pth
 *.bin
