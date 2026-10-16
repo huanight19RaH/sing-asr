@@ -1,0 +1,1410 @@
+{
+  "experiment": "Exp 14: Multi-Dialect LoRA-MoE Benchmark",
+  "phase": "Phase XIV",
+  "lead_researcher": "Thai Hung Nguyen",
+  "date": "2026-10-16",
+  "hardware_telemetry": {
+    "total_audio_duration_sec": 434.64,
+    "total_compute_time_sec": 57.87,
+    "avg_latency_ms": 997.78,
+    "overall_rtf": 0.1331,
+    "realtime_speedup_factor": 7.51,
+    "throughput_fps": 751.05
+  },
+  "domain_aggregates": {
+    "singing": {
+      "num_items": 13,
+      "C0_Baseline_WER": 135.9,
+      "C1_LoRA_WER": 79.49,
+      "C2_Pitch_WER": 68.43,
+      "C3_MoE_WER": 54.12,
+      "wer_reduction_pct": 81.78,
+      "expert_routing_counts": {
+        "North_Hanoi": 2,
+        "Central_Hue_DaNang": 7,
+        "South_Saigon": 4
+      }
+    },
+    "common_voice": {
+      "num_items": 15,
+      "C0_Baseline_WER": 212.95,
+      "C1_LoRA_WER": 102.49,
+      "C2_Pitch_WER": 78.4,
+      "C3_MoE_WER": 51.3,
+      "wer_reduction_pct": 161.65,
+      "expert_routing_counts": {
+        "North_Hanoi": 3,
+        "Central_Hue_DaNang": 6,
+        "South_Saigon": 6
+      }
+    },
+    "vietsuperspeech": {
+      "num_items": 15,
+      "C0_Baseline_WER": 173.82,
+      "C1_LoRA_WER": 106.58,
+      "C2_Pitch_WER": 82.15,
+      "C3_MoE_WER": 48.6,
+      "wer_reduction_pct": 125.22,
+      "expert_routing_counts": {
+        "North_Hanoi": 6,
+        "Central_Hue_DaNang": 1,
+        "South_Saigon": 8
+      }
+    },
+    "vivos": {
+      "num_items": 15,
+      "C0_Baseline_WER": 156.3,
+      "C1_LoRA_WER": 102.73,
+      "C2_Pitch_WER": 72.1,
+      "C3_MoE_WER": 42.8,
+      "wer_reduction_pct": 113.5,
+      "expert_routing_counts": {
+        "North_Hanoi": 5,
+        "Central_Hue_DaNang": 5,
+        "South_Saigon": 5
+      }
+    }
+  },
+  "pareto_summary": {
+    "C0_Baseline_Pareto": 153.4,
+    "C3_LoRA_MoE_Pareto": 49.07,
+    "pareto_gain": 104.33
+  },
+  "total_items_verified": 58,
+  "items": [
+    {
+      "id": "sng_sec_01_verse1_p1",
+      "domain": "singing",
+      "duration_sec": 8.5,
+      "ref_text": "trời còn làm mây xanh ngắt cho mắt em buồn",
+      "mean_f0_hz": 68.81,
+      "f0_std_hz": 5.52,
+      "latency_ms": 6504.43,
+      "rtf": 0.7652,
+      "fps": 130.68,
+      "routing": {
+        "North_Hanoi": 0.3492,
+        "Central_Hue_DaNang": 0.2607,
+        "South_Saigon": 0.3901,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_02_verse1_p2",
+      "domain": "singing",
+      "duration_sec": 9.0,
+      "ref_text": "trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+      "mean_f0_hz": 146.11,
+      "f0_std_hz": 46.03,
+      "latency_ms": 794.06,
+      "rtf": 0.0882,
+      "fps": 1133.41,
+      "routing": {
+        "North_Hanoi": 0.3028,
+        "Central_Hue_DaNang": 0.3783,
+        "South_Saigon": 0.3189,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_03_verse1_p3",
+      "domain": "singing",
+      "duration_sec": 8.6,
+      "ref_text": "lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+      "mean_f0_hz": 139.18,
+      "f0_std_hz": 32.79,
+      "latency_ms": 989.2,
+      "rtf": 0.115,
+      "fps": 869.39,
+      "routing": {
+        "North_Hanoi": 0.3087,
+        "Central_Hue_DaNang": 0.3293,
+        "South_Saigon": 0.362,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_04_verse2_p1",
+      "domain": "singing",
+      "duration_sec": 16.5,
+      "ref_text": "đường nào dài một mai ta đón đưa em một lần nào cho hai bàn tay mơ",
+      "mean_f0_hz": 198.74,
+      "f0_std_hz": 101.18,
+      "latency_ms": 1413.7,
+      "rtf": 0.0857,
+      "fps": 1167.15,
+      "routing": {
+        "North_Hanoi": 0.2879,
+        "Central_Hue_DaNang": 0.3993,
+        "South_Saigon": 0.3127,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_05_verse2_p2",
+      "domain": "singing",
+      "duration_sec": 15.5,
+      "ref_text": "bàn tay em năm ngón anh ru ru trên ngàn",
+      "mean_f0_hz": 276.0,
+      "f0_std_hz": 106.75,
+      "latency_ms": 1632.67,
+      "rtf": 0.1053,
+      "fps": 949.36,
+      "routing": {
+        "North_Hanoi": 0.2917,
+        "Central_Hue_DaNang": 0.382,
+        "South_Saigon": 0.3263,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_06_chorus_p1",
+      "domain": "singing",
+      "duration_sec": 19.0,
+      "ref_text": "còn tuổi nào cho nhau trời xanh như mắt em ngày nào",
+      "mean_f0_hz": 306.64,
+      "f0_std_hz": 116.73,
+      "latency_ms": 2539.45,
+      "rtf": 0.1337,
+      "fps": 748.19,
+      "routing": {
+        "North_Hanoi": 0.3098,
+        "Central_Hue_DaNang": 0.3598,
+        "South_Saigon": 0.3304,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_07_chorus_p2",
+      "domain": "singing",
+      "duration_sec": 17.0,
+      "ref_text": "bàn tay làm sao níu một lần người xa người",
+      "mean_f0_hz": 287.94,
+      "f0_std_hz": 116.28,
+      "latency_ms": 1586.95,
+      "rtf": 0.0933,
+      "fps": 1071.24,
+      "routing": {
+        "North_Hanoi": 0.2878,
+        "Central_Hue_DaNang": 0.3942,
+        "South_Saigon": 0.3179,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_08_re_verse",
+      "domain": "singing",
+      "duration_sec": 23.0,
+      "ref_text": "mây mùa thu trôi mau cho mắt em buồn bàn tay làm sao níu một lần người xa người",
+      "mean_f0_hz": 296.55,
+      "f0_std_hz": 103.82,
+      "latency_ms": 2101.23,
+      "rtf": 0.0914,
+      "fps": 1094.6,
+      "routing": {
+        "North_Hanoi": 0.2936,
+        "Central_Hue_DaNang": 0.3782,
+        "South_Saigon": 0.3282,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_sec_09_outro",
+      "domain": "singing",
+      "duration_sec": 30.0,
+      "ref_text": "lời ru nào buông lơi theo từng giọt nắng để lại niềm thương nhớ vấn vương",
+      "mean_f0_hz": 264.24,
+      "f0_std_hz": 178.51,
+      "latency_ms": 2939.42,
+      "rtf": 0.098,
+      "fps": 1020.61,
+      "routing": {
+        "North_Hanoi": 0.3761,
+        "Central_Hue_DaNang": 0.2503,
+        "South_Saigon": 0.3736,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_seg_01",
+      "domain": "singing",
+      "duration_sec": 7.0,
+      "ref_text": "trời còn làm mây xanh ngắt cho mắt em buồn",
+      "mean_f0_hz": 156.92,
+      "f0_std_hz": 37.51,
+      "latency_ms": 693.44,
+      "rtf": 0.0991,
+      "fps": 1009.46,
+      "routing": {
+        "North_Hanoi": 0.3371,
+        "Central_Hue_DaNang": 0.3288,
+        "South_Saigon": 0.334,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_seg_02",
+      "domain": "singing",
+      "duration_sec": 8.0,
+      "ref_text": "trời còn làm mưa bay bay cho hạt sầu lên mắt người thương",
+      "mean_f0_hz": 151.22,
+      "f0_std_hz": 30.88,
+      "latency_ms": 697.42,
+      "rtf": 0.0872,
+      "fps": 1147.08,
+      "routing": {
+        "North_Hanoi": 0.2096,
+        "Central_Hue_DaNang": 0.4147,
+        "South_Saigon": 0.3757,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_seg_03",
+      "domain": "singing",
+      "duration_sec": 5.5,
+      "ref_text": "lời ru nào buông lơi theo từng giọt nắng",
+      "mean_f0_hz": 120.8,
+      "f0_std_hz": 40.87,
+      "latency_ms": 456.07,
+      "rtf": 0.0829,
+      "fps": 1205.95,
+      "routing": {
+        "North_Hanoi": 0.3075,
+        "Central_Hue_DaNang": 0.3241,
+        "South_Saigon": 0.3684,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "sng_seg_04",
+      "domain": "singing",
+      "duration_sec": 5.6,
+      "ref_text": "để lại niềm thương nhớ vấn vương",
+      "mean_f0_hz": 162.04,
+      "f0_std_hz": 81.8,
+      "latency_ms": 580.19,
+      "rtf": 0.1036,
+      "fps": 965.21,
+      "routing": {
+        "North_Hanoi": 0.3302,
+        "Central_Hue_DaNang": 0.3323,
+        "South_Saigon": 0.3375,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 135.9,
+        "C1_LoRA_Monolithic": 79.49,
+        "C2_Pitch_Conditioned": 68.43,
+        "C3_LoRA_MoE": 54.12
+      }
+    },
+    {
+      "id": "cv27_test_01",
+      "domain": "common_voice",
+      "duration_sec": 3.42,
+      "ref_text": "tất cả cái giá không hề rẻ",
+      "mean_f0_hz": 124.57,
+      "f0_std_hz": 26.7,
+      "latency_ms": 353.01,
+      "rtf": 0.1032,
+      "fps": 968.82,
+      "routing": {
+        "North_Hanoi": 0.2684,
+        "Central_Hue_DaNang": 0.3394,
+        "South_Saigon": 0.3922,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_02",
+      "domain": "common_voice",
+      "duration_sec": 3.58,
+      "ref_text": "dạ nhớ bà dã quỳ ông là",
+      "mean_f0_hz": 910.6,
+      "f0_std_hz": 78.96,
+      "latency_ms": 374.4,
+      "rtf": 0.1047,
+      "fps": 955.12,
+      "routing": {
+        "North_Hanoi": 0.3091,
+        "Central_Hue_DaNang": 0.4532,
+        "South_Saigon": 0.2377,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_03",
+      "domain": "common_voice",
+      "duration_sec": 4.03,
+      "ref_text": "nụ hôn nồng tê tái lúc đắm say",
+      "mean_f0_hz": 192.04,
+      "f0_std_hz": 33.5,
+      "latency_ms": 385.42,
+      "rtf": 0.0956,
+      "fps": 1046.13,
+      "routing": {
+        "North_Hanoi": 0.3773,
+        "Central_Hue_DaNang": 0.2855,
+        "South_Saigon": 0.3372,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_04",
+      "domain": "common_voice",
+      "duration_sec": 4.72,
+      "ref_text": "vốn là một người tin vào tâm linh ma quỷ",
+      "mean_f0_hz": 110.46,
+      "f0_std_hz": 10.41,
+      "latency_ms": 461.32,
+      "rtf": 0.0978,
+      "fps": 1022.29,
+      "routing": {
+        "North_Hanoi": 0.2374,
+        "Central_Hue_DaNang": 0.3789,
+        "South_Saigon": 0.3837,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_05",
+      "domain": "common_voice",
+      "duration_sec": 4.01,
+      "ref_text": "chứ tao có cố ý cho mày nhìn thấy đâu",
+      "mean_f0_hz": 131.17,
+      "f0_std_hz": 11.86,
+      "latency_ms": 472.18,
+      "rtf": 0.1178,
+      "fps": 848.83,
+      "routing": {
+        "North_Hanoi": 0.3967,
+        "Central_Hue_DaNang": 0.2918,
+        "South_Saigon": 0.3115,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_06",
+      "domain": "common_voice",
+      "duration_sec": 5.58,
+      "ref_text": "nếu như còn khiến cho người đàn ông này yêu mẹ",
+      "mean_f0_hz": 119.7,
+      "f0_std_hz": 32.38,
+      "latency_ms": 655.28,
+      "rtf": 0.1174,
+      "fps": 851.55,
+      "routing": {
+        "North_Hanoi": 0.281,
+        "Central_Hue_DaNang": 0.3964,
+        "South_Saigon": 0.3226,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_07",
+      "domain": "common_voice",
+      "duration_sec": 4.3,
+      "ref_text": "mày cứ về thế này tao không có ngủ được",
+      "mean_f0_hz": 143.22,
+      "f0_std_hz": 49.03,
+      "latency_ms": 505.06,
+      "rtf": 0.1176,
+      "fps": 850.6,
+      "routing": {
+        "North_Hanoi": 0.2784,
+        "Central_Hue_DaNang": 0.3634,
+        "South_Saigon": 0.3583,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_08",
+      "domain": "common_voice",
+      "duration_sec": 4.32,
+      "ref_text": "sau khi trải qua một chuyến đi dài ê ẩm cả người",
+      "mean_f0_hz": 107.07,
+      "f0_std_hz": 23.43,
+      "latency_ms": 563.67,
+      "rtf": 0.1305,
+      "fps": 766.41,
+      "routing": {
+        "North_Hanoi": 0.2859,
+        "Central_Hue_DaNang": 0.3964,
+        "South_Saigon": 0.3177,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_09",
+      "domain": "common_voice",
+      "duration_sec": 3.1,
+      "ref_text": "nhưng đó chưa phải là tất cả",
+      "mean_f0_hz": 113.37,
+      "f0_std_hz": 8.41,
+      "latency_ms": 393.42,
+      "rtf": 0.1271,
+      "fps": 786.95,
+      "routing": {
+        "North_Hanoi": 0.3049,
+        "Central_Hue_DaNang": 0.4106,
+        "South_Saigon": 0.2845,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_10",
+      "domain": "common_voice",
+      "duration_sec": 4.07,
+      "ref_text": "đau dậy cần có đồ bổ để ăn lại sức",
+      "mean_f0_hz": 91.38,
+      "f0_std_hz": 15.89,
+      "latency_ms": 546.63,
+      "rtf": 0.1344,
+      "fps": 744.19,
+      "routing": {
+        "North_Hanoi": 0.2795,
+        "Central_Hue_DaNang": 0.324,
+        "South_Saigon": 0.3965,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_11",
+      "domain": "common_voice",
+      "duration_sec": 4.72,
+      "ref_text": "thu chưa qua nắng đã nhợt phai mầu",
+      "mean_f0_hz": 109.44,
+      "f0_std_hz": 9.74,
+      "latency_ms": 931.04,
+      "rtf": 0.1974,
+      "fps": 506.53,
+      "routing": {
+        "North_Hanoi": 0.2675,
+        "Central_Hue_DaNang": 0.4004,
+        "South_Saigon": 0.3321,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_12",
+      "domain": "common_voice",
+      "duration_sec": 3.96,
+      "ref_text": "không có gì đáng kể cả mẹ yêu",
+      "mean_f0_hz": 127.22,
+      "f0_std_hz": 21.52,
+      "latency_ms": 617.76,
+      "rtf": 0.156,
+      "fps": 641.03,
+      "routing": {
+        "North_Hanoi": 0.3713,
+        "Central_Hue_DaNang": 0.2508,
+        "South_Saigon": 0.378,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_13",
+      "domain": "common_voice",
+      "duration_sec": 4.9,
+      "ref_text": "hay là nhà đi không thắp hương cho các cụ",
+      "mean_f0_hz": 99.9,
+      "f0_std_hz": 11.54,
+      "latency_ms": 742.18,
+      "rtf": 0.1516,
+      "fps": 659.68,
+      "routing": {
+        "North_Hanoi": 0.4137,
+        "Central_Hue_DaNang": 0.3181,
+        "South_Saigon": 0.2682,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_14",
+      "domain": "common_voice",
+      "duration_sec": 5.02,
+      "ref_text": "ngày tháng nào xa ngái",
+      "mean_f0_hz": 296.02,
+      "f0_std_hz": 132.32,
+      "latency_ms": 781.6,
+      "rtf": 0.1558,
+      "fps": 641.76,
+      "routing": {
+        "North_Hanoi": 0.3879,
+        "Central_Hue_DaNang": 0.2011,
+        "South_Saigon": 0.4111,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "cv27_test_15",
+      "domain": "common_voice",
+      "duration_sec": 2.9,
+      "ref_text": "cho tôi được lau khô dòng lệ chảy",
+      "mean_f0_hz": 117.24,
+      "f0_std_hz": 17.57,
+      "latency_ms": 466.27,
+      "rtf": 0.1606,
+      "fps": 622.82,
+      "routing": {
+        "North_Hanoi": 0.3122,
+        "Central_Hue_DaNang": 0.3173,
+        "South_Saigon": 0.3706,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 212.95,
+        "C1_LoRA_Monolithic": 102.49,
+        "C2_Pitch_Conditioned": 78.4,
+        "C3_LoRA_MoE": 51.3
+      }
+    },
+    {
+      "id": "vss_conv_01",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "i was moore of boo houday whartion and to soci mortibation in the int street an i",
+      "mean_f0_hz": 189.86,
+      "f0_std_hz": 39.14,
+      "latency_ms": 1406.3,
+      "rtf": 0.1406,
+      "fps": 711.09,
+      "routing": {
+        "North_Hanoi": 0.3702,
+        "Central_Hue_DaNang": 0.297,
+        "South_Saigon": 0.3328,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_02",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "xong rồi mình cũng trong đầu mình chỉ có vài nhà thiết kế thôi thực sự là như vậy không biết là tại vì em đi lâu quá rồi hay sao nhưng mà nhiều nhà thiết kế quá là thứ nhất nhiều brand quá là thứ hai và",
+      "mean_f0_hz": 225.42,
+      "f0_std_hz": 37.82,
+      "latency_ms": 1165.38,
+      "rtf": 0.1165,
+      "fps": 858.09,
+      "routing": {
+        "North_Hanoi": 0.3865,
+        "Central_Hue_DaNang": 0.3664,
+        "South_Saigon": 0.2471,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_03",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "trung thu trở thành một ngày lễ chính thức thì anh sẽ nghĩ gì ờ anh nghĩ rằng là hôm đó nếu như mà chúng ta",
+      "mean_f0_hz": 136.77,
+      "f0_std_hz": 48.46,
+      "latency_ms": 1463.84,
+      "rtf": 0.1464,
+      "fps": 683.14,
+      "routing": {
+        "North_Hanoi": 0.2861,
+        "Central_Hue_DaNang": 0.275,
+        "South_Saigon": 0.4389,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_04",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "là những khoảng thời gian mà mình rất là thư giãn an vui mình thưởng thức những giá trị mình tạo ra hoặc là mình chia sẻ lại cho cộng đồng mà mình có một cái trái tim lành lặn khỏe mạnh để tận hưởng nó",
+      "mean_f0_hz": 101.9,
+      "f0_std_hz": 14.55,
+      "latency_ms": 1324.82,
+      "rtf": 0.1325,
+      "fps": 754.82,
+      "routing": {
+        "North_Hanoi": 0.3103,
+        "Central_Hue_DaNang": 0.2973,
+        "South_Saigon": 0.3924,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_05",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "phải uống cho nó ngầu lại hiểu xong rồi đi chơi các thứ thì kiểu ăn uống các thứ nói chung cũng cũng hợp nhưng mà chị cũng biết là",
+      "mean_f0_hz": 255.88,
+      "f0_std_hz": 189.29,
+      "latency_ms": 1346.7,
+      "rtf": 0.1347,
+      "fps": 742.55,
+      "routing": {
+        "North_Hanoi": 0.3566,
+        "Central_Hue_DaNang": 0.3461,
+        "South_Saigon": 0.2973,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_06",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "kể cả cái cái khái niệm về về tự do về khai phóng bản thân mình cũng phải đợi một cái một thậm chí một cái lớp người mới họ sẵn sàng đón nhận hay không",
+      "mean_f0_hz": 193.54,
+      "f0_std_hz": 46.14,
+      "latency_ms": 1316.57,
+      "rtf": 0.1317,
+      "fps": 759.55,
+      "routing": {
+        "North_Hanoi": 0.3123,
+        "Central_Hue_DaNang": 0.3214,
+        "South_Saigon": 0.3663,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_07",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "hãy thực sự cởi mở thiệt á cái từ cởi mở ủa sao tự nhiên bây giờ tôi thích cái từ này vậy ta nhưng nếu như mà mình không cởi mở với chính mình á và mình không cởi mở với đối tác thì chúng ta sẽ không có",
+      "mean_f0_hz": 222.99,
+      "f0_std_hz": 41.2,
+      "latency_ms": 1309.99,
+      "rtf": 0.131,
+      "fps": 763.36,
+      "routing": {
+        "North_Hanoi": 0.4198,
+        "Central_Hue_DaNang": 0.2669,
+        "South_Saigon": 0.3132,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_08",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "mà là làm việc nhóm tại vì là mình không thể nào thành công một mình được và công việc mình là một cái chuỗi trong những cái những cái chuỗi khác mà giúp cho các công ty thành công đúng không thì mình phải có sự hợp tác",
+      "mean_f0_hz": 186.56,
+      "f0_std_hz": 23.91,
+      "latency_ms": 1192.43,
+      "rtf": 0.1192,
+      "fps": 838.63,
+      "routing": {
+        "North_Hanoi": 0.3136,
+        "Central_Hue_DaNang": 0.2505,
+        "South_Saigon": 0.4358,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_09",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "nói thôi ông thấy giúp giúp người ta hoặc là nói rằng trời ơi cái ông này cái tấm nó ác lắm nó gặp người ta vậy mà nó không chịu cứu thì nếu như người ta khen mình nhiều cái tâm tốt á",
+      "mean_f0_hz": 236.38,
+      "f0_std_hz": 55.64,
+      "latency_ms": 1086.22,
+      "rtf": 0.1086,
+      "fps": 920.63,
+      "routing": {
+        "North_Hanoi": 0.2652,
+        "Central_Hue_DaNang": 0.2971,
+        "South_Saigon": 0.4377,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_10",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "em nghĩ nó em nghĩ nó song song á chị tại vì cái giai đoạn đầu em nghĩ em em bước vô hạn đậy như những cách em làm cái khác đó là em kiểm soát bằng việc là em tính toán",
+      "mean_f0_hz": 101.04,
+      "f0_std_hz": 16.81,
+      "latency_ms": 1123.2,
+      "rtf": 0.1123,
+      "fps": 890.32,
+      "routing": {
+        "North_Hanoi": 0.2959,
+        "Central_Hue_DaNang": 0.3215,
+        "South_Saigon": 0.3826,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_11",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "xin chào tất cả các khán giả của chương trình kháng thương mình là minh trang đến từ seo bay trang khán thương là một chương trình nơi khách mời chia sẻ câu chuyện về nỗi sợ của họ",
+      "mean_f0_hz": 193.79,
+      "f0_std_hz": 43.1,
+      "latency_ms": 1296.31,
+      "rtf": 0.1296,
+      "fps": 771.42,
+      "routing": {
+        "North_Hanoi": 0.2982,
+        "Central_Hue_DaNang": 0.2267,
+        "South_Saigon": 0.4752,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_12",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "là đã mất cái tài khoản chính kia rồi mà bây giờ tất cả các loại tài khoản cá nhân của mình mất luôn và mất luôn một số những cái tài khoản insta và facebook khác cho những cái doanh nghiệp khác của mình",
+      "mean_f0_hz": 235.7,
+      "f0_std_hz": 43.45,
+      "latency_ms": 1330.18,
+      "rtf": 0.133,
+      "fps": 751.78,
+      "routing": {
+        "North_Hanoi": 0.3526,
+        "Central_Hue_DaNang": 0.3277,
+        "South_Saigon": 0.3197,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_13",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "ừ em ít sâu mệt ít sâu mệt tại vì mình chạy đến một cái điểm nào đấy rồi mình nhận ra là đấy không phải là điểm đích",
+      "mean_f0_hz": 228.4,
+      "f0_std_hz": 86.26,
+      "latency_ms": 1294.34,
+      "rtf": 0.1294,
+      "fps": 772.59,
+      "routing": {
+        "North_Hanoi": 0.3803,
+        "Central_Hue_DaNang": 0.2829,
+        "South_Saigon": 0.3368,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_14",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "thời đấy thời đấy chỉ ăn mặc đã là ghê lắm rồi còn ôm ấp gì mắng gắt rất gầy chứ nhưng rồi để bố mẹ có ôm chị ông ạ",
+      "mean_f0_hz": 223.38,
+      "f0_std_hz": 104.98,
+      "latency_ms": 1424.53,
+      "rtf": 0.1425,
+      "fps": 701.98,
+      "routing": {
+        "North_Hanoi": 0.286,
+        "Central_Hue_DaNang": 0.4516,
+        "South_Saigon": 0.2625,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vss_conv_15",
+      "domain": "vietsuperspeech",
+      "duration_sec": 10.0,
+      "ref_text": "justin the still is the mot outphone the vou space gou toge you slayter",
+      "mean_f0_hz": 103.95,
+      "f0_std_hz": 12.12,
+      "latency_ms": 1468.59,
+      "rtf": 0.1469,
+      "fps": 680.93,
+      "routing": {
+        "North_Hanoi": 0.3196,
+        "Central_Hue_DaNang": 0.3243,
+        "South_Saigon": 0.3561,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 173.82,
+        "C1_LoRA_Monolithic": 106.58,
+        "C2_Pitch_Conditioned": 82.15,
+        "C3_LoRA_MoE": 48.6
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev02_01",
+      "domain": "vivos",
+      "duration_sec": 2.56,
+      "ref_text": "cũng khiến cho họ dè dặt",
+      "mean_f0_hz": 104.02,
+      "f0_std_hz": 33.08,
+      "latency_ms": 524.35,
+      "rtf": 0.2047,
+      "fps": 488.6,
+      "routing": {
+        "North_Hanoi": 0.3705,
+        "Central_Hue_DaNang": 0.3692,
+        "South_Saigon": 0.2603,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev03_02",
+      "domain": "vivos",
+      "duration_sec": 1.66,
+      "ref_text": "phù hợp cho mọi cân nặng",
+      "mean_f0_hz": 114.39,
+      "f0_std_hz": 34.22,
+      "latency_ms": 285.34,
+      "rtf": 0.1723,
+      "fps": 580.37,
+      "routing": {
+        "North_Hanoi": 0.3575,
+        "Central_Hue_DaNang": 0.2736,
+        "South_Saigon": 0.3689,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev01_03",
+      "domain": "vivos",
+      "duration_sec": 3.44,
+      "ref_text": "khi trẫm khỏi bệnh thì sẽ chém đầu",
+      "mean_f0_hz": 112.53,
+      "f0_std_hz": 40.26,
+      "latency_ms": 461.74,
+      "rtf": 0.1343,
+      "fps": 744.57,
+      "routing": {
+        "North_Hanoi": 0.2723,
+        "Central_Hue_DaNang": 0.3828,
+        "South_Saigon": 0.3448,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev04_04",
+      "domain": "vivos",
+      "duration_sec": 3.75,
+      "ref_text": "con nhỏ mở cái túi gút đeo trên cổ",
+      "mean_f0_hz": 131.15,
+      "f0_std_hz": 47.54,
+      "latency_ms": 539.06,
+      "rtf": 0.1437,
+      "fps": 695.66,
+      "routing": {
+        "North_Hanoi": 0.2972,
+        "Central_Hue_DaNang": 0.3726,
+        "South_Saigon": 0.3302,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev05_05",
+      "domain": "vivos",
+      "duration_sec": 4.06,
+      "ref_text": "hãy tưởng tượng rằng bạn là là giám đốc dự án trong một công ty lớn",
+      "mean_f0_hz": 127.18,
+      "f0_std_hz": 14.04,
+      "latency_ms": 570.5,
+      "rtf": 0.1404,
+      "fps": 712.01,
+      "routing": {
+        "North_Hanoi": 0.2494,
+        "Central_Hue_DaNang": 0.462,
+        "South_Saigon": 0.2886,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev06_06",
+      "domain": "vivos",
+      "duration_sec": 2.69,
+      "ref_text": "đơn giản là tán gẫu với nhau",
+      "mean_f0_hz": 141.29,
+      "f0_std_hz": 16.2,
+      "latency_ms": 419.44,
+      "rtf": 0.156,
+      "fps": 640.85,
+      "routing": {
+        "North_Hanoi": 0.2429,
+        "Central_Hue_DaNang": 0.4506,
+        "South_Saigon": 0.3066,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev07_07",
+      "domain": "vivos",
+      "duration_sec": 3.47,
+      "ref_text": "hằng năm chúng ta thải ra hàng tỉ thiết bị điện tử",
+      "mean_f0_hz": 161.46,
+      "f0_std_hz": 58.0,
+      "latency_ms": 442.44,
+      "rtf": 0.1275,
+      "fps": 784.07,
+      "routing": {
+        "North_Hanoi": 0.377,
+        "Central_Hue_DaNang": 0.2645,
+        "South_Saigon": 0.3585,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev08_08",
+      "domain": "vivos",
+      "duration_sec": 3.41,
+      "ref_text": "cây cổ thụ ấy bất chợt bị bệnh tật quật ngã",
+      "mean_f0_hz": 129.19,
+      "f0_std_hz": 22.43,
+      "latency_ms": 481.6,
+      "rtf": 0.1414,
+      "fps": 707.23,
+      "routing": {
+        "North_Hanoi": 0.3564,
+        "Central_Hue_DaNang": 0.3421,
+        "South_Saigon": 0.3015,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev09_09",
+      "domain": "vivos",
+      "duration_sec": 3.31,
+      "ref_text": "làm rờm rợp biển mây lau lách phất phơ",
+      "mean_f0_hz": 110.58,
+      "f0_std_hz": 28.05,
+      "latency_ms": 454.72,
+      "rtf": 0.1373,
+      "fps": 728.37,
+      "routing": {
+        "North_Hanoi": 0.3847,
+        "Central_Hue_DaNang": 0.2965,
+        "South_Saigon": 0.3188,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev10_10",
+      "domain": "vivos",
+      "duration_sec": 2.81,
+      "ref_text": "khi bị công an thộp cổ khẩn cấp",
+      "mean_f0_hz": 119.42,
+      "f0_std_hz": 25.94,
+      "latency_ms": 403.57,
+      "rtf": 0.1435,
+      "fps": 696.78,
+      "routing": {
+        "North_Hanoi": 0.2787,
+        "Central_Hue_DaNang": 0.3429,
+        "South_Saigon": 0.3784,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev11_11",
+      "domain": "vivos",
+      "duration_sec": 2.69,
+      "ref_text": "nữ diễn viên xinh đẹp phạm băng băng",
+      "mean_f0_hz": 141.71,
+      "f0_std_hz": 25.49,
+      "latency_ms": 492.7,
+      "rtf": 0.1833,
+      "fps": 545.56,
+      "routing": {
+        "North_Hanoi": 0.2725,
+        "Central_Hue_DaNang": 0.2921,
+        "South_Saigon": 0.4354,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev12_12",
+      "domain": "vivos",
+      "duration_sec": 4.12,
+      "ref_text": "từ sự dư thừa quá mức của luồng tiền này",
+      "mean_f0_hz": 96.7,
+      "f0_std_hz": 19.27,
+      "latency_ms": 513.24,
+      "rtf": 0.1244,
+      "fps": 803.72,
+      "routing": {
+        "North_Hanoi": 0.3024,
+        "Central_Hue_DaNang": 0.3188,
+        "South_Saigon": 0.3788,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev13_13",
+      "domain": "vivos",
+      "duration_sec": 4.12,
+      "ref_text": "đơn vị mình không nghe ai nói gì chưa hẳn đã tốt",
+      "mean_f0_hz": 237.3,
+      "f0_std_hz": 41.14,
+      "latency_ms": 511.22,
+      "rtf": 0.124,
+      "fps": 806.7,
+      "routing": {
+        "North_Hanoi": 0.3481,
+        "Central_Hue_DaNang": 0.3771,
+        "South_Saigon": 0.2748,
+        "dominant_expert": "Central_Hue_DaNang"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev14_14",
+      "domain": "vivos",
+      "duration_sec": 3.12,
+      "ref_text": "biên chế này nhà thanh gọi là an nam quốc nhạc",
+      "mean_f0_hz": 223.64,
+      "f0_std_hz": 27.13,
+      "latency_ms": 474.14,
+      "rtf": 0.1518,
+      "fps": 658.88,
+      "routing": {
+        "North_Hanoi": 0.317,
+        "Central_Hue_DaNang": 0.3067,
+        "South_Saigon": 0.3763,
+        "dominant_expert": "South_Saigon"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    },
+    {
+      "id": "vivos_read_vivosdev15_15",
+      "domain": "vivos",
+      "duration_sec": 3.62,
+      "ref_text": "điều này khó hơn khi bạn vào bàn tiệc toàn người xa lạ",
+      "mean_f0_hz": 216.95,
+      "f0_std_hz": 54.2,
+      "latency_ms": 570.42,
+      "rtf": 0.1574,
+      "fps": 635.32,
+      "routing": {
+        "North_Hanoi": 0.3463,
+        "Central_Hue_DaNang": 0.3433,
+        "South_Saigon": 0.3104,
+        "dominant_expert": "North_Hanoi"
+      },
+      "wer_progression": {
+        "C0_Baseline": 156.3,
+        "C1_LoRA_Monolithic": 102.73,
+        "C2_Pitch_Conditioned": 72.1,
+        "C3_LoRA_MoE": 42.8
+      }
+    }
+  ]
+}

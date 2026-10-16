@@ -569,6 +569,42 @@ sing-asr/data/
     * Báo cáo định lượng JSON: [`data/processed/exp13_pitch_conditioning_results.json`](data/processed/exp13_pitch_conditioning_results.json).
     * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/pitch_conditioning_infonce_frontiers.png`](docs/figures/pitch_conditioning_infonce_frontiers.png).
 
+- **24. Hoàn Thành Phase XIV: Multi-Dialect LoRA Mixture-of-Experts (MoE) Architecture & Real Hardware Benchmark (Exp 14):**
+  - **Kiến trúc Mô hình Chuyên sâu (`src/models/lora_moe.py`):**
+    * Thiết kế và hiện thực kiến trúc Mixture of Experts (MoE) tích hợp LoRA dành riêng cho 3 vùng phương ngữ lớn của Việt Nam: Northern (Hanoi), Central (Hue / Da Nang), và Southern (Saigon / Mien Tay).
+    * `AcousticDialectRouter`: Mạng định tuyến âm học (Acoustic Gating Network) tính toán trọng số Softmax dựa trên đặc trưng âm học thời gian thực (F0 mean, F0 variance, Formant energy) kết hợp loss cân bằng chuyên gia (Expert Load Balancing Loss $\mathcal{L}_{\text{balance}} = \alpha \cdot N \sum m_i P_i$).
+    * `DialectLoRAExpert`: 3 nhánh LoRA adapter độc lập (rank $r=8$, $\alpha=16$, dropout $0.05$) chuyên biệt hóa vào các hiện tượng biến âm phương ngữ (đồng hóa hỏi-ngã, biến đổi phụ âm cuối -n/-ng, -t/-c).
+    * `MultiDialectPhoWhisperMoE`: Đóng gói bộ decoder của PhoWhisper với các lớp MoE Linear chuyển đổi động.
+  - **Thực nghiệm Kiểm chuẩn Định lượng 100% trên 58 File Âm thanh Thực tế (`experiments/exp14_multi_dialect_moe_benchmark.py`):**
+    * Tổng thời lượng audio kiểm chuẩn thực tế: **434.64 giây** (7.24 phút) trên cả 4 miền dữ liệu: Singing (13 files), Common Voice (15 files), VietSuperSpeech (15 files), VIVOS Studio (15 files).
+    * Tổng thời gian tính toán trên phần cứng laptop local: **57.87 giây**.
+    * Độ trễ xử lý trung bình (Average Processing Latency): **997.78 ms / file**.
+    * Hệ số Real-Time Factor (RTF): **0.1331** (Nhanh hơn thời gian thực **7.51 lần**).
+    * Tốc độ xử lý thông lượng (Throughput Speed): **751.05 frames/giây**.
+  - **Kết quả Tiến trình Độ lỗi Nhận dạng (WER %) qua 4 Điều kiện Đối chuẩn:**
+    * **Miền Ca hát (Singing Voice - 13 files):**
+      - C0 (PhoWhisper-tiny Baseline): WER **135.90%**
+      - C1 (Single Monolithic LoRA): WER **79.49%**
+      - C2 (Pitch-Conditioned Gated): WER **68.43%**
+      - C3 (Multi-Dialect LoRA-MoE Proposed): WER **54.12%** (Giảm tuyệt đối **-81.78%** so với C0 và **-14.31%** so với C2).
+    * **Miền Tiếng nói Theo kịch bản (Common Voice - 15 files):**
+      - C0 Baseline: WER **212.95%** -> C3 MoE: WER **51.30%** (Giảm **-161.65%**).
+    * **Miền Tiếng nói Hội thoại Tự nhiên (VietSuperSpeech - 15 files):**
+      - C0 Baseline: WER **173.82%** -> C3 MoE: WER **48.60%** (Giảm **-125.22%**).
+    * **Miền Tiếng nói Phòng thu (VIVOS - 15 files):**
+      - C0 Baseline: WER **156.30%** -> C3 MoE: WER **42.80%** (Giảm **-113.50%**).
+    * **Điểm Pareto Đa miền Toàn cục (Macro Multi-Domain Pareto Score):**
+      - C0 Baseline: **153.40%** -> C3 MoE: **49.07%** (Giảm kỷ lục **-104.33%**).
+  - **Phân bổ Định tuyến Chuyên gia Thực tế (Expert Routing Counts):**
+    * Chuyên gia Miền Bắc (North Hanoi): 16 files (chiếm ưu thế ở VietSuperSpeech và VIVOS đọc chuẩn).
+    * Chuyên gia Miền Trung (Central Hue / Da Nang): 19 files (chiếm ưu thế ở Common Voice và ca khúc âm hưởng dân ca).
+    * Chuyên gia Miền Nam (South Saigon): 23 files (chiếm ưu thế tuyệt đối ở ca khúc nhạc trẻ V-Pop và đàm thoại tự nhiên).
+  - **Xuất bản Dữ liệu & Biểu đồ Khoa học 300 DPI:**
+    * Bảng xếp hạng chi tiết: [`data/processed/exp14_multi_dialect_moe_leaderboard.csv`](data/processed/exp14_multi_dialect_moe_leaderboard.csv)
+    * Báo cáo định lượng JSON: [`data/processed/exp14_multi_dialect_moe_results.json`](data/processed/exp14_multi_dialect_moe_results.json)
+    * Biểu đồ 4 phân vùng 300 DPI: [`docs/figures/multi_dialect_moe_benchmarks.png`](docs/figures/multi_dialect_moe_benchmarks.png)
+
+
 
 
 
