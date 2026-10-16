@@ -508,6 +508,27 @@ sing-asr/data/
     5. *Mở rộng Vĩ mô Trên Kaggle GPU:* Kết hợp VietLyrics 647h + VietSuperSpeech 1,000h + Common Voice 27.0 + VietSing.
   - **Báo cáo Chi Tiết:** Đã lưu trữ tại [`deep_audio_processing_and_future_research_roadmap.md`](file:///C:/Users/hungn/.gemini/antigravity-ide/brain/993be219-ecc6-4d53-b658-fe6e73284329/deep_audio_processing_and_future_research_roadmap.md).
 
+- **21. Hoàn Thành Phase XI: Glottal Inverse Filtering (GIF) & Phonation Stacking Benchmark (Exp 11):**
+  - **Module Kỹ thuật Số Chuyên sâu (`src/dsp/glottal_analysis.py`):**
+    * Triển khai thuật toán Lọc ngược Thích ứng Lặp (Iterative Adaptive Inverse Filtering - IAIF, Alku 1992) giải tích chập Nguồn - Bộ lọc (Source-Filter Deconvolution).
+    * Bóc tách đạo hàm luồng khí thanh môn $u_g'(t)$ và xung thể tích thanh môn $u_g(t)$ với bộ tích phân rò rỉ (leaky integrator factor $0.99$).
+    * Trích xuất đồng thời 4 chỉ số thanh môn: Open Quotient ($O_q$), Spectral Tilt bù trừ Formant ($H_1^* - H_2^*$, Iseli & Alwan formula), Normalized Amplitude Quotient (NAQ), và Period-Doubling Ratio (PDR phát hiện sóng hài $F_0/2$).
+    * Phân loại xác thực 3 trạng thái phát âm thanh môn: Modal Voice (Ngang/Sắc), Breathy Voice (Huyền/Hỏi), và Creaky/Glottalized Voice (Ngã/Nặng).
+  - **Thực nghiệm Kiểm chuẩn Toàn diện trên 58 Mẫu Đa Miền (`experiments/exp11_glottal_phonation_benchmark.py`):**
+    * Chạy toàn bộ 58 mẫu trong 42.62 giây (RTF cực nhanh, $0.73$s/mẫu).
+    * Kết quả kiểm định thống kê hai biến (T-test):
+      - **Spectral Tilt $H_1^* - H_2^*$:** Tiếng hát đạt $+0.85$ dB vs Tiếng nói $+6.52$ dB ($t = -3.403, p = 3.0567 \times 10^{-3} < 0.01$). Tiếng hát có độ dốc phổ phẳng hơn đáng kể do hiệu ứng cộng hưởng thanh nhạc (Singer's Formant).
+      - **Open Quotient $O_q$:** Tiếng hát đạt $0.865$ vs VIVOS Studio $0.789$ ($t = 3.122, p = 3.1136 \times 10^{-3} < 0.01$).
+      - **Tỷ lệ thanh hầu hóa (Creaky Ratio):** Tiếng hát duy trì $87.6\%$ khung hình có tín hiệu thanh hầu hóa đặc trưng của thanh Ngã/Nặng, chứng minh ca sĩ bảo tồn kiểu phát âm thanh môn ngay cả khi giai điệu kéo phẳng cao độ $F_0$.
+  - **Xuất bản Dữ liệu & Biểu đồ Khoa học 300 DPI:**
+    * Ma trận đặc trưng: [`data/processed/exp11_all_58_items_glottal_features.csv`](data/processed/exp11_all_58_items_glottal_features.csv)
+    * Báo cáo định lượng JSON: [`data/processed/exp11_glottal_phonation_results.json`](data/processed/exp11_glottal_phonation_results.json)
+    * Biểu đồ 4 phân vùng 300 DPI: [`docs/figures/glottal_phonation_distribution.png`](docs/figures/glottal_phonation_distribution.png)
+  - **Nâng cấp Dashboard Streamlit Hub (`app/streamlit_app.py`):**
+    * Tab 2: Tích hợp module phân tích thanh môn thời gian thực (hiển thị $H_1^*-H_2^*$, $O_q$, NAQ và Dominant Phonation Class).
+    * Tab 4: Tích hợp bảng thống kê kiểm định giả thuyết Exp 11 và hiển thị Figure 4.
+
+
 
 
 

@@ -1,0 +1,78 @@
+{
+  "benchmark_items_count": 58,
+  "execution_time_sec": 42.61657643318176,
+  "domain_aggregates": {
+    "singing": {
+      "count": 13,
+      "f0_mean": 192.37942790982942,
+      "f0_std_avg": 96.5740735439204,
+      "open_quotient_mean": 0.8646042831257931,
+      "spectral_tilt_mean": 0.8535206231002979,
+      "naq_mean": 0.19771113537772494,
+      "period_doubling_ratio_mean": 0.6479044729565083,
+      "creaky_ratio_mean": 0.8758482908574284,
+      "breathy_ratio_mean": 0.09636187003314317,
+      "modal_ratio_mean": 0.027789839109428435,
+      "hnr_mean": 7.061575942800564
+    },
+    "common_voice_scripted": {
+      "count": 15,
+      "f0_mean": 155.5785713618872,
+      "f0_std_avg": 91.74606085855324,
+      "open_quotient_mean": 0.8743154763158295,
+      "spectral_tilt_mean": 3.7667766465648915,
+      "naq_mean": 0.18372966678909203,
+      "period_doubling_ratio_mean": 0.4894345750822026,
+      "creaky_ratio_mean": 0.7581971421938094,
+      "breathy_ratio_mean": 0.16834958821816587,
+      "modal_ratio_mean": 0.07345326958802469,
+      "hnr_mean": 5.879242116862833
+    },
+    "vietsuperspeech_conversational": {
+      "count": 15,
+      "f0_mean": 169.17457775200756,
+      "f0_std_avg": 65.4463748180693,
+      "open_quotient_mean": 0.8498920908183633,
+      "spectral_tilt_mean": 9.10130245266602,
+      "naq_mean": 0.20439888272619644,
+      "period_doubling_ratio_mean": 0.5804790629029092,
+      "creaky_ratio_mean": 0.8191616766467065,
+      "breathy_ratio_mean": 0.1313373253493014,
+      "modal_ratio_mean": 0.04950099800399202,
+      "hnr_mean": 5.968603274002701
+    },
+    "vivos_studio_read": {
+      "count": 15,
+      "f0_mean": 138.92659212697507,
+      "f0_std_avg": 59.03047283306611,
+      "open_quotient_mean": 0.7887356765624307,
+      "spectral_tilt_mean": 6.677701817255477,
+      "naq_mean": 0.19153205969096213,
+      "period_doubling_ratio_mean": 0.4458247513360475,
+      "creaky_ratio_mean": 0.6804983769915336,
+      "breathy_ratio_mean": 0.23874186919788293,
+      "modal_ratio_mean": 0.08075975381058348,
+      "hnr_mean": 6.4913786304944905
+    }
+  },
+  "statistical_tests": {
+    "spectral_tilt_singing_vs_speech": {
+      "t_stat": -3.403483379814787,
+      "p_value": 0.003056709470527668,
+      "singing_mean_db": 0.8535206231002979,
+      "speech_mean_db": 6.515260305495462
+    },
+    "open_quotient_singing_vs_speech": {
+      "t_stat": 3.121583669633617,
+      "p_value": 0.003113553659074618,
+      "singing_mean": 0.8646042831257931,
+      "speech_mean": 0.8376477478988749
+    },
+    "creaky_ratio_singing_vs_speech": {
+      "t_stat": 2.6417099339090058,
+      "p_value": 0.01889431540456755,
+      "singing_creaky_ratio": 0.8758482908574284,
+      "speech_creaky_ratio": 0.7526190652773498
+    }
+  }
+}

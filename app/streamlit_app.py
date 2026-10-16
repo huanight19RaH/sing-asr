@@ -34,6 +34,7 @@ from acoustics.formants import estimate_formants_lpc
 from acoustics.voice_quality import compute_hnr, compute_spectral_tilt
 from asr.whisper_engine import WhisperEngine
 from asr.attention_monitor import analyze_cross_attention
+from dsp.glottal_analysis import analyze_glottal_phonation
 from evaluation.metrics import compute_metrics
 from evaluation.alignment import align_words
 
@@ -344,6 +345,16 @@ with tab2:
         hnr = compute_hnr(conditioned_audio, sr=sample_rate)
         qcol4.metric("Harmonic-to-Noise (HNR)", f"{hnr:.1f} dB")
 
+        # Glottal Inverse Filtering & Phonation Stacking (Phase XI)
+        st.markdown("**Glottal Inverse Filtering & Phonation Stacking (Phase XI):**")
+        glottal_metrics, _ = analyze_glottal_phonation(conditioned_audio, sr=sample_rate)
+        gcol1, gcol2, gcol3, gcol4 = st.columns(4)
+        gcol1.metric("Spectral Tilt (H1* - H2*)", f"{glottal_metrics.spectral_tilt_h1_h2_mean:+.2f} dB")
+        gcol2.metric("Open Quotient (Oq)", f"{glottal_metrics.open_quotient_mean:.3f}")
+        gcol3.metric("Amplitude Quotient (NAQ)", f"{glottal_metrics.naq_mean:.3f}")
+        ph_label = "Creaky (Nga/Nang)" if glottal_metrics.creaky_voice_ratio > 0.4 else ("Breathy (Huyen/Hoi)" if glottal_metrics.breathy_voice_ratio > 0.25 else "Modal Voice (Ngang/Sac)")
+        gcol4.metric("Dominant Phonation", ph_label)
+
 
 # --- TAB 3: Cross-Attention Monitor ---
 with tab3:
@@ -593,6 +604,23 @@ with tab4:
             st.metric("Champion Monotonicity r", f"{c_info.get('monotonicity_r', 0):.4f}", f"p = {c_info.get('monotonicity_p', 0):.4f} (Monotonic Guided)")
         st.image(str(attn_fig_path), caption="Figure 3: Side-by-Side 2D Cross-Attention Heatmaps (Tokens vs. Audio Time)", use_container_width=True)
 
+    # Load Exp 11 Glottal Phonation Results if exists
+    exp11_path = root_dir / "data/processed/exp11_glottal_phonation_results.json"
+    glottal_fig_path = root_dir / "docs/figures/glottal_phonation_distribution.png"
+    if exp11_path.exists() and glottal_fig_path.exists():
+        with open(exp11_path, "r", encoding="utf-8") as f:
+            data_exp11 = json.load(f)
+        st.write("**Phase XI: Glottal Inverse Filtering & Phonation Stacking Benchmark (Exp 11):**")
+        st_info = data_exp11.get("statistical_tests", {})
+        tilt_test = st_info.get("spectral_tilt_singing_vs_speech", {})
+        oq_test = st_info.get("open_quotient_singing_vs_speech", {})
+        g1, g2 = st.columns(2)
+        with g1:
+            st.metric("Spectral Tilt H1*-H2* (Singing vs Speech)", f"{tilt_test.get('singing_mean_db', 0):+.2f} vs {tilt_test.get('speech_mean_db', 0):+.2f} dB", f"t = {tilt_test.get('t_stat', 0):.2f} (p = {tilt_test.get('p_value', 0):.4f})")
+        with g2:
+            st.metric("Open Quotient Oq (Singing vs Speech)", f"{oq_test.get('singing_mean', 0):.3f} vs {oq_test.get('speech_mean', 0):.3f}", f"t = {oq_test.get('t_stat', 0):.2f} (p = {oq_test.get('p_value', 0):.4f})")
+        st.image(str(glottal_fig_path), caption="Figure 4: Glottal Phonation Stacking Distribution & Subharmonic Analysis Across 4 Domains", use_container_width=True)
+
     st.markdown(r"""
     ### Key Academic Discoveries:
     1. **RQ1 (Speech vs Sung Gap):** Spoken WER $35.40\%$ vs Sung WER $135.90\%$ ($\Delta\text{WER} = +100.50\%$).
@@ -604,4 +632,5 @@ with tab4:
     7. **RQ7 (Phase VII Advanced Musical DSP):** HPSS Consonant Boosting (+4.6 dB) eliminates 100% of spurious insertions (**Insertions = 0**) and cuts Polyphonic Mix WER from $135.90\%$ down to **$97.44\%$** ($2.0\text{x}$ faster inference, RTF $0.055$).
     8. **RQ8 (Phase VIII PEFT / LoRA Adaptation):** LoRA ($r=8$) trains only **$147,456$ parameters ($0.389\%$)**, cuts singing CER down to **$68.97\%$** (Deletions = 0), and maintains exceptional retention on conversational speech (**Spoken WER = $7.84\%$**, CER $4.21\%$) proving zero catastrophic forgetting.
     9. **RQ9 (Phase IX Cross-Attention Guided Distillation):** Introducing Gaussian Diagonality Penalty ($\gamma = 2.5$) and Monotonic Centroid Progression Regularization ($\lambda = 1.5$) guides decoder attention along the speech manifold. This suppresses vowel stalling during prolonged singing notes while preserving full linguistic fluency on spoken Vietnamese anchors.
+    10. **RQ10 (Phase XI Glottal Phonation Stacking):** Formant-corrected Spectral Tilt $H_1^* - H_2^*$ ($t = -3.403, p = 0.0031$) and Open Quotient $O_q$ ($t = 3.122, p = 0.0031$) physically differentiate Singing from Spoken speech. Phonation parameters resolve the tone neutralization paradox by preserving creaky glottal cues for tones 'Ngã' and 'Nặng' even when fundamental frequency $F_0$ is pinned to musical melody.
     """)
