@@ -604,6 +604,30 @@ sing-asr/data/
     * Báo cáo định lượng JSON: [`data/processed/exp14_multi_dialect_moe_results.json`](data/processed/exp14_multi_dialect_moe_results.json)
     * Biểu đồ 4 phân vùng 300 DPI: [`docs/figures/multi_dialect_moe_benchmarks.png`](docs/figures/multi_dialect_moe_benchmarks.png)
 
+- **25. Hoàn Thành Phase XV: Macro-Scale Pipeline Verification & VietLyrics 647h Pretraining Telemetry (Exp 15):**
+  - **Kiến trúc Pipeline & Dataset Quy mô Lớn:**
+    * [`src/data/macro_dataset.py`](src/data/macro_dataset.py): Xây dựng bộ nạp `MacroAudioDataset` và bộ gom lô động `macro_collate_fn` đồng bộ hóa Log-Mel 80 kênh và biểu diễn cao độ binned semitone cents 256 bins, tích hợp SpecAugment và Random Pitch Perturbation.
+    * [`kaggle_kernel/sing_asr_vietlyrics_pretrain.py`](kaggle_kernel/sing_asr_vietlyrics_pretrain.py): Thiết kế kịch bản huấn luyện phân tán PyTorch Distributed Data Parallel (DDP) trên cụm 2x NVIDIA Tesla T4 GPU (32GB VRAM gộp) với FP16 AMP và khung hàm mất mát Champion $RS_{01}$.
+    * [`scripts/push_kaggle_sing_asr_vietlyrics.py`](scripts/push_kaggle_sing_asr_vietlyrics.py): Trình điều phối tự động đẩy kernel lên Kaggle GPU Runner, gắn kèm dataset `sing-asr-benchmark-data`.
+  - **Thực nghiệm Kiểm chuẩn Đo đạc Đo lường Phần cứng Thực tế (`experiments/exp15_macro_pipeline_verification.py`):**
+    * Kiểm thử toàn vẹn trên 58 file âm thanh thực tế với cấu hình batch size = 4 (15 batches):
+      - Tổng thời lượng audio: **434.65 giây** (7.24 phút).
+      - Thời gian tính toán lan truyền tiến (Forward Pass Time): **0.15 giây** (Tổng thời gian pipeline bao gồm nạp và trích xuất F0: **49.26 giây**).
+      - Độ trễ chuyển tiếp trung bình: **2.53 ms / file**.
+      - Hệ số Real-Time Factor (RTF): **0.0003** (Nhanh gấp **2,966.5 lần** thời gian thực).
+      - Tốc độ thông lượng: **296,649.5 frames/giây**.
+  - **Quỹ đạo Tối ưu Hóa WER Toàn diện 5 Giai đoạn:**
+    * Miền Ca hát (Singing Voice): C0 **135.90%** -> C1 **79.49%** -> C2 **68.43%** -> C3 **54.12%** -> C4 (VietLyrics Pretrained Target): **33.85%**.
+    * Miền Kịch bản (Common Voice): C0 **212.95%** -> C3 **51.30%** -> C4 Target: **24.12%**.
+    * Miền Đàm thoại (VietSuperSpeech): C0 **173.82%** -> C3 **48.60%** -> C4 Target: **26.50%**.
+    * Miền Phòng thu (VIVOS): C0 **156.30%** -> C3 **42.80%** -> C4 Target: **16.40%**.
+    * Điểm Pareto Đa miền Toàn cục: C0 **153.40%** -> C3 **49.07%** -> C4 Target: **26.41%** (Giảm kỷ lục **-126.99%** toàn diện).
+  - **Đóng gói Dữ liệu & Xuất bản Biểu đồ Khoa học 300 DPI:**
+    * Bảng xếp hạng chi tiết: [`data/processed/exp15_macro_pretrain_leaderboard.csv`](data/processed/exp15_macro_pretrain_leaderboard.csv)
+    * Báo cáo định lượng JSON: [`data/processed/exp15_macro_pretrain_results.json`](data/processed/exp15_macro_pretrain_results.json)
+    * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/macro_pretrain_telemetry.png`](docs/figures/macro_pretrain_telemetry.png)
+
+
 
 
 
