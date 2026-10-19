@@ -1,0 +1,296 @@
+{
+  "experiment": "Phase XXIII: Instrument-Specific Acoustic Collision & Sub-Band Suppression Benchmark",
+  "timestamp": "2026-10-19T14:41:50",
+  "total_test_duration_sec": 412.2,
+  "total_processing_sec": 3.4382,
+  "real_time_factor_rtf": 0.00834,
+  "throughput_x_realtime": 119.89,
+  "overall_summary": {
+    "baseline": {
+      "total_clips": 45,
+      "macro_wer": 0.3107,
+      "macro_cer": 0.111,
+      "macro_ter": 0.0606,
+      "macro_cons_er": 0.0635,
+      "macro_vow_er": 0.3107,
+      "macro_cos_sim": 0.8513
+    },
+    "broadband": {
+      "total_clips": 45,
+      "macro_wer": 0.2277,
+      "macro_cer": 0.0825,
+      "macro_ter": 0.0401,
+      "macro_cons_er": 0.0478,
+      "macro_vow_er": 0.2277,
+      "macro_cos_sim": 0.8512
+    },
+    "ias_adapter": {
+      "total_clips": 45,
+      "macro_wer": 0.1385,
+      "macro_cer": 0.0477,
+      "macro_ter": 0.027,
+      "macro_cons_er": 0.0457,
+      "macro_vow_er": 0.1385,
+      "macro_cos_sim": 0.8506
+    }
+  },
+  "condition_summary": {
+    "clean_vocal": {},
+    "drums": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.3828,
+        "mean_cer": 0.1126,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0938,
+        "mean_vow_er": 0.3828,
+        "mean_cos_sim": 0.8713
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.2886,
+        "mean_cer": 0.0885,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0888,
+        "mean_vow_er": 0.2886,
+        "mean_cos_sim": 0.8713
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.1423,
+        "mean_cer": 0.0453,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0502,
+        "mean_vow_er": 0.1423,
+        "mean_cos_sim": 0.8706
+      }
+    },
+    "piano": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.243,
+        "mean_cer": 0.0762,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0119,
+        "mean_vow_er": 0.243,
+        "mean_cos_sim": 0.8716
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.1905,
+        "mean_cer": 0.0602,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0212,
+        "mean_vow_er": 0.1905,
+        "mean_cos_sim": 0.8715
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.1423,
+        "mean_cer": 0.0453,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0558,
+        "mean_vow_er": 0.1423,
+        "mean_cos_sim": 0.8709
+      }
+    },
+    "guitar": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.0,
+        "mean_cer": 0.0,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0,
+        "mean_vow_er": 0.0,
+        "mean_cos_sim": 0.8716
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.0,
+        "mean_cer": 0.0,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0,
+        "mean_vow_er": 0.0,
+        "mean_cos_sim": 0.8716
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.0,
+        "mean_cer": 0.0,
+        "mean_ter": 0.0,
+        "mean_cons_er": 0.0,
+        "mean_vow_er": 0.0,
+        "mean_cos_sim": 0.8709
+      }
+    },
+    "synth_808": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.2507,
+        "mean_cer": 0.0995,
+        "mean_ter": 0.0552,
+        "mean_cons_er": 0.033,
+        "mean_vow_er": 0.2507,
+        "mean_cos_sim": 0.8714
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.1862,
+        "mean_cer": 0.0755,
+        "mean_ter": 0.0433,
+        "mean_cons_er": 0.0281,
+        "mean_vow_er": 0.1862,
+        "mean_cos_sim": 0.8713
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.1304,
+        "mean_cer": 0.0514,
+        "mean_ter": 0.0413,
+        "mean_cons_er": 0.049,
+        "mean_vow_er": 0.1304,
+        "mean_cos_sim": 0.8707
+      }
+    },
+    "full_polyphonic_snr10": {
+      "baseline": {
+        "num_clips": 3,
+        "mean_wer": 0.3327,
+        "mean_cer": 0.1049,
+        "mean_ter": 0.1013,
+        "mean_cons_er": 0.101,
+        "mean_vow_er": 0.3327,
+        "mean_cos_sim": 0.9534
+      },
+      "broadband": {
+        "num_clips": 3,
+        "mean_wer": 0.2317,
+        "mean_cer": 0.075,
+        "mean_ter": 0.0651,
+        "mean_cons_er": 0.0238,
+        "mean_vow_er": 0.2317,
+        "mean_cos_sim": 0.9534
+      },
+      "ias_adapter": {
+        "num_clips": 3,
+        "mean_wer": 0.1545,
+        "mean_cer": 0.0452,
+        "mean_ter": 0.0325,
+        "mean_cons_er": 0.0733,
+        "mean_vow_er": 0.1545,
+        "mean_cos_sim": 0.9526
+      }
+    },
+    "full_polyphonic_snr5": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.4488,
+        "mean_cer": 0.1731,
+        "mean_ter": 0.1509,
+        "mean_cons_er": 0.0709,
+        "mean_vow_er": 0.4488,
+        "mean_cos_sim": 0.8715
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.3005,
+        "mean_cer": 0.126,
+        "mean_ter": 0.0692,
+        "mean_cons_er": 0.0709,
+        "mean_vow_er": 0.3005,
+        "mean_cos_sim": 0.8715
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.1684,
+        "mean_cer": 0.0608,
+        "mean_ter": 0.0413,
+        "mean_cons_er": 0.0676,
+        "mean_vow_er": 0.1684,
+        "mean_cos_sim": 0.8708
+      }
+    },
+    "full_polyphonic_snr0": {
+      "baseline": {
+        "num_clips": 7,
+        "mean_wer": 0.5291,
+        "mean_cer": 0.207,
+        "mean_ter": 0.1398,
+        "mean_cons_er": 0.1553,
+        "mean_vow_er": 0.5291,
+        "mean_cos_sim": 0.7063
+      },
+      "broadband": {
+        "num_clips": 7,
+        "mean_wer": 0.3987,
+        "mean_cer": 0.1479,
+        "mean_ter": 0.1176,
+        "mean_cons_er": 0.088,
+        "mean_vow_er": 0.3987,
+        "mean_cos_sim": 0.7063
+      },
+      "ias_adapter": {
+        "num_clips": 7,
+        "mean_wer": 0.2405,
+        "mean_cer": 0.0842,
+        "mean_ter": 0.077,
+        "mean_cons_er": 0.04,
+        "mean_vow_er": 0.2405,
+        "mean_cos_sim": 0.7057
+      }
+    }
+  },
+  "collision_profile_summary": {
+    "mean_tei": {
+      "drums": 32.2132,
+      "piano": 28.9064,
+      "guitar": 28.0847,
+      "synth_808": 29.0361,
+      "full_polyphonic_snr5": 28.4667,
+      "full_polyphonic_snr0": 28.2347,
+      "full_polyphonic_snr10": 27.2027
+    },
+    "mean_fdr": {
+      "drums": 0.3921,
+      "piano": 0.9183,
+      "guitar": 0.8129,
+      "synth_808": 0.4913,
+      "full_polyphonic_snr5": 0.6724,
+      "full_polyphonic_snr0": 1.1939,
+      "full_polyphonic_snr10": 0.6498
+    },
+    "mean_ptd": {
+      "drums": 0.3532,
+      "piano": 0.4751,
+      "guitar": 0.4604,
+      "synth_808": 0.5565,
+      "full_polyphonic_snr5": 0.5378,
+      "full_polyphonic_snr0": 0.6758,
+      "full_polyphonic_snr10": 0.2381
+    },
+    "mean_sef": {
+      "drums": 0.1167,
+      "piano": 0.0348,
+      "guitar": 0.0405,
+      "synth_808": 0.1652,
+      "full_polyphonic_snr5": 0.1099,
+      "full_polyphonic_snr0": 0.1787,
+      "full_polyphonic_snr10": 0.0492
+    }
+  },
+  "model_architecture": {
+    "adapter_name": "InstrumentAwareSuppressionAdapter",
+    "total_parameters": 3236070,
+    "sub_bands": [
+      "Low (<250Hz)",
+      "Mid (250-3000Hz)",
+      "High (>3000Hz)"
+    ],
+    "instrument_classes": [
+      "Drums",
+      "Piano",
+      "Guitar",
+      "Synth_808"
+    ]
+  }
+}

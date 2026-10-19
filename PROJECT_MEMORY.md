@@ -745,6 +745,30 @@ sing-asr/data/
     * Tốc độ suy luận tổng thể: Mean INT8 RTF = **0.02108** (Nhanh gấp **47.4 lần** thời gian thực).
     * Báo cáo định lượng JSON: [`data/processed/exp22_edge_quantization_results.json`](data/processed/exp22_edge_quantization_results.json).
 
+- **33. Hoan Thanh Phase XXIII: Instrument-Specific Acoustic Collision & Sub-Band Suppression Benchmark (Exp 23):**
+  - **Khao sat & Binh luan Vat ly Va cham Am hoc Nhac cu:**
+    * Trong hoa am da am (polyphonic arrangement), cac nhac cu khac nhau gay ra nhung co che pha huy dac trung am hoc dac thu len giong hat:
+      - *Trong / Percussion (Snare, Hi-hat, Cymbals >2.5 kHz):* Xung dot bien do dot ngot (crest factor cao, transient spikes) che lap cac diem bat dau phu am vo thanh (voiceless onsets: /t/, /th/, /c/, /k/, /p/) va phu am sat (/s/, /x/, /ch/, /tr/).
+      - *Piano / Ban phim (250 - 2,500 Hz):* Hoa am da am ngan vang dai (long reverberation decay) phu trung len vung formant nguyen am F1, F2, gay nhoe pho formant (Formant Smearing) va nham lan nguyen am tram trong.
+      - *Guitar (150 - 3,500 Hz):* Rung day (vibrato 4-7 Hz) va uon day (pitch bends) canh tranh truc tiep voi F0 cua giong hat, gay hien tuong nhay quang (octave hopping) va sai lech duong bao cao do.
+      - *Synth / 808 Sub-Bass (<150 Hz):* Nang luong song vuong/sawtooth tan so thap lam bao hoa dai dong (dynamic range depression), gay ro ri pho sang cac bang loc filterbank.
+  - **Module Phan tich Va cham Am hoc & Kien truc Tri-Band Adapter:**
+    * [`src/acoustics/instrument_collision_profiler.py`](src/acoustics/instrument_collision_profiler.py): Tinh toan 4 chi so dinh luong: Transient Energy Index (TEI), Formant Disturbance Ratio (FDR), Pitch Tracking Deviation (PTD) va Spectral Energy Floor (SEF).
+    * [`src/models/instrument_aware_suppression_adapter.py`](src/models/instrument_aware_suppression_adapter.py): Kien truc Instrument-Aware Suppression Adapter (IAS-Adapter, 3,236,070 tham so) gom:
+      1. Instrument Presence Classifier phat hien xac suat va cham cua 4 dong nhac cu [Drums, Piano, Guitar, Synth_808].
+      2. Phan tach Tri-Band khong gian an: Low-Band (<250 Hz, cong suy giam sub-bass), Mid-Band (250-3000 Hz, cong chu y giu formant nguyen am), High-Band (>3000 Hz, cong gioi han mem triet tieu transient trong).
+      3. Hop nhat Fusion va duong noi tat dong nhat (Residual Identity Connection).
+  - **Bo du lieu stem thuc te va thuc nghiem dinh luong (`scripts/benchmark_instrument_suppression.py`):**
+    * Chiet xuat 45 ban phoi nhac cu thuc te (412.20 giay am thanh) tu stem BGM bai hat Viet Nam va da kenh MIR-1K.
+    * Ket qua do dac dinh luong:
+      - TEI cao nhat o Trong (32.21 dB so voi 28.08 dB o Guitar); FDR cao nhat o Piano (0.9183) va ban phoi 0 dB SNR (1.1939); PTD cao nhat o Guitar (0.4604) va Synth (0.5565); SEF cao nhat o Synth/808 (16.52% tong nang luong pho).
+      - Macro WER: Baseline khong xu ly dat 31.07% -> Broadband Suppression Attention (Phase II) dat 22.77% -> IAS-Adapter (Phase XXIII) dat **13.85%** (Giam loi tuong doi **55.42%** so voi Baseline, va **39.17%** so voi Broadband).
+      - Dieu kien Trong: WER giam tu 38.28% xuong **14.23%** (Loi phu am Cons-ER giam tu 9.38% xuong **5.02%**).
+      - Dieu kien Ban phoi da am nang (0 dB SNR): WER giam tu 52.91% xuong **24.05%** (Giam tuong doi 54.55%).
+      - Toc do xu ly: RTF = **0.00834** (Nhanh gap **119.9 lan** thoi gian thuc tren CPU).
+      - Bao cao ket qua JSON: [`data/processed/exp23_instrument_suppression_results.json`](data/processed/exp23_instrument_suppression_results.json).
+
+
 
 
 
