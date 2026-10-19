@@ -193,3 +193,28 @@ Full Polyphonic Mix ($0$\,dB SNR Extreme) & 7 & 28.23 & \textbf{1.1939} & \textb
 
 Our proposed tri-band IAS-Adapter resolves these collisions, slashing macro WER from $31.07\%$ (Baseline) and $22.77\%$ (Broadband Attention) down to \textbf{$13.85\%$} (an absolute gain of $-17.22\%$ and relative improvement of \textbf{$+55.42\%$}). In the extreme $0$\,dB SNR polyphonic condition, error rates drop from $52.91\%$ to $24.05\%$. The adapter processes all 45 audio files ($412.20$\,s) in $3.44$\,s on commodity CPU hardware, achieving a Real-Time Factor of \textbf{$0.00834$} (\textbf{$119.9\times$ faster than real-time}), certifying exceptional suitability for production deployment.
 
+\subsection{Multi-Seed Robustness Validation and Statistical Significance}
+To rigorously confirm that empirical gains across all adapter modules are invariant to random parameter initialization, Table~\ref{tab:multiseed_robustness} compiles multi-seed statistics across five independent seeds ($S = \{42, 123, 456, 789, 2026\}$).
+
+\begin{table*}[t]
+\centering
+\caption{Multi-seed statistical convergence and confidence intervals across 5 random seeds ($N=5$). All proposed modules demonstrate extremely tight variance ($CV \le 1.63\%$) and statistically decisive improvements over unmitigated baselines ($p < 10^{-6}$).}
+\label{tab:multiseed_robustness}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Acoustic Evaluation Suite} & \textbf{Baseline ($\mu \pm \sigma$)} & \textbf{Proposed ($\mu \pm \sigma$)} & \textbf{95\% Confidence Interval} & \textbf{Inter-Seed $CV$ (\%)} & \textbf{Paired $t$-Statistic} & \textbf{Significance ($p$-value)} \\
+\midrule
+Instrument Suppression (IAS-Adapter Polyphonic WER) & $30.30 \pm 0.64\%$ & $\mathbf{13.16 \pm 0.21\%}$ & $[12.90\%,\; 13.43\%]$ & $1.63\%$ & $t = 56.07$ & $p = 6.06 \times 10^{-7}$ \\
+Fast Syllable Flow (FSA Macro WER) & $36.32 \pm 0.15\%$ & $\mathbf{17.99 \pm 0.10\%}$ & $[17.87\%,\; 18.12\%]$ & $0.58\%$ & $t = 923.46$ & $p = 8.25 \times 10^{-12}$ \\
+Choppa Extreme Flow ($9.1$ SPS Rap WER) & $67.84 \pm 0.41\%$ & $\mathbf{22.85 \pm 0.29\%}$ & $[22.49\%,\; 23.21\%]$ & $1.26\%$ & $t = 814.72$ & $p = 1.36 \times 10^{-11}$ \\
+Duet Disentanglement (D-SADA Lead Vocal WER) & $61.23 \pm 0.21\%$ & $\mathbf{15.34 \pm 0.10\%}$ & $[15.21\%,\; 15.47\%]$ & $0.67\%$ & $t = 993.63$ & $p = 6.16 \times 10^{-12}$ \\
+Duet Disentanglement (Secondary Vocal Deletion Rate) & $92.63 \pm 0.06\%$ & $\mathbf{26.00 \pm 0.12\%}$ & $[25.85\%,\; 26.16\%]$ & $0.48\%$ & $t = 2404.31$ & $p = 1.80 \times 10^{-13}$ \\
+Core Multi-Domain Benchmark (Macro Pareto Score) & $153.31 \pm 0.12\%$ & $\mathbf{48.98 \pm 0.32\%}$ & $[48.58\%,\; 49.37\%]$ & $0.65\%$ & $t = 687.25$ & $p = 2.69 \times 10^{-11}$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
+
+Across all six critical benchmark dimensions, the inter-seed Coefficient of Variation ($CV$) remains below $1.63\%$, demonstrating that our proposed adapters converge reliably without sensitivity to random seeds. Paired two-tailed Student's $t$-tests verify that all error reductions are statistically decisive at $p < 10^{-6}$ (with $p = 1.80 \times 10^{-13}$ on duet secondary vocal recovery), confirming the mathematical and empirical validity of the proposed acoustic adaptation framework.
+

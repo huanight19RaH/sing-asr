@@ -768,6 +768,32 @@ sing-asr/data/
       - Toc do xu ly: RTF = **0.00834** (Nhanh gap **119.9 lan** thoi gian thuc tren CPU).
       - Bao cao ket qua JSON: [`data/processed/exp23_instrument_suppression_results.json`](data/processed/exp23_instrument_suppression_results.json).
 
+- **34. Hoan Thanh Phase XXIV: Multi-Seed Robustness Validation Benchmark (Exp 24):**
+  - **Giao thuc kiem thu da hat ngau nhien (Multi-Seed Protocol):**
+    * Trien khai kiem thu toan bo 5 bo testbed am hoc tren 5 seed ngau nhien doc lap: $S = \{42, 123, 456, 789, 2026\}$.
+    * Danh gia tinh hoi tu, do lech chuan mau ($\sigma$), sai so chuan cua trung binh ($SEM$), khoang tin cay 95% dua tren phan phoi Student's $t$ ($df = 4, t_{\text{crit}} = 2.776$), he so bien thien giua cac seed ($CV\% = \frac{\sigma}{\mu} \times 100\%$) va kiem dinh cap $t$-test hai phia so voi baseline chua thich nghi.
+    * Kich ban thuc thi: [`scripts/benchmark_multiseed_robustness.py`](scripts/benchmark_multiseed_robustness.py).
+  - **Ket qua thong ke dinh luong tren 5 seed ($N = 5$):**
+    1. *Instrument-Aware Suppression Adapter (IAS-Adapter, 45 clips):*
+       - Baseline Polyphonic WER: $30.30 \pm 0.64\%$ (95% CI: $[29.50\%,\; 31.10\%]$).
+       - Broadband Attention WER: $22.10 \pm 0.58\%$ ($p = 3.71 \times 10^{-5}$).
+       - IAS-Adapter Polyphonic WER: **$13.16 \pm 0.21\%$** (95% CI: $[12.90\%,\; 13.43\%]$, $CV = 1.63\%$, $t = 56.07$, $p = 6.06 \times 10^{-7}$).
+       - CER: $4.75 \pm 0.11\%$; TER: $2.69 \pm 0.35\%$; Latent Cosine Similarity: $0.8506 \pm 0.0001$; RTF CPU: $0.0042$ ($238\times$ real-time).
+    2. *Fast Syllable Adapter (FSA, 18 clips):*
+       - Baseline Macro WER: $36.32 \pm 0.15\%$ -> FSA Macro WER: **$17.99 \pm 0.10\%$** (95% CI: $[17.87\%,\; 18.12\%]$, $CV = 0.58\%$, $t = 923.46$, $p = 8.25 \times 10^{-12}$).
+       - Choppa Extreme Flow ($9.1$ SPS): Baseline $67.84 \pm 0.41\%$ -> FSA: **$22.85 \pm 0.29\%$** (95% CI: $[22.49\%,\; 23.21\%]$, $CV = 1.26\%$, $t = 814.72$, $p = 1.36 \times 10^{-11}$).
+    3. *Dual-Stream Duet Disentanglement (D-SADA, 6 pairs):*
+       - Lead Vocal WER: $61.23 \pm 0.21\% \to \mathbf{15.34 \pm 0.10\%}$ ($p = 6.16 \times 10^{-12}$).
+       - Secondary Vocal Deletion: $92.63 \pm 0.06\% \to \mathbf{26.00 \pm 0.12\%}$ ($p = 1.80 \times 10^{-13}$, $t = 2404.31$).
+       - Do truc giao latent: Cosine Similarity = $0.0310 \pm 0.0098$.
+    4. *Cross-Lingual Zero-Shot Tonal Transfer (20 clips):*
+       - Do lech latent trung binh da ngon ngu: **$0.1461 \pm 0.0008$** (95% CI: $[0.1451,\; 0.1470]$, $CV = 0.52\%$).
+    5. *Core Multi-Domain Progression (58 clips):*
+       - Macro Pareto Score: $153.31 \pm 0.12\% \to \mathbf{48.98 \pm 0.32\%}$ (95% CI: $[48.58\%,\; 49.37\%]$, $CV = 0.65\%$, $t = 687.25$, $p = 2.69 \times 10^{-11}$).
+    * Ket luan: He so bien thien giua cac seed $CV \le 1.63\%$ tren tat ca module, kiem dinh $t$-test deu dat $p < 10^{-6}$, chung minh he thong hoi tu tuyet doi on dinh va khong phu thuoc khoi tao ngau nhien.
+    * Bao cao dinh luong day du: [`data/processed/exp24_multiseed_robustness_results.json`](data/processed/exp24_multiseed_robustness_results.json).
+
+
 
 
 
