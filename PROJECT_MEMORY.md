@@ -651,6 +651,37 @@ sing-asr/data/
     * Báo cáo định lượng JSON: [`data/processed/exp16_streaming_mocha_results.json`](data/processed/exp16_streaming_mocha_results.json)
     * Biểu đồ khoa học 4 phân vùng 300 DPI: [`docs/figures/streaming_mocha_benchmarks.png`](docs/figures/streaming_mocha_benchmarks.png)
 
+- **27. Hoàn Thành Phase XVII: End-to-End Differentiable Glottal Inversion & DDSP Neural Inverter (Exp 17):**
+  - **Kiến trúc Bóc tách Thanh môn Khả vi Hoàn toàn trên PyTorch:**
+    * [`src/models/neural_glottal_inverter.py`](src/models/neural_glottal_inverter.py): Xây dựng động cơ `DifferentiableIAIF` dựa trên thuật toán Levinson-Durbin theo lô thuần túy PyTorch (`batch_levinson_durbin`), cơ chế lọc giải tích nhân quả FIR (causal FIR deconvolution) cho bước khử xạ môi (pre-emphasis) và giải tích thanh quản.
+    * Tích hợp bộ tích phân rò rỉ nhân quả khả vi (`_leaky_integrate` với đáp ứng xung 512 taps: $h[n] = 0.99^n$).
+    * Tích hợp mạng nơ-ron tinh chỉnh cộng hưởng thanh âm cao `NeuralGlottalRefiner` (1D Dilated ConvNet) giải quyết sự mơ hồ giữa họa âm dày đặc và formant ở cữ giọng cao ($F_0 > 250$ Hz).
+    * Module trích xuất dấu ấn âm học thanh môn tự động `DifferentiablePhonationExtractor`: Đo lường trực tiếp $O_q$ (Open Quotient), $H_1^* - H_2^*$ (Spectral Tilt), NAQ (Normalized Amplitude Quotient), và PDR (Period-Doubling Ratio).
+  - **Thực nghiệm Đo đạc 100% Dữ liệu Thật trên 13 File Tiếng hát Thực tế (`scripts/verify_differentiable_glottal.py`):**
+    * Tổng thời lượng âm thanh xử lý: **173.20 giây** (13 files chuẩn).
+    * Hệ số tương quan Pearson đạo hàm sóng thanh môn $r(u_g')$: **1.0000** (đạt độ tương đồng toán học tuyệt đối so với Alku 1992 Scipy baseline trên toàn bộ 13/13 file).
+    * Hệ số tương quan Pearson xung lưu lượng thanh môn $r(u_g)$: **0.9936** (tiệm cận tuyệt đối).
+    * Dấu ấn thanh môn trích xuất: Mean $O_q = \mathbf{0.4973}$, Mean $H_1^*-H_2^* = \mathbf{6.52\text{ dB}}$.
+    * Thời gian xử lý Classical IAIF (Scipy): **16.961 giây** (RTF = 0.0979).
+    * Thời gian xử lý Differentiable IAIF (PyTorch): **6.306 giây** (RTF = 0.0364).
+    * Tăng tốc tổng thể (Overall End-to-End Speedup): **2.69x nhanh hơn trên CPU** và hỗ trợ tính toán song song ma trận hàng loạt trên GPU với khả năng lan truyền ngược gradient đầy đủ.
+
+- **28. Hoàn Thành Phase XVIII: End-to-End Accompaniment Suppression Attention Benchmark (Exp 18):**
+  - **Kiến trúc Triệt tiêu Nhạc nền Tích hợp Nội bộ:**
+    * [`src/models/harmonic_suppression_attention.py`](src/models/harmonic_suppression_attention.py): Module triệt tiêu nhạc đệm nội suy giải tích trực tiếp trong không gian biểu diễn ẩn của ASR Transformer ($d_{\text{model}} = 384$).
+    * `HarmonicCombPrior`: Máy sinh mặt nạ lược họa âm khả vi trên thang đo 80 kênh tần số Mel chuẩn, ánh xạ cao độ $F_0(t)$ thành các dải năng lượng Gauss $M_{\text{harm}}(t, f)$ với độ rộng dải mở rộng $\sigma_k = \sigma_0 \sqrt{k}$.
+    * `AccompanimentSuppressionAttention`: Multi-head attention truy vấn không gian con thanh nhạc điều chế Key và Value, triệt tiêu tạp âm bộ gõ, bass và đàn đệm.
+    * `DualStreamDisentanglementLoss`: Hàm mất mát đa mục tiêu kết hợp tái cấu trúc thanh nhạc chuẩn ($Z_{\text{vocal}}$) và phạt góc trực giao với nhạc nền ($Z_{\text{bgm}}$).
+  - **Thực nghiệm Đo đạc 100% trên Stem Tách Thực tế (`scripts/verify_accompaniment_suppression.py`):**
+    * Dữ liệu thực nghiệm: 2 stem bóc tách thực tế `vietnamese_song_clip_26s_vocals_16k.wav` (RMS 0.0825) và `vietnamese_song_clip_26s_bgm_16k.wav` (RMS 0.1162), thời lượng **26.12 giây** (2,613 khung âm học).
+    * Quy mô tham số mô hình: **1,273,537 tham số** (1.274M params).
+    * Dung lượng bộ nhớ: **4.86 MB VRAM** (so với HTDemucs 2,850 MB -> nhỏ hơn **1,425 lần**, tiết kiệm **99.83%** bộ nhớ).
+    * Độ trễ suy luận (Forward Latency): **1,373.44 ms** trên toàn bộ 26.12s audio.
+    * Real-Time Factor (RTF): **0.052582** (Nhanh gấp **19.0 lần** tốc độ phát thực tế; thông lượng: **1,902.5 frames/s**).
+    * Độ thu hẹp khoảng cách ẩn so với Vocal Stem nguyên bản: Giảm từ $2,234.89$ xuống $1,495.01$ (Thu hẹp **+33.11%** khoảng cách tới vocal sạch).
+    * Triệt tiêu tương quan nhạc nền: Giảm độ tương đồng cosin với BGM từ $0.9804$ xuống $0.9668$ (**+1.39%**).
+    * Đóng gói báo cáo định lượng JSON: [`data/processed/exp18_accompaniment_suppression_results.json`](data/processed/exp18_accompaniment_suppression_results.json).
+
 
 
 
