@@ -682,6 +682,38 @@ sing-asr/data/
     * Triệt tiêu tương quan nhạc nền: Giảm độ tương đồng cosin với BGM từ $0.9804$ xuống $0.9668$ (**+1.39%**).
     * Đóng gói báo cáo định lượng JSON: [`data/processed/exp18_accompaniment_suppression_results.json`](data/processed/exp18_accompaniment_suppression_results.json).
 
+- **29. Hoàn Thành Phase XIX: Vietnamese Rap / Hip-Hop Benchmark & Fast Syllable Temporal Adaptation (Exp 19):**
+  - **Kiến trúc Fast Syllable Adapter:**
+    * [`src/acoustics/rap_stress_profiler.py`](src/acoustics/rap_stress_profiler.py): Bộ công cụ đo đạc chuyên sâu âm học rap gồm Syllable Rate (SPS), Consonant-Vowel Energy Ratio (CVER), Onset Transient Kurtosis, Half-wave Rectified Spectral Flux, và Syncopation Index.
+    * [`src/models/fast_syllable_adapter.py`](src/models/fast_syllable_adapter.py): Module Transient-Preserving Temporal Pooling với cấu trúc kim tự tháp đa độ phân giải vi mô - vĩ mô (Micro-to-Macro Pyramid). Mô hình gồm **1,218,561 tham số** (1.219M params, **4.65 MB**).
+  - **Dữ liệu thực nghiệm:** Tuyển chọn 18 clip âm thanh thực tế từ Mozilla Common Voice 27.0 Vietnamese chia đều 3 phân tầng tốc độ nhịp: Moderate Flow (4.0 - 5.5 SPS, mean 4.80 SPS), Fast Flow (6.0 - 7.9 SPS, mean 6.96 SPS), và Choppa / Double-time (8.0 - 10.5 SPS, mean 9.12 SPS). Tổng thời lượng: **27.51 giây**.
+  - **Thực nghiệm đo đạc định lượng (`scripts/benchmark_rap_stress_test.py`):**
+    * Baseline WER toàn bộ: **33.23%** (Tỷ lệ xóa từ / Deletion: **26.61%**).
+    * Fast Syllable Adapter WER: **18.97%** (Deletion: **18.27%**).
+    * Cải thiện WER tương đối: **+42.92%**.
+    * Giảm tỷ lệ xóa từ: **+31.33% reduction**.
+    * Đột phá trên phân tầng Choppa / Double-time (>8 SPS): Baseline WER từ **67.77%** giảm xuống **22.80%** (Cải thiện tương đối **+66.36%**, giảm xóa âm tiết **+60.30%** từ 57.43% xuống 22.80%).
+    * Tốc độ suy luận: RTF = **0.3823** (Nhanh gấp **2.6 lần** thời gian thực).
+    * Báo cáo định lượng JSON: [`data/processed/exp19_rap_stress_test_results.json`](data/processed/exp19_rap_stress_test_results.json).
+
+- **30. Hoàn Thành Phase XX: Cross-Lingual Tonal Transfer: Generalization to Mandarin, Cantonese, and Thai (Exp 20):**
+  - **Kiến trúc Chuyển giao Âm vực & Thanh điệu Đa ngôn ngữ:**
+    * [`src/acoustics/cross_lingual_tonal_divergence.py`](src/acoustics/cross_lingual_tonal_divergence.py): Phân tích phân kỳ thanh điệu chuẩn hóa NMTDI (Normalized Multi-scale Tonal Divergence Index), độ dốc và độ cong đường bao F0, dải động âm vực (Tonal Dynamic Range trên bán âm Semitones), tỷ lệ thanh hầu hóa (Creak/Glottalization ratio), và đối soát đạo hàm xung thanh môn IAIF khả vi.
+    * [`src/models/cross_lingual_pitch_adapter.py`](src/models/cross_lingual_pitch_adapter.py): Module chuẩn hóa bán âm liên ngôn ngữ (Universal Semitone Normalization relative to speaker reference fundamental frequency $F_{0,\text{ref}}$) kết hợp Bottleneck Adapters riêng biệt cho từng ngôn ngữ.
+  - **Bộ dữ liệu kiểm chuẩn thực tế chuẩn quốc tế:** Tuyển chọn 20 clip âm thanh thực tế bản địa chuẩn:
+    * Tiếng Việt (Vietnamese Singing): 5 clips (58.1s).
+    * Tiếng Trung (Mandarin Chinese Singing): 5 clips OpenCpop (`espnet/ace-opencpop-segments`, 23.4s).
+    * Tiếng Quảng Đông (Cantonese Native Speech): 5 clips Google FLEURS (`yue_hant_hk`, 58.3s).
+    * Tiếng Thái (Thai Native Speech): 5 clips Google FLEURS (`th_th`, 53.0s).
+    * Tổng thời lượng âm thanh: **192.74 giây**.
+  - **Thực nghiệm đo đạc định lượng (`scripts/benchmark_cross_lingual_transfer.py`):**
+    * Dải động âm vực thanh điệu: Quảng Đông **30.26 st** > Tiếng Việt **26.63 st** > Tiếng Thái **24.94 st** > Tiếng Trung **18.34 st**.
+    * Tỷ lệ xuất hiện hiện tượng thanh hầu hóa (Creaky Voice): Tiếng Quảng Đông **0.47%**, Tiếng Việt **0.12%**, Tiếng Trung **0.00%**, Tiếng Thái **0.00%**.
+    * Tương quan bóc tách xung thanh môn khả vi ($r(u_g)$): Tiếng Thái **0.3413**, Quảng Đông **0.1640**, Tiếng Việt **0.1553**, Tiếng Trung **0.1271**.
+    * Khoảng cách trôi dạt biểu diễn ẩn Zero-Shot (Latent Distance): Quảng Đông **0.1271**, Tiếng Việt **0.1318**, Tiếng Thái **0.1346**, Tiếng Trung **0.1902** (Chứng minh tính ổn định chuyển giao zero-shot vượt trội với độ trôi lệch $< 0.19$).
+    * Tốc độ suy luận: RTF = **0.1153** (Nhanh gấp **8.7 lần** thời gian thực).
+    * Báo cáo định lượng JSON: [`data/processed/exp20_cross_lingual_transfer_results.json`](data/processed/exp20_cross_lingual_transfer_results.json).
+
 
 
 

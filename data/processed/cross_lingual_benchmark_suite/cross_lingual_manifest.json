@@ -1,0 +1,202 @@
+[
+  {
+    "item_id": "vie_01",
+    "language": "vietnamese",
+    "domain": "singing",
+    "filename": "sng_sec_01_verse1_p1.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/vietnamese/sng_sec_01_verse1_p1.wav",
+    "duration_sec": 8.5,
+    "sample_rate": 16000,
+    "source": "Vietnamese_Singing_Suite"
+  },
+  {
+    "item_id": "vie_02",
+    "language": "vietnamese",
+    "domain": "singing",
+    "filename": "sng_sec_02_verse1_p2.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/vietnamese/sng_sec_02_verse1_p2.wav",
+    "duration_sec": 9.0,
+    "sample_rate": 16000,
+    "source": "Vietnamese_Singing_Suite"
+  },
+  {
+    "item_id": "vie_03",
+    "language": "vietnamese",
+    "domain": "singing",
+    "filename": "sng_sec_03_verse1_p3.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/vietnamese/sng_sec_03_verse1_p3.wav",
+    "duration_sec": 8.6,
+    "sample_rate": 16000,
+    "source": "Vietnamese_Singing_Suite"
+  },
+  {
+    "item_id": "vie_04",
+    "language": "vietnamese",
+    "domain": "singing",
+    "filename": "sng_sec_04_verse2_p1.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/vietnamese/sng_sec_04_verse2_p1.wav",
+    "duration_sec": 16.5,
+    "sample_rate": 16000,
+    "source": "Vietnamese_Singing_Suite"
+  },
+  {
+    "item_id": "vie_05",
+    "language": "vietnamese",
+    "domain": "singing",
+    "filename": "sng_sec_05_verse2_p2.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/vietnamese/sng_sec_05_verse2_p2.wav",
+    "duration_sec": 15.5,
+    "sample_rate": 16000,
+    "source": "Vietnamese_Singing_Suite"
+  },
+  {
+    "item_id": "man_01",
+    "language": "mandarin",
+    "domain": "singing",
+    "filename": "mandarin_opencpop_01.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/mandarin/mandarin_opencpop_01.wav",
+    "duration_sec": 3.79,
+    "sample_rate": 48000,
+    "source": "OpenCpop_espnet_ace"
+  },
+  {
+    "item_id": "man_02",
+    "language": "mandarin",
+    "domain": "singing",
+    "filename": "mandarin_opencpop_02.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/mandarin/mandarin_opencpop_02.wav",
+    "duration_sec": 5.6,
+    "sample_rate": 48000,
+    "source": "OpenCpop_espnet_ace"
+  },
+  {
+    "item_id": "man_03",
+    "language": "mandarin",
+    "domain": "singing",
+    "filename": "mandarin_opencpop_03.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/mandarin/mandarin_opencpop_03.wav",
+    "duration_sec": 3.82,
+    "sample_rate": 48000,
+    "source": "OpenCpop_espnet_ace"
+  },
+  {
+    "item_id": "man_04",
+    "language": "mandarin",
+    "domain": "singing",
+    "filename": "mandarin_opencpop_04.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/mandarin/mandarin_opencpop_04.wav",
+    "duration_sec": 5.4,
+    "sample_rate": 48000,
+    "source": "OpenCpop_espnet_ace"
+  },
+  {
+    "item_id": "man_05",
+    "language": "mandarin",
+    "domain": "singing",
+    "filename": "mandarin_opencpop_05.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/mandarin/mandarin_opencpop_05.wav",
+    "duration_sec": 4.79,
+    "sample_rate": 48000,
+    "source": "OpenCpop_espnet_ace"
+  },
+  {
+    "item_id": "can_01",
+    "language": "cantonese",
+    "domain": "speech",
+    "filename": "cantonese_fleurs_01.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/cantonese/cantonese_fleurs_01.wav",
+    "duration_sec": 15.48,
+    "sample_rate": 16000,
+    "source": "google_fleurs_yue_hant_hk"
+  },
+  {
+    "item_id": "can_02",
+    "language": "cantonese",
+    "domain": "speech",
+    "filename": "cantonese_fleurs_02.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/cantonese/cantonese_fleurs_02.wav",
+    "duration_sec": 10.98,
+    "sample_rate": 16000,
+    "source": "google_fleurs_yue_hant_hk"
+  },
+  {
+    "item_id": "can_03",
+    "language": "cantonese",
+    "domain": "speech",
+    "filename": "cantonese_fleurs_03.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/cantonese/cantonese_fleurs_03.wav",
+    "duration_sec": 9.0,
+    "sample_rate": 16000,
+    "source": "google_fleurs_yue_hant_hk"
+  },
+  {
+    "item_id": "can_04",
+    "language": "cantonese",
+    "domain": "speech",
+    "filename": "cantonese_fleurs_04.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/cantonese/cantonese_fleurs_04.wav",
+    "duration_sec": 10.68,
+    "sample_rate": 16000,
+    "source": "google_fleurs_yue_hant_hk"
+  },
+  {
+    "item_id": "can_05",
+    "language": "cantonese",
+    "domain": "speech",
+    "filename": "cantonese_fleurs_05.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/cantonese/cantonese_fleurs_05.wav",
+    "duration_sec": 12.12,
+    "sample_rate": 16000,
+    "source": "google_fleurs_yue_hant_hk"
+  },
+  {
+    "item_id": "tha_01",
+    "language": "thai",
+    "domain": "speech",
+    "filename": "thai_fleurs_01.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/thai/thai_fleurs_01.wav",
+    "duration_sec": 8.22,
+    "sample_rate": 16000,
+    "source": "google_fleurs_th_th"
+  },
+  {
+    "item_id": "tha_02",
+    "language": "thai",
+    "domain": "speech",
+    "filename": "thai_fleurs_02.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/thai/thai_fleurs_02.wav",
+    "duration_sec": 7.8,
+    "sample_rate": 16000,
+    "source": "google_fleurs_th_th"
+  },
+  {
+    "item_id": "tha_03",
+    "language": "thai",
+    "domain": "speech",
+    "filename": "thai_fleurs_03.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/thai/thai_fleurs_03.wav",
+    "duration_sec": 12.66,
+    "sample_rate": 16000,
+    "source": "google_fleurs_th_th"
+  },
+  {
+    "item_id": "tha_04",
+    "language": "thai",
+    "domain": "speech",
+    "filename": "thai_fleurs_04.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/thai/thai_fleurs_04.wav",
+    "duration_sec": 12.06,
+    "sample_rate": 16000,
+    "source": "google_fleurs_th_th"
+  },
+  {
+    "item_id": "tha_05",
+    "language": "thai",
+    "domain": "speech",
+    "filename": "thai_fleurs_05.wav",
+    "relative_path": "data/processed/cross_lingual_benchmark_suite/thai/thai_fleurs_05.wav",
+    "duration_sec": 12.24,
+    "sample_rate": 16000,
+    "source": "google_fleurs_th_th"
+  }
+]
