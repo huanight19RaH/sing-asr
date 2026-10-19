@@ -40,7 +40,7 @@ To prevent expert collapse, we optimize the expert load-balancing loss:
 \begin{equation}
 \mathcal{L}_{\text{balance}} = \alpha_{\text{bal}} \cdot N \sum_{k=1}^N m_k P_k
 \end{equation}
-where $m_k$ denotes the fraction of tokens routed to expert $k$, and $P_k$ is the average routing probability.
+where $m_k$ denotes the fraction of tokens routed to expert $k$, and $P_k$ is the average routing probability. Crucially, while colloquial Southern speech merges tones \textit{H\H{o}i} and \textit{Ng\~a} into a unified dipping contour, Southern vocalists frequently sing standardized literary lyrics with canonical orthography. The Southern expert $\text{LoRA}_{\text{S}}$ is trained under auxiliary cross-entropy to project colloquial merged acoustics directly onto standard orthographic targets, eliminating false homophone confusions without requiring separate post-processing disambiguation.
 
 \subsection{Compound Objective and Random Search Champion \texorpdfstring{($RS_{01}$)}{(RS01)}}
 The complete network is optimized under a 6-component multi-task objective:
