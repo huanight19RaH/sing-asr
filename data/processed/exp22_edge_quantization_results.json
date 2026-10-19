@@ -1,0 +1,89 @@
+{
+  "benchmark_id": "EXP22_EDGE_QUANTIZATION_BENCHMARK",
+  "architecture_coverage": "All 4 Phase Neural Modules (Rap, Tonal, Accompaniment, Duet)",
+  "quantization_type": "PyTorch Post-Training Dynamic INT8 Quantization (qint8)",
+  "target_platform": "Edge CPU / Mobile Embedded Core",
+  "overall_metrics": {
+    "total_fp32_size_mb": 32.19,
+    "total_int8_size_mb": 21.82,
+    "overall_memory_compression_pct": 32.23,
+    "mean_cpu_speedup_factor": 1.31,
+    "mean_numerical_cosine_parity": 0.99974,
+    "mean_int8_real_time_factor": 0.02108,
+    "speedup_vs_realtime": 47.4
+  },
+  "module_benchmarks": [
+    {
+      "module_name": "FastSyllableAdapter",
+      "phase": "Phase XIX (Vietnamese Rap & Flow)",
+      "fp32_size_mb": 4.66,
+      "int8_size_mb": 4.66,
+      "memory_savings_pct": 0.0,
+      "fp32_latency_ms": 13.2,
+      "int8_latency_ms": 4.93,
+      "latency_speedup_x": 2.68,
+      "fp32_rtf": 0.0132,
+      "int8_rtf": 0.00493,
+      "throughput_fps": 20276.0,
+      "numerical_parity": {
+        "cosine_similarity": 1.0,
+        "mean_absolute_error": 0.0,
+        "max_absolute_error": 0.0
+      }
+    },
+    {
+      "module_name": "CrossLingualPitchAdapter",
+      "phase": "Phase XX (Multilingual Tonal Transfer)",
+      "fp32_size_mb": 0.5,
+      "int8_size_mb": 0.16,
+      "memory_savings_pct": 68.44,
+      "fp32_latency_ms": 0.67,
+      "int8_latency_ms": 34.53,
+      "latency_speedup_x": 0.02,
+      "fp32_rtf": 0.00067,
+      "int8_rtf": 0.03453,
+      "throughput_fps": 2896.2,
+      "numerical_parity": {
+        "cosine_similarity": 0.99932,
+        "mean_absolute_error": 0.024137,
+        "max_absolute_error": 0.267214
+      }
+    },
+    {
+      "module_name": "AccompanimentSuppressionAttention",
+      "phase": "Phase XVIII (Internal Stem Disentanglement)",
+      "fp32_size_mb": 4.87,
+      "int8_size_mb": 2.93,
+      "memory_savings_pct": 39.86,
+      "fp32_latency_ms": 17.14,
+      "int8_latency_ms": 24.72,
+      "latency_speedup_x": 0.69,
+      "fp32_rtf": 0.01714,
+      "int8_rtf": 0.02472,
+      "throughput_fps": 4045.8,
+      "numerical_parity": {
+        "cosine_similarity": 0.99982,
+        "mean_absolute_error": 0.02138,
+        "max_absolute_error": 0.115255
+      }
+    },
+    {
+      "module_name": "DualStreamDuetAdapter",
+      "phase": "Phase XXI (Multi-Speaker Duet)",
+      "fp32_size_mb": 22.17,
+      "int8_size_mb": 14.07,
+      "memory_savings_pct": 36.51,
+      "fp32_latency_ms": 36.8,
+      "int8_latency_ms": 20.14,
+      "latency_speedup_x": 1.83,
+      "fp32_rtf": 0.0368,
+      "int8_rtf": 0.02014,
+      "throughput_fps": 4966.5,
+      "numerical_parity": {
+        "cosine_similarity": 0.99982,
+        "mean_absolute_error": 0.015065,
+        "max_absolute_error": 0.075886
+      }
+    }
+  ]
+}

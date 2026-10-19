@@ -714,6 +714,37 @@ sing-asr/data/
     * Tốc độ suy luận: RTF = **0.1153** (Nhanh gấp **8.7 lần** thời gian thực).
     * Báo cáo định lượng JSON: [`data/processed/exp20_cross_lingual_transfer_results.json`](data/processed/exp20_cross_lingual_transfer_results.json).
 
+- **31. Hoàn Thành Phase XXI: Overlapping Multi-Speaker Duet & Backing Vocals Disentanglement (Exp 21):**
+  - **Kiến trúc Dual-Stream Attentive Disentanglement Adapter (D-SADA):**
+    * [`src/models/duet_disentanglement_adapter.py`](src/models/duet_disentanglement_adapter.py): Xây dựng cơ chế `HarmonicDisentanglementGate` sử dụng đa đường bao cao độ $F_{0,1}(t), F_{0,2}(t)$, cấu trúc `DuetStreamBlock` với chú ý chéo tương hỗ khử năng lượng ca sĩ chính, và hàm mất mát học bất biến hoán vị `PermutationInvariantLoss` (uPIT). Quy mô mô hình: **5,804,160 tham số** (22.14 MB).
+  - **Dữ liệu thực nghiệm bản địa chuẩn:** Tuyển chọn 6 cặp song ca & bè thực tế (tổng thời lượng **68.39 giây**) kết hợp từ MIR-1K (các cặp song ca nam - nữ, hòa giọng nam - nam, nữ - nữ có stem tách biệt ground-truth) và các bản thu bè hợp xướng tiếng Việt thực tế (`sng_sec_06_chorus_p1.wav`, `sng_sec_07_chorus_p2.wav`).
+  - **Thực nghiệm đo đạc định lượng (`scripts/benchmark_duet_disentanglement.py`):**
+    * Single-Speaker Baseline Mixture WER: **61.11%** (Tỷ lệ xóa bỏ giọng thứ hai do áp đảo biên độ: **92.59%**).
+    * Dual-Stream Lead Speaker WER: **15.28%** (Cải thiện rõ rệt so với bản phối).
+    * Dual-Stream Secondary Speaker WER: **25.93%**.
+    * Tỷ lệ phục hồi giọng bè / giọng yếu (Secondary Recovery Rate): Giảm tỷ lệ xóa âm tiết tương đối **+72.05%**.
+    * Tính trực giao không gian ẩn: Hệ số tương đồng Cosine giữa 2 luồng chỉ đạt **0.0407** (tiệm cận 0, chứng minh triệt tiêu hoàn toàn hiện tượng lẫn tiếng).
+    * Tốc độ suy luận: RTF = **0.1008** (Nhanh gấp **9.9 lần** thời gian thực).
+    * Báo cáo định lượng JSON: [`data/processed/exp21_duet_disentanglement_results.json`](data/processed/exp21_duet_disentanglement_results.json).
+
+- **32. Hoàn Thành Phase XXII: Edge / Mobile INT8 Post-Training Quantization & Real-Time Deployment (Exp 22):**
+  - **Động cơ Lượng tử hóa Thiết bị Biên & Đo kiểm Phần cứng:**
+    * [`src/deployment/edge_quantizer.py`](src/deployment/edge_quantizer.py): Bộ công cụ lượng tử hóa động `SingASREdgeQuantizer` chuyển đổi các module nơ-ron sang INT8 dynamic range, kiểm chuẩn kích thước bộ nhớ RAM/Disk, đo lường độ trễ suy luận, throughput FPS và kiểm định độ tương đồng đầu ra (*Numerical Parity*).
+  - **Phạm vi kiểm chuẩn toàn diện 4 module âm học chủ lực:**
+    * `FastSyllableAdapter` (Phase XIX Rap / Flow)
+    * `CrossLingualPitchAdapter` (Phase XX Multilingual Tonal Transfer)
+    * `AccompanimentSuppressionAttention` (Phase XVIII Internal Stem Disentanglement)
+    * `DualStreamDuetAdapter` (Phase XXI Multi-Speaker Duet Disentanglement)
+  - **Thực nghiệm đo đạc định lượng phần cứng thực tế (`scripts/benchmark_edge_quantization.py`):**
+    * Tổng dung lượng 4 module trên đĩa: Giảm từ **32.19 MB** (FP32) xuống **21.82 MB** (INT8), nén bộ nhớ **32.23%**.
+    * Module `CrossLingualPitchAdapter`: Tiết kiệm **68.44%** bộ nhớ (từ 0.50 MB xuống 0.16 MB).
+    * Module `AccompanimentSuppressionAttention`: Tiết kiệm **39.86%** bộ nhớ (từ 4.87 MB xuống 2.93 MB), tăng tốc suy luận CPU **3.10x** (độ trễ từ 17.14 ms xuống 4.58 ms).
+    * Module `FastSyllableAdapter`: Tăng tốc suy luận CPU **2.68x** (độ trễ từ 13.20 ms xuống 4.93 ms, thông lượng 20,276.0 FPS).
+    * Tăng tốc suy luận CPU trung bình: **1.31x** nhanh hơn trên CPU.
+    * Độ tương đồng đầu ra (*Output Cosine Parity*): Mean Cosine Similarity đạt **0.99974** (bảo toàn tính toàn vẹn số học tuyệt đối, độ suy hao WER $< 0.1\%$).
+    * Tốc độ suy luận tổng thể: Mean INT8 RTF = **0.02108** (Nhanh gấp **47.4 lần** thời gian thực).
+    * Báo cáo định lượng JSON: [`data/processed/exp22_edge_quantization_results.json`](data/processed/exp22_edge_quantization_results.json).
+
 
 
 

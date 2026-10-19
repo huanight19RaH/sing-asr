@@ -1,0 +1,114 @@
+{
+  "benchmark_id": "EXP21_DUET_DISENTANGLEMENT_SUITE",
+  "total_pairs": 6,
+  "pairs": [
+    {
+      "pair_id": "duet_mf_01",
+      "pair_type": "Male_Female_Duet",
+      "mixture_path": "data/processed/duet_benchmark_suite\\duet_mf_01_mixture.wav",
+      "duration_sec": 8.8,
+      "speaker_1": {
+        "singer": "abjones",
+        "gender": "male",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_abjones_1_01.wav",
+        "transcript": "d߸}B_ݱoM_ܦhiê]_I۩p_pk"
+      },
+      "speaker_2": {
+        "singer": "Ani",
+        "gender": "female",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_Ani_1_01.wav",
+        "transcript": "OF_GOI檺_RRݵ"
+      }
+    },
+    {
+      "pair_id": "duet_mf_02",
+      "pair_type": "Male_Female_Duet",
+      "mixture_path": "data/processed/duet_benchmark_suite\\duet_mf_02_mixture.wav",
+      "duration_sec": 7.17,
+      "speaker_1": {
+        "singer": "leon",
+        "gender": "male",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_leon_1_01.wav",
+        "transcript": "bѶMnŬX"
+      },
+      "speaker_2": {
+        "singer": "amy",
+        "gender": "female",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_amy_1_01.wav",
+        "transcript": "ɭ_ӫ_T__A"
+      }
+    },
+    {
+      "pair_id": "duet_ff_01",
+      "pair_type": "Female_Female_Harmony",
+      "mixture_path": "data/processed/duet_benchmark_suite\\duet_ff_01_mixture.wav",
+      "duration_sec": 9.86,
+      "speaker_1": {
+        "singer": "Ani",
+        "gender": "female",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_Ani_1_02.wav",
+        "transcript": "֩tEv_BǨӨxq"
+      },
+      "speaker_2": {
+        "singer": "amy",
+        "gender": "female",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_amy_1_02.wav",
+        "transcript": "o@_ڻ"
+      }
+    },
+    {
+      "pair_id": "duet_mm_01",
+      "pair_type": "Male_Male_Harmony",
+      "mixture_path": "data/processed/duet_benchmark_suite\\duet_mm_01_mixture.wav",
+      "duration_sec": 6.56,
+      "speaker_1": {
+        "singer": "abjones",
+        "gender": "male",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_abjones_1_02.wav",
+        "transcript": "ڷR{_ӹq_Oi`B"
+      },
+      "speaker_2": {
+        "singer": "leon",
+        "gender": "male",
+        "isolated_path": "data/processed/duet_benchmark_suite\\vocal_leon_1_02.wav",
+        "transcript": "ѪŬXaŬXAۧ"
+      }
+    },
+    {
+      "pair_id": "duet_vn_chorus_01",
+      "pair_type": "Vietnamese_Authentic_Chorus_Harmony",
+      "mixture_path": "data/processed/benchmark_suite/singing/sng_sec_06_chorus_p1.wav",
+      "duration_sec": 19.0,
+      "speaker_1": {
+        "singer": "Lead_Vocal_KhanhLy",
+        "gender": "female",
+        "isolated_path": "data/processed/benchmark_suite/singing/sng_sec_06_chorus_p1.wav",
+        "transcript": "gọi nắng trên vai em gầy đường xa áo bay"
+      },
+      "speaker_2": {
+        "singer": "Backing_Harmony_Soprano",
+        "gender": "female",
+        "isolated_path": "data/processed/benchmark_suite/singing/sng_sec_06_chorus_p1.wav",
+        "transcript": "nắng trên vai áo bay đường xa"
+      }
+    },
+    {
+      "pair_id": "duet_vn_chorus_02",
+      "pair_type": "Vietnamese_Authentic_Chorus_Harmony",
+      "mixture_path": "data/processed/benchmark_suite/singing/sng_sec_07_chorus_p2.wav",
+      "duration_sec": 17.0,
+      "speaker_1": {
+        "singer": "Lead_Vocal_KhanhLy",
+        "gender": "female",
+        "isolated_path": "data/processed/benchmark_suite/singing/sng_sec_07_chorus_p2.wav",
+        "transcript": "nắng qua mắt buồn để mùa thu tới"
+      },
+      "speaker_2": {
+        "singer": "Backing_Harmony_Alto",
+        "gender": "female",
+        "isolated_path": "data/processed/benchmark_suite/singing/sng_sec_07_chorus_p2.wav",
+        "transcript": "mắt em buồn mùa thu tới"
+      }
+    }
+  ]
+}
