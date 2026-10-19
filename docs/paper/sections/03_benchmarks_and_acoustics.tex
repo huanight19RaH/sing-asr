@@ -1,12 +1,29 @@
-\section{Empirical 4-Domain Benchmark \& Acoustic Diagnostics}
-\subsection{Benchmark Construction and Provenance}
-To establish uncompromising empirical validity and reproducibility, we construct a verified 58-item multi-domain benchmark testbed. All clips consist of authentic, non-synthetic 16\,kHz mono PCM audio balanced across four complementary domains:
-\begin{enumerate}
-    \item \textbf{Domain 1 (Singing Voice - 13 items):} Representative verse, chorus, and bridge sections from classic Vietnamese repertoire (composed by Trinh Cong Son), evaluated across isolated vocal stems (separated via HTDemucs \cite{rouard2023hybrid}) and full polyphonic acoustic mixtures.
-    \item \textbf{Domain 2 (Mozilla Common Voice 27.0 - 15 items):} Stratified recordings from the official Vietnamese Common Voice CC0 corpus \cite{ardila2020common}, providing balanced gender and age distributions for clean scripted read speech.
-    \item \textbf{Domain 3 (VietSuperSpeech - 15 items):} Authentic conversational audio from the development split of VietSuperSpeech \cite{thanh2026vietsuperspeech}, capturing informal speech cadences, spontaneous rate variations, and real-world background acoustics.
-    \item \textbf{Domain 4 (VIVOS Studio Speech - 15 items):} High-fidelity acoustic chamber recordings from 15 unique native speakers in the standardized VIVOS test split \cite{luong2016vivos}.
-\end{enumerate}
+\section{Empirical Multi-Domain Benchmark \& Acoustic Diagnostics}
+
+\subsection{Benchmark Construction, Provenance, and Multi-Facet Testbeds}
+To establish uncompromising empirical validity and reproducibility, our study builds upon verified, non-synthetic 16\,kHz mono PCM audio across five targeted experimental testbeds. Table~\ref{tab:dataset_taxonomy} summarizes the provenance, duration, sample volume, and acoustic focus of each corpus.
+
+\begin{table*}[t]
+\centering
+\caption{Comprehensive taxonomy of verified authentic audio benchmark testbeds employed across all empirical phases.}
+\label{tab:dataset_taxonomy}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccl}
+\toprule
+\textbf{Benchmark Suite} & \textbf{Source Dataset \& Provenance} & \textbf{Items / Pairs} & \textbf{Total Dur. (s)} & \textbf{Languages} & \textbf{Primary Acoustic \& Phonetic Focus} \\
+\midrule
+Core Multi-Domain Benchmark & Trinh Cong Son Classics, CV 27.0 \cite{ardila2020common}, & 58 & 434.65 & Vietnamese & Verse/chorus singing, conversational spontaneous cadences, \\
+& VietSuperSpeech \cite{thanh2026vietsuperspeech}, VIVOS Studio \cite{luong2016vivos} & & & & scripted read speech, clean studio phonetic anchors \\
+Fast Syllable Flow Stress Suite & Mozilla Common Voice 27.0 \cite{ardila2020common} & 18 & 27.51 & Vietnamese & High-tempo syllable compression ($4.8$, $7.0$, and $9.1$ SPS Choppa) \\
+Cross-Lingual Tonal Corpus & Vietnamese Singing, OpenCpop \cite{wang2022opencpop}, & 20 & 192.74 & vi, zh, & Extreme tonal dynamic range ($18.3\text{--}30.3$ st), \\
+& FLEURS Cantonese \& Thai \cite{conneau2023fleurs} & & & yue, th & glottal creak transfer, zero-shot latent distance \\
+Multi-Speaker Duet Testbed & MIR-1K Multi-track \cite{hsu2010mir1k}, Vietnamese Chorus & 6 pairs & 68.39 & vi, zh & Dual-stream harmonic overlap, lead vocal amplitude masking \\
+Instrument Collision Testbed & Vietnamese Song Stems, MIR-1K Accompaniment & 45 & 412.20 & vi, zh & Specific instrument interference (Drums, Piano, Guitar, 808 Bass), \\
+& & & & & polyphonic mixtures at calibrated SNRs ($10$\,dB, $5$\,dB, $0$\,dB) \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
 
 \subsection{16-Variable Acoustic Feature Extraction}
 For each benchmark utterance, we extract a comprehensive 16-dimensional acoustic vector utilizing Librosa \cite{mcfee2015librosa} and Praat via Parselmouth \cite{boersma2002praat,jadoul2018parselmouth}:
@@ -17,6 +34,15 @@ For each benchmark utterance, we extract a comprehensive 16-dimensional acoustic
     \item \textbf{Voice Quality \& Phonation:} Harmonics-to-Noise Ratio (HNR in dB) \cite{yumoto1982harmonics}, spectral tilt, local jitter (\%), and local shimmer (\%) \cite{farrus2007jitter}.
 \end{itemize}
 
+\subsection{Instrument-Specific Acoustic Collision Profiling}
+To isolate the destructive physical mechanisms induced by specific musical instruments in polyphonic arrangements, we formulate four diagnostic collision descriptors:
+\begin{enumerate}
+    \item \textbf{Transient Energy Index (TEI):} The high-frequency ($>2.5$\,kHz) crest factor and onset transient burst density, measuring consonant onset masking caused by percussive drum/snare hits.
+    \item \textbf{Formant Disturbance Ratio (FDR):} The normalized Frobenius spectral deviation within the vocal formant band ($300\text{--}2,500$\,Hz), quantifying formant smearing produced by dense polyphonic piano chords.
+    \item \textbf{Pitch Tracking Deviation (PTD):} The frame ratio of pitch errors ($>1$ semitone deviation) induced by competing harmonic sources, such as guitar string vibrato ($4\text{--}7$\,Hz) and pitch bends.
+    \item \textbf{Spectral Energy Floor (SEF):} The proportion of total spectral power concentrated in the sub-bass floor ($<150$\,Hz), characterizing dynamic range saturation caused by 808 synth bass lines.
+\end{enumerate}
+
 \subsection{Multivariate Regression Analysis}
 To address Research Question 2 (RQ2: \textit{Which acoustic dimensions govern ASR failure modes?}), we fit Ordinary Least Squares (OLS) regression models predicting error subtypes from acoustic descriptors:
 \begin{equation}
@@ -25,6 +51,7 @@ To address Research Question 2 (RQ2: \textit{Which acoustic dimensions govern AS
 &\quad + \beta_3 \text{HNR} + \beta_4 \text{Tilt} + \beta_5 \Delta F_{\text{disp}} + \epsilon
 \end{aligned}
 \end{equation}
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{tone_confusion_matrix_domains.png}
@@ -33,3 +60,4 @@ To address Research Question 2 (RQ2: \textit{Which acoustic dimensions govern AS
 \end{figure}
 
 Bivariate correlation analysis confirms that fundamental frequency semitone range correlates significantly with word deletions ($r = 0.3345, p = 0.0103$; Spearman $\rho = 0.3433, p = 0.0083$) \cite{pearson1895notes,spearman1904proof}. Similarly, vibrato modulation rate correlates positively with token deletions ($r = 0.3445, p = 0.0081$; $\rho = 0.2675, p = 0.0424$). As illustrated in Fig.~\ref{fig:tone_confusion}, these empirical relationships demonstrate that rapid melodic frequency modulations blur acoustic frame representations, prompting the decoder to drop tokens prematurely. Conversely, our regularized champion model exhibits an essentially flat correlation with utterance duration ($r = -0.0412, p = 0.7589$), confirming that it is insulated from length-dependent insertion blowups.
+

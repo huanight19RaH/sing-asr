@@ -80,3 +80,41 @@ c_i &= \sum_{k=j-C+1}^j \beta_{i, k} h_k \\
 \end{figure}
 
 As illustrated in Fig.~\ref{fig:cross_attention}, this monotonic formulation bounds computation latency to $8.50$\,ms per chunk. Adding the $40$\,ms lookahead window, the combined algorithmic latency is $48.50$\,ms, strictly below the $100$\,ms human perception threshold for real-time interaction.
+
+\subsection{Fast Syllable Adaptation for Rapid Rhythmic Delivery}
+In modern musical genres such as Vietnamese rap and fast melodic flows, speech rate frequently exceeds $8$ syllables per second (SPS), causing standard frame downsamplers to blur brief consonant onsets. We introduce the \textit{Fast Syllable Adapter} (FSA, $1.219$\,M parameters), which incorporates transient-preserving multi-resolution temporal pooling:
+\begin{equation}
+\begin{aligned}
+Z_{\text{fast}} &= \text{LayerNorm}\Bigl(Z + \sum_{k \in \{1, 2, 4\}} \text{Conv1D}_k\bigl(\text{GELU}( \\
+&\quad \text{DepthwiseConv}_k(Z))\bigr)\Bigr)
+\end{aligned}
+\end{equation}
+By executing parallel temporal convolutions with kernel sizes $k \in \{1, 2, 4\}$ and stride $1$, the adapter preserves sub-frame consonant transients while capturing rhythmically compressed vowel contours.
+
+\subsection{Multi-Speaker Duet Disentanglement (D-SADA)}
+When lead and backing vocals overlap simultaneously, single-stream decoders suffer from severe amplitude dominance, deleting the secondary vocal. We propose the \textit{Dual-Stream Attentive Disentanglement Adapter} (D-SADA, $5.804$\,M parameters). Utilizing multi-pitch harmonic gates conditioned on dual $F_0$ tracks ($F_{0,1}, F_{0,2}$), the module projects acoustic features into orthogonal lead and secondary streams ($Z_{\text{lead}}, Z_{\text{sec}}$) optimized via utterance-level Permutation Invariant Training (uPIT) \cite{kolbaek2017pit}:
+\begin{equation}
+\mathcal{L}_{\text{uPIT}} = \min_{\pi \in \mathcal{P}} \sum_{s=1}^2 \mathcal{L}_{\text{CE}}(\hat{y}_{\pi(s)}, y_s)
+\end{equation}
+where $\mathcal{P}$ represents the set of all permutations over the two vocal tracks.
+
+\subsection{Instrument-Aware Tri-Band Suppression Architecture (IAS-Adapter)}
+Polyphonic musical accompaniments collide with singing formants across distinct frequency bands depending on instrument physics. We design the \textit{Instrument-Aware Suppression Adapter} (IAS-Adapter, $3.236$\,M parameters), which decomposes latent acoustic representations into three functional sub-bands:
+\begin{enumerate}
+    \item \textbf{Low-Band Gate ($<250$\,Hz):} Conditioned on 808/synth bass detection probability $P_{\text{synth}}$, attenuating sub-bass floor leakage.
+    \item \textbf{Mid-Band Formant Gate ($250\text{--}3,000$\,Hz):} Self-attention cross-projection conditioned on $[P_{\text{piano}}, P_{\text{guitar}}]$ that desmears $F_1, F_2$ vowel formants against polyphonic chords and vibrato modulations.
+    \item \textbf{High-Band Transient Limiter ($>3,000$\,Hz):} Gated soft limiter activated by drum probability $P_{\text{drum}}$, dampening snare/hi-hat transients while preserving voiceless consonant edges (/t/, /th/, /s/, /x/).
+\end{enumerate}
+The suppressed sub-bands are recombined via projection and a residual identity bypass:
+\begin{equation}
+Y = \text{LayerNorm}(X + \gamma_{\text{res}} \cdot \text{Proj}([Z_{\text{low}}', Z_{\text{mid}}', Z_{\text{high}}']))
+\end{equation}
+where $\gamma_{\text{res}}$ is initialized to $0.20$ to maintain baseline representation integrity.
+
+\subsection{Edge INT8 Post-Training Quantization}
+For deployment on resource-constrained consumer edge devices, we implement dynamic-range post-training INT8 quantization \cite{jacob2018quantization}. Linear feed-forward projections and attention projections within our adapter suite are quantized dynamically from 32-bit floating point ($\text{FP32}$) to signed 8-bit integers ($\text{qint8}$):
+\begin{equation}
+q = \text{clamp}\left(\left\lfloor \frac{w}{S} \right\rceil + Z_{\text{zero}}, -128, 127\right)
+\end{equation}
+where $S$ is the dynamic scale factor and $Z_{\text{zero}}$ is the zero-point offset. LayerNorm, Softmax, and residual additions are maintained in FP32 to ensure numerical stability and prevent gradient degradation.
+
