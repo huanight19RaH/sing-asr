@@ -1,7 +1,7 @@
 \section{Discussion and Conclusion}
 
 \subsection{Scientific Insights and Theoretical Implications}
-This study established an empirical, mathematically grounded adaptation paradigm for automatic singing voice recognition in tonal languages. Our findings resolve fundamental debates in musical speech processing:
+This study established an empirical, mathematically grounded paradigm for automatic singing voice recognition in tonal languages. Our findings resolve fundamental debates in musical speech processing:
 \begin{enumerate}
     \item \textbf{Phonation Invariance and Tone Preservation:} While musical melody overrides the fundamental frequency ($F_0$) contour, glottal source parameters (formant-corrected spectral tilt $H_1^*-H_2^*$ and Open Quotient $O_q$) provide a physical mechanism by which vocal fold constriction preserves lexical tone contrasts. In particular, $87.6\%$ of creaky glottalization cues are preserved in \textit{Ng\~{a}} and \textit{N\d{a}ng} tones.
     \item \textbf{Monotonic Chunkwise Alignment:} By replacing quadratic full-sequence attention with Monotonic Chunkwise Attention (MoChA), the decoder eliminates horizontal attention stalling over prolonged vowels. Operating on $160$\,ms chunks, the engine runs at $8.50$\,ms latency ($RTF = 0.1091$) with $98.72\%$ accuracy retention.
@@ -12,9 +12,9 @@ This study established an empirical, mathematically grounded adaptation paradigm
 \subsection{Limitations and Future Horizons}
 While our multi-tier framework delivers consistent error reductions across singing, rap, multi-dialect, and polyphonic acoustics, and 10-seed cross-validation has verified strict parameter stability ($CV \le 1.88\%$), three principal avenues define the immediate roadmap:
 \begin{itemize}
-    \item \textbf{Non-Tempered Traditional Vocal Genres:} While 256-bin semitone discretization resolves Western 12-TET pop and rap melodies, traditional chamber singing genres (e.g., Vietnamese \textit{Ca Tr\`{u}}, \textit{H\'{a}t X\H{a}m}, or \textit{Quan H\d{o}}) exhibit microtonal pitch inflections ($<25$ cents) and continuous glissandi. Extending continuous pitch embeddings with sub-cent continuous Fourier neural operators represents a vital direction for non-tempered ethnomusicological traditions.
-    \item \textbf{Embedded NPU Compiler Deployment:} While CPU inference achieves $47.4\times$ real-time throughput under INT8, compiling neural adapters directly to dedicated low-power neural engines (Apple Neural Engine, Qualcomm Hexagon QNN, and ONNX-Runtime WebAssembly) will measure thermal and battery endurance in consumer edge hardware.
-    \item \textbf{Triple-Head Multi-Task Decoding:} Jointly decoding text lyrics, musical notes (MIDI pitch and duration), and lexical tone classes within a unified autoregressive representation head to enable bidirectional music-language co-supervision.
+    \item \textbf{Near-Term Embedded NPU Compilation:} While CPU inference achieves $47.4\times$ real-time throughput under INT8, compiling neural adapters directly to dedicated low-power neural engines (Apple Neural Engine, Qualcomm Hexagon QNN, and ONNX-Runtime WebAssembly) provides an immediately actionable milestone to benchmark thermal and battery endurance in consumer edge hardware.
+    \item \textbf{Medium-Term Traditional Microtonal Singing:} While 256-bin semitone discretization resolves Western 12-TET pop and rap melodies, traditional chamber singing genres (e.g., Vietnamese \textit{Ca Tr\`{u}}, \textit{H\'{a}t X\H{a}m}, or \textit{Quan H\d{o}}) exhibit microtonal pitch inflections ($<25$ cents) and continuous glissandi. Extending continuous pitch embeddings with sub-cent continuous Fourier neural operators represents a compelling next-generation research direction for non-tempered ethnomusicological traditions.
+    \item \textbf{Long-Term Triple-Head Unified Co-Supervision:} Jointly decoding text lyrics, musical notes (MIDI pitch and duration), and lexical tone classes within a unified autoregressive representation head to enable bidirectional music-language co-supervision.
 \end{itemize}
 
 \subsection{Conclusion}

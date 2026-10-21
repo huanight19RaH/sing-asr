@@ -102,11 +102,12 @@ where $\mathcal{P}$ represents the set of all permutations over the two vocal tr
 Polyphonic musical accompaniments collide with singing formants across distinct frequency bands depending on instrument physics. We design the \textit{Instrument-Aware Suppression Adapter} (IAS-Adapter, $3.236$\,M parameters), which decomposes latent acoustic representations into three functional sub-bands:
 \begin{enumerate}
     \item \textbf{Low-Band Gate ($<250$\,Hz):} Conditioned on 808/synth bass detection probability $P_{\text{synth}}$, attenuating sub-bass floor leakage.
-    \item \textbf{Mid-Band Formant Gate ($250\text{--}3,000$\,Hz):} Self-attention cross-projection conditioned on $[P_{\text{piano}}, P_{\text{guitar}}]$ that desmears $F_1, F_2$ vowel formants against polyphonic chords and vibrato modulations.
-    \item \textbf{High-Band Transient Limiter ($>3,000$\,Hz):} Gated soft limiter activated by drum probability $P_{\text{drum}}$, dampening snare/hi-hat transients while preserving voiceless consonant edges (/t/, /th/, /s/, /x/).
+    \item \textbf{Mid-Band Formant Gate ($250\text{--}3{,}000$\,Hz):} Self-attention cross-projection conditioned on $[P_{\text{piano}}, P_{\text{guitar}}]$ that desmears $F_1, F_2$ vowel formants against polyphonic chords and vibrato modulations.
+    \item \textbf{High-Band Transient Limiter ($>3{,}000$\,Hz):} Gated soft limiter activated by drum probability $P_{\text{drum}}$, dampening snare/hi-hat transients while preserving voiceless consonant edges (/t/, /th/, /s/, /x/).
 \end{enumerate}
 The suppressed sub-bands are recombined via projection and a residual identity bypass:
 \begin{equation}
+\label{eq:ias_recon}
 Y = \text{LayerNorm}(X + \gamma_{\text{res}} \cdot \text{Proj}([Z_{\text{low}}', Z_{\text{mid}}', Z_{\text{high}}']))
 \end{equation}
 where $\gamma_{\text{res}}$ is initialized to $0.20$ to maintain baseline representation integrity.
@@ -117,4 +118,7 @@ For deployment on resource-constrained consumer edge devices, we implement dynam
 q = \text{clamp}\left(\left\lfloor \frac{w}{S} \right\rceil + Z_{\text{zero}}, -128, 127\right)
 \end{equation}
 where $S$ is the dynamic scale factor and $Z_{\text{zero}}$ is the zero-point offset. LayerNorm, Softmax, and residual additions are maintained in FP32 to ensure numerical stability and prevent gradient degradation.
+
+\subsection{Unified End-to-End Pipeline and Dynamic Scenario Gating}
+In practical production deployments, the four acoustic adapter modules operate as a hierarchical, scenario-aware cascaded pipeline rather than isolated components. Raw input audio first enters the \textbf{IAS-Adapter} ($Z_{\text{low}}, Z_{\text{mid}}, Z_{\text{high}}$) to decouple transient percussion, piano formant smearing, and sub-bass energy. If the input is detected as clean vocal or spoken speech, the residual gate ($\gamma_{\text{res}}$ in Eq.~\ref{eq:ias_recon}) automatically attenuates sub-band suppression, passing acoustic frames unaltered. Next, if multi-pitch tracking indicates simultaneous harmonic voices, \textbf{D-SADA} activates dual-stream uPIT projection; otherwise, single-lead features bypass directly. The representation is then conditioned by the \textbf{Fast Syllable Adapter (FSA)} whenever rhythmic pacing exceeds $5.0$\,SPS. Finally, continuous pitch embedding ($E_{F_0}$) and the Sparse Dialect MoE router ($g_k(x)$) modulate the encoder representations before the low-latency \textbf{MoChA} streaming decoder decodes tokens frame-by-frame. As quantified in Table~\ref{tab:edge_quantization}, the complete integrated pipeline consumes only $21.82$\,MB in INT8 and executes in $64.31$\,ms ($1.31\times$ real-time latency on CPU), achieving an INT8 Real-Time Factor of $0.02108$ ($47.4\times$ faster than real-time).
 

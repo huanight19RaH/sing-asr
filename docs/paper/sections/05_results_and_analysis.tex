@@ -91,7 +91,7 @@ Moderate Cadence & $4.8$ & 6 & 12.50 & \textbf{11.11} & $+11.12$ & 0.3812 \\
 Fast Melodic Flow & $7.0$ & 6 & 28.57 & \textbf{20.00} & $+30.00$ & 0.3825 \\
 Choppa / Double-time & $9.1$ & 6 & 67.77 & \textbf{22.80} & \textbf{+66.36} & 0.3832 \\
 \midrule
-\textbf{Macro Aggregate} & \textbf{6.97} & \textbf{18} & \textbf{33.23} & \textbf{18.97} & \textbf{+42.92} & \textbf{0.3823} \\
+\textbf{Macro Aggregate} & \textbf{6.97} & \textbf{18} & \textbf{36.28} & \textbf{17.97} & \textbf{+50.47} & \textbf{0.3823} \\
 \bottomrule
 \end{tabular}%
 }
@@ -194,7 +194,7 @@ Full Polyphonic Mix ($0$\,dB SNR Extreme) & 7 & 28.23 & \textbf{1.1939} & \textb
 Our proposed tri-band IAS-Adapter resolves these collisions, slashing macro WER from $31.07\%$ (Baseline) and $22.77\%$ (Broadband Attention) down to \textbf{$13.85\%$} (an absolute gain of $-17.22\%$ and relative improvement of \textbf{$+55.42\%$}). In the extreme $0$\,dB SNR polyphonic condition, error rates drop from $52.91\%$ to $24.05\%$. The adapter processes all 45 audio files ($412.20$\,s) in $3.44$\,s on commodity CPU hardware, achieving a Real-Time Factor of \textbf{$0.00834$} (\textbf{$119.9\times$ faster than real-time}), certifying exceptional suitability for production deployment.
 
 \subsection{Multi-Seed Robustness Validation and Statistical Significance}
-To rigorously confirm that empirical gains across all adapter modules are invariant to random parameter initialization, Table~\ref{tab:multiseed_robustness} compiles multi-seed statistics across ten independent seeds ($S = \{42, 123, 456, 789, 2026, 11, 77, 999, 1337, 2027\}$).
+To confirm that empirical gains across all adapter modules are invariant to random initialization, Table~\ref{tab:multiseed_robustness} compiles multi-seed statistics across ten independent seeds ($S = \{42$, $123$, $456$, $789$, $2026$, $11$, $77$, $999$, $1337$, $2027\}$).
 
 \begin{table*}[t]
 \centering
